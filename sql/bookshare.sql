@@ -54,3 +54,6 @@ CREATE TABLE histories (
     user_id INT(15) PRIMARY KEY,
     book_id INT(15),
 )WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories, VALUE_TYPE=demo.model.Histories";
+
+
+

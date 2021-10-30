@@ -1,0 +1,1 @@
+INSERT INTO bookshelf(user_id, book_id) VALUES(1, 1);
