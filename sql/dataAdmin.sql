@@ -1,1 +1,0 @@
-INSERT INTO admin(admin_id, username, password, registered_date) VALUES(1, null, null, null);
