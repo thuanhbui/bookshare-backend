@@ -26,6 +26,6 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- Imports default Ignite configuration -->
     <import resource="example-default.xml"/>
-
+  <!--  <import resource="example-cache.xml" />-->
     <bean parent="ignite.cfg"/>
 </beans>

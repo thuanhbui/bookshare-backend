@@ -37,16 +37,8 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="ignite.cfg" class="org.apache.ignite.configuration.IgniteConfiguration">
-        <property name="cacheConfiguration">
-            <list>
-                <!-- Partitioned cache example configuration (Atomic mode). -->
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="default"/>
-                    <property name="atomicityMode" value="ATOMIC"/>
-                    <property name="backups" value="1"/>
-                </bean>
-            </list>
-        </property>
+    <property name="clientMode" value="true"/>
+    <property name="igniteInstanceName" value="bookshare"/>
 
         <!-- Explicitly configure TCP discovery SPI to provide list of initial nodes. -->
         <property name="discoverySpi">
@@ -68,7 +60,189 @@
                         </property>
                     </bean>
                 </property>
+                
             </bean>
         </property>
+
+        <property name="communicationSpi">
+            <bean class="org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi">
+                <property name="localPort" value="31100"/>
+            </bean>
+        </property>
+
+        <property name="connectorConfiguration">
+            <bean class="org.apache.ignite.configuration.ConnectorConfiguration">
+                <property name="port" value="11231"/>
+            </bean>
+        </property>
+
+        <property name="clientConnectorConfiguration">
+            <bean class="org.apache.ignite.configuration.ClientConnectorConfiguration">
+                <property name="port" value="10831"/>
+            </bean>
+        </property>
+
+        <property name="cacheConfiguration">
+
+            <list>
+
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="admin"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="backups" value="1"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="copyOnRead" value="true"/>
+                    <property name="sqlSchema" value="BOOKSHARE"/>
+
+                    <property name="queryEntities">
+                        <list>
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <property name="keyType" value="java.lang.Integer"/>
+                                <property name="valueType" value="model.Entity.Admin"/>
+                                <property name="keyFieldName" value="admin_id"/>
+
+                                <property name="keyFields">
+                                    <list>
+                                        <value>admin_id</value>
+                                    </list>
+                                </property>
+
+                                <property name="fields">
+                                    <map>
+                                        <entry key="admin_id" value="java.lang.Integer"/>
+                                        <entry key="username" value="java.lang.String"/>
+                                        <entry key="password" value="java.lang.String"/>
+                                        <entry key="registered_date" value="java.sql.Date"/>
+                                    </map>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>   
+
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="user"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="backups" value="1"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="copyOnRead" value="true"/>
+                    <property name="sqlSchema" value="BOOKSHARE"/>
+
+			        
+                    <property name="queryEntities">
+                        <list>
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <property name="keyType" value="model.Key.UserKey"/>
+                                <property name="valueType" value="model.Entity.User"/>
+                                <property name="keyFieldName" value="user_id"/>
+
+                                <property name="keyFields">
+                                    <list>
+                                        <value>user_id</value>
+                                    </list>
+                                </property>
+
+                                <property name="fields">
+                                    <map>
+                                        <entry key="user_id" value="java.lang.Integer"/>
+                                        <entry key="username" value="java.lang.String"/>
+                                        <entry key="password" value="java.lang.String"/>
+                                        <entry key="email" value="java.lang.String"/>
+                                        <entry key="phone" value="java.lang.String"/>
+                                        <entry key="address" value="java.lang.String"/>
+                                        <entry key="registered_date" value="java.sql.Date"/>
+                                        <entry key="admin_id" value="java.lang.Integer"/>
+                                    </map>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                 <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="Catalog"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="backups" value="1"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="copyOnRead" value="true"/>
+                    <property name="sqlSchema" value="BOOKSHARE"/>
+
+                    <property name="queryEntities">
+                        <list>
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <property name="keyType" value="model.Key.CatalogKey"/>
+                                <property name="valueType" value="model.Entity.Catalog"/>
+                                <property name="keyFieldName" value="catalog_id"/>
+
+                                <property name="keyFields">
+                                    <list>
+                                        <value>catalog_id</value>
+                                    </list>
+                                </property>
+
+                                <property name="fields">
+                                    <map>
+                                        <entry key="catalog_id" value="java.lang.Interger"/>
+                                        <entry key="name_catalog" value="java.lang.String"/>
+                                        <entry key="book_id" value="java.lang.Integer"/>
+                                    </map>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                 <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="book"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="backups" value="1"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="copyOnRead" value="true"/>
+                    <property name="sqlSchema" value="BOOKSHARE"/>
+
+                    <property name="queryEntities">
+                        <list>
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <property name="keyType" value="model.Key.BookKey"/>
+                                <property name="valueType" value="model.Entity.Book"/>
+                                <property name="keyFieldName" value="book_id"/>
+
+                                <property name="keyFields">
+                                    <list>
+                                        <value>book_id</value>
+                                    </list>
+                                </property>
+
+                                <property name="fields">
+                                    <map>
+                                        <entry key="book_id" value="java.lang.Integer"/>
+                                        <entry key="title" value="java.lang.String"/>
+                                        <entry key="description" value="java.lang.String"/>
+                                        <entry key="image_link" value="java.lang.String"/>
+                                        <entry key="file_link" value="java.lang.String"/>
+                                        <entry key="release_year" value="java.sql.Year"/>
+                                        <entry key="last_update" value="java.sql.Date"/>
+                                        <entry key="viewers" value="java.lang.Integer"/>
+                                        <entry key="catalog_id" value="java.lang.Integer"/>
+                                        <entry key="user_id" value="java.lang.Integer"/>
+                                    </map>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+
+
+
+            </list>
+
+
+        </property>
+    
+
+
+
+
     </bean>
 </beans>
