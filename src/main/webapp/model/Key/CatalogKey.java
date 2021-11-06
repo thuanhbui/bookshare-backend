@@ -1,6 +1,5 @@
 package model.Key;
 
-
 import java.util.Objects;
 import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 
@@ -8,19 +7,19 @@ public class CatalogKey {
    private int catalog_id;
 
    @AffinityKeyMapped
-   private int BOOK_ID;
+   private int ADMIN_ID;
 
-   public CatalogKey(int CatalogID, int bookID) {
-      this.catalog_id = CatalogID;
-      this.BOOK_ID = bookID;
+   public CatalogKey(int catalogID, int adminID) {
+      this.catalog_id = catalogID;
+      this.ADMIN_ID = adminID;
    }
 
-   public int getCatalogId() {
+   public int geteCatalogId() {
       return catalog_id;
    }
 
-   public int getAdminID() {
-      return BOOK_ID;
+   public int geteBookID() {
+      return ADMIN_ID;
    }
 
    @Override
@@ -33,20 +32,18 @@ public class CatalogKey {
       }
 
       CatalogKey key = (CatalogKey) object;
-      return catalog_id == key.catalog_id && BOOK_ID == key.BOOK_ID;
+      return catalog_id == key.catalog_id && ADMIN_ID == key.ADMIN_ID;
 
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(catalog_id, BOOK_ID);
+      return Objects.hash(catalog_id, ADMIN_ID);
    }
 
    @Override
    public String toString() {
-      return "CityKey{" +
-            "catalog_id=" + catalog_id + 
-            ", BOOK_ID=" + BOOK_ID + "}";
+      return "CatalogKey{" + "catalog_id=" + catalog_id + ", admin_id=" + ADMIN_ID + "\'}";
    }
 
 }

@@ -1,54 +1,52 @@
 
-import javax.cache.processor.EntryProcessor;
-import javax.cache.processor.EntryProcessorException;
-import javax.cache.processor.MutableEntry;
+
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
-import org.apache.ignite.IgniteDataStreamer;
+
 import org.apache.ignite.Ignition;
-import org.apache.ignite.stream.StreamReceiver;
 
 import model.Entity.Admin;
 import model.Entity.Catalog;
+import model.Entity.User;
+import model.Key.UserKey;
 
 public class KeyValue {
 
     public static void main(String args[]) {
         Ignition.setClientMode(true);
-        
+
         Ignite client = Ignition.start("./bookshare-backend/config/example-ignite.xml");
-        
 
-        IgniteCache<Integer, Catalog> catalogCache = client.cache("catalog");
+        // IgniteCache<Integer, User> eCatalogCache = client.cache("admin");
 
-        getPutCatalog(catalogCache);
-        
+        // getPutcatalog(eCatalogCache);
+
+        IgniteCache<UserKey, User> userCache = client.cache("user");
+        tra(userCache);
+
         client.close();
     }
-    
 
-    private static void getPutCatalog(IgniteCache<Integer, Catalog> catalogCache) {
-        Catalog catalog1 = catalogCache.get(1);
-        System.out.println("hello " + catalog1.getCatalog());
-    
-
-        
+    public static Admin getAdmin(IgniteCache<Integer, Admin> adminCache, int admin_id) {
+        return adminCache.get(admin_id);
     }
 
-    private static void updateSingleField(IgniteCache<String, Admin> adminCache) {
-        
+    public static User getUser(IgniteCache<UserKey, User> userCache, UserKey userKey) {
+        return userCache.get(userKey);
     }
 
-/*
-private static class AdminEntryProcessor implements EntryProcessor<String, Admin, String> {
+    private static void getPutcatalog(IgniteCache<Integer, User> eCatalogCache) {
+        User eCatalog1 = eCatalogCache.get(1);
+        System.out.println("hello " + eCatalog1.getUsername());
 
-        @Override public String process(MutableEntry<String, Admin> entry,
-            Object... arguments) throws EntryProcessorException {
+    }
 
-            entry.getValue().setUsername("Boris Johnson");
+    private static void tra(IgniteCache<UserKey, User> userCache) {
+        UserKey userKey = new UserKey(1, 1);
+        User user = userCache.get(userKey);
+        System.out.println("hello " + user.getUsername());
+    }
 
-            return entry.getValue().getUsername();
-        }
-    }*/
+    
 
 }

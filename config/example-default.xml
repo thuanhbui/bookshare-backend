@@ -73,7 +73,7 @@
             </bean>
         </property>
 
-        <property name="cacheConfiguration">
+    <!--   <property name="cacheConfiguration">
 
             <list>
 
@@ -83,7 +83,7 @@
                     <property name="backups" value="1"/>
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="copyOnRead" value="true"/>
-                    <property name="sqlSchema" value="BOOKSHARE"/>
+                    <property name="sqlSchema" value="eBookSHARE"/>
 
                     <property name="queryEntities">
                         <list>
@@ -117,7 +117,7 @@
                     <property name="backups" value="1"/>
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="copyOnRead" value="true"/>
-                    <property name="sqlSchema" value="BOOKSHARE"/>
+                    <property name="sqlSchema" value="eBookSHARE"/>
 
 			        
                     <property name="queryEntities">
@@ -151,31 +151,31 @@
                 </bean>
 
                  <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="catalog"/>
+                    <property name="name" value="eCatalog"/>
                     <property name="cacheMode" value="PARTITIONED"/>
                     <property name="backups" value="1"/>
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="copyOnRead" value="true"/>
-                    <property name="sqlSchema" value="BOOKSHARE"/>
+                    <property name="sqlSchema" value="eBookSHARE"/>
 
                     <property name="queryEntities">
                         <list>
                             <bean class="org.apache.ignite.cache.QueryEntity">
-                                <property name="keyType" value="model.Key.CatalogKey"/>
-                                <property name="valueType" value="model.Entity.Catalog"/>
-                                <property name="keyFieldName" value="catalog_id"/>
+                                <property name="keyType" value="model.Key.eCatalogKey"/>
+                                <property name="valueType" value="model.Entity.eCatalog"/>
+                                <property name="keyFieldName" value="eCatalog_id"/>
 
                                 <property name="keyFields">
                                     <list>
-                                        <value>catalog_id</value>
+                                        <value>eCatalog_id</value>
                                     </list>
                                 </property>
 
                                 <property name="fields">
                                     <map>
-                                        <entry key="catalog_id" value="java.lang.Interger"/>
-                                        <entry key="name_catalog" value="java.lang.String"/>
-                                        <entry key="book_id" value="java.lang.Integer"/>
+                                        <entry key="eCatalog_id" value="java.lang.Interger"/>
+                                        <entry key="name_eCatalog" value="java.lang.String"/>
+                                        <entry key="eBook_id" value="java.lang.Integer"/>
                                     </map>
                                 </property>
                             </bean>
@@ -184,29 +184,29 @@
                 </bean>
 
                  <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="book"/>
+                    <property name="name" value="eBook"/>
                     <property name="cacheMode" value="PARTITIONED"/>
                     <property name="backups" value="1"/>
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="copyOnRead" value="true"/>
-                    <property name="sqlSchema" value="BOOKSHARE"/>
+                    <property name="sqlSchema" value="eBookSHARE"/>
 
                     <property name="queryEntities">
                         <list>
                             <bean class="org.apache.ignite.cache.QueryEntity">
-                                <property name="keyType" value="model.Key.BookKey"/>
-                                <property name="valueType" value="model.Entity.Book"/>
-                                <property name="keyFieldName" value="book_id"/>
+                                <property name="keyType" value="model.Key.eBookKey"/>
+                                <property name="valueType" value="model.Entity.eBook"/>
+                                <property name="keyFieldName" value="eBook_id"/>
 
                                 <property name="keyFields">
                                     <list>
-                                        <value>book_id</value>
+                                        <value>eBook_id</value>
                                     </list>
                                 </property>
 
                                 <property name="fields">
                                     <map>
-                                        <entry key="book_id" value="java.lang.Integer"/>
+                                        <entry key="eBook_id" value="java.lang.Integer"/>
                                         <entry key="title" value="java.lang.String"/>
                                         <entry key="description" value="java.lang.String"/>
                                         <entry key="image_link" value="java.lang.String"/>
@@ -214,7 +214,7 @@
                                         <entry key="release_year" value="java.sql.Year"/>
                                         <entry key="last_update" value="java.sql.Date"/>
                                         <entry key="viewers" value="java.lang.Integer"/>
-                                        <entry key="catalog_id" value="java.lang.Integer"/>
+                                        <entry key="eCatalog_id" value="java.lang.Integer"/>
                                         <entry key="user_id" value="java.lang.Integer"/>
                                     </map>
                                 </property>
@@ -229,7 +229,7 @@
             </list>
 
 
-        </property>
+        </property> -->
     
 
 

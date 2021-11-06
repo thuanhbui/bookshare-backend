@@ -1,6 +1,6 @@
 package model.Entity;
 
-public class Book {
+public class eBook {
 
     private String title;
     private String description;
@@ -8,8 +8,20 @@ public class Book {
     private String file_link;
     private String language;
     private String release_year;
-    private String  last_update;
+    private String last_update;
     private int viewers;
+
+    public eBook(String title, String description, String image_link, String file_link, 
+                String language, String release_year, String last_update, int viewers) {
+                    this.title = title;
+                    this.description = description;
+                    this.image_link = image_link;
+                    this.file_link = file_link;
+                    this.language = language;
+                    this.release_year = release_year;
+                    this.last_update = last_update;
+                    this.viewers = viewers;
+                }
 
     public String getTitle() {
         return title;
@@ -71,21 +83,16 @@ public class Book {
         return viewers;
     }
 
-    public void setViewers( int viewers) {
+    public void setViewers(int viewers) {
         this.viewers = viewers;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
-        "title='" + title + '\'' +
-        ", description='" + description + '\'' +
-        ", image_link='" + image_link + '\'' +
-        ", file_link='" + file_link + '\'' +
-        ", language='" + language + '\'' +
-        ", release_year='" + release_year + '\'' +
-        ", last_update='" + last_update + '\'' +
-        ", viewers=" + viewers +"}";
+        return "eBook{" + "title='" + title + '\'' + ", description='" + description + '\'' + ", image_link='"
+                + image_link + '\'' + ", file_link='" + file_link + '\'' + ", language='" + language + '\''
+                + ", release_year='" + release_year + '\'' + ", last_update='" + last_update + '\'' + ", viewers="
+                + viewers + "}";
     }
 
 }

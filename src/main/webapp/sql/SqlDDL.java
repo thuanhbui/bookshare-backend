@@ -9,7 +9,7 @@ import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.apache.ignite.configuration.CacheConfiguration;
 
 public class SqlDDL {
-    private static final String CATALOG_CACHE_NAME = "catalog";
+    private static final String eCatalog_CACHE_NAME = "eCatalog";
 
     /**
      * Executes example.
@@ -17,29 +17,32 @@ public class SqlDDL {
      * @param args Command line arguments, none required.
      * @throws Exception If example execution failed.
      */
-    @SuppressWarnings({"unused", "ThrowFromFinallyBlock"})
+    @SuppressWarnings({ "unused", "ThrowFromFinallyBlock" })
     public static void main(String[] args) throws Exception {
-        try (Ignite ignite = Ignition.start("./bookshare-backend/config/example-ignite.xml")) {
+        try (Ignite ignite = Ignition.start("./eBookshare-backend/config/example-ignite.xml")) {
             print("Cache query DDL example started.");
-            
-            // Create dummy cache to act as an entry point for SQL queries (new SQL API which do not require this
-            // will appear in future versions, JDBC and ODBC drivers do not require it already).
-            CacheConfiguration<?, ?> cacheCfg = new CacheConfiguration<>(CATALOG_CACHE_NAME).setSqlSchema("PUBLIC");
 
-            try (
-                IgniteCache<?, ?> cache = ignite.getOrCreateCache(cacheCfg)
-            ) {
+            // Create dummy cache to act as an entry point for SQL queries (new SQL API
+            // which do not require this
+            // will appear in future versions, JDBC and ODBC drivers do not require it
+            // already).
+            CacheConfiguration<?, ?> cacheCfg = new CacheConfiguration<>(eCatalog_CACHE_NAME).setSqlSchema("PUBLIC");
+
+            try (IgniteCache<?, ?> cache = ignite.getOrCreateCache(cacheCfg)) {
                 // Create reference City table based on REPLICATED template.
                 cache.query(new SqlFieldsQuery(
-                    "CREATE TABLE catalog (id LONG PRIMARY KEY, name VARCHAR) WITH \"template=replicated\"")).getAll();
+                        "CREATE TABLE eCatalog (id LONG PRIMARY KEY, name VARCHAR) WITH \"template=replicated\""))
+                        .getAll();
 
                 cache.query(new SqlFieldsQuery(
-                    "CREATE TABLE catalog (catalog_id INT(15), name_catalog CHAR(128), book_id INT(15), PRIMARY KEY (catalog_id, book_id))WITH \"TEMPLATE=partitioned, BACKUPS=1, AFFINITY_KEY=book_id, CACHE_NAME=catalog, KEY_TYPE=model.Key.CatalogKey, VALUE_TYPE=model.Entity.Catalog\"")).getAll();
-                
+                        "CREATE TABLE eCatalog (eCatalog_id INT(15), name_eCatalog CHAR(128), eBook_id INT(15), PRIMARY KEY (catalog_id, admin_id))WITH \"TEMPLATE=partitioned, BACKUPS=1, AFFINITY_KEY=eBook_id, CACHE_NAME=eCatalog, KEY_TYPE=model.Key.eCatalogKey, VALUE_TYPE=model.Entity.eCatalog\""))
+                        .getAll();
+
                 // Create table based on PARTITIONED template with one backup.
                 cache.query(new SqlFieldsQuery(
-                    "CREATE TABLE person (id LONG, name VARCHAR, city_id LONG, PRIMARY KEY (id, city_id)) " +
-                    "WITH \"backups=1, affinity_key=city_id\"")).getAll();
+                        "CREATE TABLE person (id LONG, name VARCHAR, city_id LONG, PRIMARY KEY (id, city_id)) "
+                                + "WITH \"backups=1, affinity_key=city_id\""))
+                        .getAll();
 
                 print("Created database objects.");
 
@@ -58,8 +61,9 @@ public class SqlDDL {
 
                 print("Populated data.");
 
-                List<List<?>> res = cache.query(new SqlFieldsQuery(
-                    "SELECT p.name, c.name FROM Person p INNER JOIN City c on c.id = p.city_id")).getAll();
+                List<List<?>> res = cache.query(
+                        new SqlFieldsQuery("SELECT p.name, c.name FROM Person p INNER JOIN City c on c.id = p.city_id"))
+                        .getAll();
 
                 print("Query results:");
 
@@ -70,10 +74,9 @@ public class SqlDDL {
                 cache.query(new SqlFieldsQuery("drop table City")).getAll();
 
                 print("Dropped database objects.");
-            }
-            finally {
+            } finally {
                 // Distributed cache can be removed from cluster only by #destroyCache() call.
-                ignite.destroyCache(CATALOG_CACHE_NAME);
+                ignite.destroyCache(eCatalog_CACHE_NAME);
             }
 
             print("Cache query DDL example finished.");

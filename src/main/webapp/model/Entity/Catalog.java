@@ -6,20 +6,18 @@ public class Catalog {
     public Catalog(String name_catalog) {
         this.name_catalog = name_catalog;
     }
-    
-    public String getCatalog() {
+
+    public String getNameCatalog() {
         return name_catalog;
     }
 
-    public void setCatalog(String  nameCatalog) {
+    public void setNameCatalog(String nameCatalog) {
         this.name_catalog = nameCatalog;
     }
 
     @Override
     public String toString() {
-        return "Catalog{" +
-        "nameCatalog='" + name_catalog + "\'}";
+        return "Catalog{" + "name_catalog='" + name_catalog + "\'}";
     }
 
 }
-

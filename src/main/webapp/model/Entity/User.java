@@ -7,7 +7,16 @@ public class User {
     private String phone;
     private String address;
     private String registered_date;
-    
+
+    public User(String username, String password, String email, String phone, String address, String registered_date) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.registered_date = registered_date;
+    }
+
     public String getUsername() {
         return username;
     }

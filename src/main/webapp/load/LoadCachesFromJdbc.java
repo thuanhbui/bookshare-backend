@@ -19,20 +19,19 @@ import org.apache.ignite.Ignition;
 import model.Entity.Catalog;
 
 public class LoadCachesFromJdbc {
-    public static void main(String[] args) {
-        System.out.println(">>> Stream Loading caches from JDBC SELECT...");
-        getLoadCaches();
-    }
+	public static void main(String[] args) {
+		System.out.println(">>> Stream Loading caches from JDBC SELECT...");
+		getLoadCaches();
+	}
 
-    public static void getLoadCaches() {
-        String loadQuery = "";
+	public static void getLoadCaches() {
+		String loadQuery = "";
 		Connection conn = null;
 		Statement loadStmt = null;
 		LoadCachesFromJdbc loadCaches = new LoadCachesFromJdbc();
-        
 
-        System.out.println(">>> Start Ignite Client...");
-		try (Ignite ignite = Ignition.start("./bookshare-backend/config/example-ignite.xml")) {
+		System.out.println(">>> Start Ignite Client...");
+		try (Ignite ignite = Ignition.start("./eBookshare-backend/config/example-ignite.xml")) {
 
 			System.out.println(">>> Get Connection to source database...");
 			try {
@@ -46,11 +45,11 @@ public class LoadCachesFromJdbc {
 			 * Office Table
 			 */
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> SELECT FROM ProductLine Table, Stream to OfficeCache...");
-			loadQuery = "SELECT catalog_id, name_catalog, book_id FROM catalog" ;
+			loadQuery = "SELECT catalog_id, name_catalog, admin_id FROM eCatalog";
 
 			// If we can get the cache, then lets try to get from JDBC and Stream to it.
-			try (IgniteDataStreamer<String, Catalog> streamer = ignite.dataStreamer("catalog")) {
-                System.out.println(">>> try to create statement and execute query:"+ loadQuery +"...");
+			try (IgniteDataStreamer<String, Catalog> streamer = ignite.dataStreamer("eCatalog")) {
+				System.out.println(">>> try to create statement and execute query:" + loadQuery + "...");
 				int n = 0; // record counter
 				try {
 					loadStmt = conn.createStatement();
@@ -60,7 +59,7 @@ public class LoadCachesFromJdbc {
 						String k = null;
 						Catalog v = null;
 						try {
-							k = rs.getString("catalog_id");
+							k = rs.getString("eCatalog_id");
 							v = new Catalog(rs.getString("name_catalog"));
 						} catch (NumberFormatException e) {
 							e.printStackTrace();
@@ -68,25 +67,26 @@ public class LoadCachesFromJdbc {
 						streamer.addData(k, v);
 						n++;
 					}
-				} catch (SQLException e ) {
+				} catch (SQLException e) {
 					System.out.println("Caught SQLException: " + e);
 				} finally {
 					System.out.println(">>> Load Office count: " + n);
-					if (loadStmt != null) { try {
-                        loadStmt.close();
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } }
+					if (loadStmt != null) {
+						try {
+							loadStmt.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			} catch (IgniteDataStreamerTimeoutException e) {
 				System.out.println("IgniteDataStreamerTimeoutException: " + e);
 			} catch (CacheException e) {
 				System.out.println("CacheException: " + e);
 			}
-        }
+		}
 
-    }
+	}
 
-    
 }

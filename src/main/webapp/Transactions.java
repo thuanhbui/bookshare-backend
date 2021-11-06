@@ -13,26 +13,26 @@ public class Transactions {
 
     public static void main(String args[]) {
         Ignition.setClientMode(true);
-        
-        try(Ignite client = Ignition.start("bookshare-backend/config/example-ignite.xml")) {
+
+        try (Ignite client = Ignition.start("eBookshare-backend/config/example-ignite.xml")) {
             IgniteCache<UserKey, User> userCache = client.cache("user");
 
             updateAdminUsername(client, userCache);
         }
-    
+
     }
 
-    private static void updateAdminUsername(Ignite client, IgniteCache<UserKey, User> userCache ) {
+    private static void updateAdminUsername(Ignite client, IgniteCache<UserKey, User> userCache) {
         IgniteTransactions txs = client.transactions();
 
-        UserKey bookshareKey = new UserKey(1, 1);
+        UserKey eBookshareKey = new UserKey(1, 1);
         UserKey XZKey = new UserKey(2, 1);
 
-        try(Transaction tx = txs.txStart(TransactionConcurrency.PESSIMISTIC, TransactionIsolation.REPEATABLE_READ)) {
-            User bookshare = userCache.get(bookshareKey);
+        try (Transaction tx = txs.txStart(TransactionConcurrency.PESSIMISTIC, TransactionIsolation.REPEATABLE_READ)) {
+            User eBookshare = userCache.get(eBookshareKey);
             User XZ = userCache.get(XZKey);
 
-            System.out.println(bookshare + " " + XZ);
+            System.out.println(eBookshare + " " + XZ);
 
             tx.commit();
 
