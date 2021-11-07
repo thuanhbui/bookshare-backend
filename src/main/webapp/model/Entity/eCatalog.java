@@ -1,23 +1,23 @@
 package model.Entity;
 
-public class Catalog {
+public class eCatalog {
     private String name_catalog;
 
-    public Catalog(String name_catalog) {
+    public eCatalog(String name_catalog) {
         this.name_catalog = name_catalog;
     }
 
-    public String getNameCatalog() {
+    public String getNameeCatalog() {
         return name_catalog;
     }
 
-    public void setNameCatalog(String nameCatalog) {
+    public void setNameeCatalog(String nameCatalog) {
         this.name_catalog = nameCatalog;
     }
 
     @Override
     public String toString() {
-        return "Catalog{" + "name_catalog='" + name_catalog + "\'}";
+        return "eCatalog{" + "name_catalog='" + name_catalog + "\'}";
     }
 
 }

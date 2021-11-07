@@ -3,23 +3,23 @@ package model.Key;
 import java.util.Objects;
 import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 
-public class CatalogKey {
+public class eCatalogKey {
    private int catalog_id;
 
    @AffinityKeyMapped
-   private int ADMIN_ID;
+   private String EBOOK_ID;
 
-   public CatalogKey(int catalogID, int adminID) {
+   public eCatalogKey(int catalogID, String bookID) {
       this.catalog_id = catalogID;
-      this.ADMIN_ID = adminID;
+      this.EBOOK_ID = bookID;
    }
 
    public int geteCatalogId() {
       return catalog_id;
    }
 
-   public int geteBookID() {
-      return ADMIN_ID;
+   public String geteBookID() {
+      return EBOOK_ID;
    }
 
    @Override
@@ -31,19 +31,19 @@ public class CatalogKey {
          return false;
       }
 
-      CatalogKey key = (CatalogKey) object;
-      return catalog_id == key.catalog_id && ADMIN_ID == key.ADMIN_ID;
+      eCatalogKey key = (eCatalogKey) object;
+      return catalog_id == key.catalog_id && EBOOK_ID.equals(key.EBOOK_ID);
 
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(catalog_id, ADMIN_ID);
+      return Objects.hash(catalog_id, EBOOK_ID);
    }
 
    @Override
    public String toString() {
-      return "CatalogKey{" + "catalog_id=" + catalog_id + ", admin_id=" + ADMIN_ID + "\'}";
+      return "CatalogKey{" + "catalog_id=" + catalog_id + ", EBOOK_ID='" + EBOOK_ID + "\'}";
    }
 
 }

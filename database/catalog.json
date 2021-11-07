@@ -1,8 +1,8 @@
-{"catalog": [
+{"eCatalog": [
     {
-        "catalog_id": 1,
-        "catalog_name": "Nhiếp ảnh, dựng phim",
-        "book_id": 1
+        "eCatalog_id": 1,
+        "eCatalog_name": "Nhiếp ảnh, dựng phim",
+        "admin_id": 1
     }
 ] 
 

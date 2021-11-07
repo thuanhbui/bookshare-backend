@@ -1,3 +1,4 @@
+package API;
 import javax.cache.configuration.Factory;
 import javax.cache.event.CacheEntryEvent;
 import javax.cache.event.CacheEntryEventFilter;
@@ -10,8 +11,8 @@ import org.apache.ignite.binary.BinaryObject;
 import org.apache.ignite.cache.query.ContinuousQuery;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
 
-import model.Entity.Catalog;
-import model.Key.CatalogKey;
+import model.Entity.eCatalog;
+import model.Key.eCatalogKey;
 
 public class ContinousQuery {
     public static void main(String args[]) {
@@ -46,8 +47,8 @@ public class ContinousQuery {
                 throws CacheEntryListenerException {
 
             for (CacheEntryEvent<? extends BinaryObject, ? extends BinaryObject> event : events) {
-                CatalogKey key = event.getKey().deserialize();
-                Catalog value = event.getValue().deserialize();
+                eCatalogKey key = event.getKey().deserialize();
+                eCatalog value = event.getValue().deserialize();
 
                 System.out.println("Admin record has been changed [key=" + key + ", value = " + value + ']');
             }

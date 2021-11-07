@@ -16,7 +16,7 @@ import org.apache.ignite.IgniteDataStreamer;
 import org.apache.ignite.IgniteDataStreamerTimeoutException;
 import org.apache.ignite.Ignition;
 
-import model.Entity.Catalog;
+import model.Entity.eCatalog;
 
 public class LoadCachesFromJdbc {
 	public static void main(String[] args) {
@@ -48,7 +48,7 @@ public class LoadCachesFromJdbc {
 			loadQuery = "SELECT catalog_id, name_catalog, admin_id FROM eCatalog";
 
 			// If we can get the cache, then lets try to get from JDBC and Stream to it.
-			try (IgniteDataStreamer<String, Catalog> streamer = ignite.dataStreamer("eCatalog")) {
+			try (IgniteDataStreamer<String, eCatalog> streamer = ignite.dataStreamer("eCatalog")) {
 				System.out.println(">>> try to create statement and execute query:" + loadQuery + "...");
 				int n = 0; // record counter
 				try {
@@ -57,10 +57,10 @@ public class LoadCachesFromJdbc {
 
 					while (rs.next()) {
 						String k = null;
-						Catalog v = null;
+						eCatalog v = null;
 						try {
 							k = rs.getString("eCatalog_id");
-							v = new Catalog(rs.getString("name_catalog"));
+							v = new eCatalog(rs.getString("name_catalog"));
 						} catch (NumberFormatException e) {
 							e.printStackTrace();
 						}
