@@ -17,13 +17,13 @@ public class CatalogController {
 
     @GetMapping("/search")
     public ResponseEntity<?> searchCatalog(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
-        List<eCatalog> catas = catalogService.searchCatalog(name);
+        List<List<?>> catas = catalogService.searchCatalog(name);
         return ResponseEntity.ok(catas);
     }
 
     @GetMapping("")
     public ResponseEntity<?> getListCatalog() {
-        List<eCatalog> catas = catalogService.getListCatalog();
+        List<List<?>> catas = catalogService.getListCatalog();
         return ResponseEntity.ok(catas);
     }
 

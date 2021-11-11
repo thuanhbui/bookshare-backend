@@ -1,9 +1,11 @@
 package org.ignite.Entity;
 
-import java.util.UUID;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
+
+
 
 public class eBook {
-
+    @QuerySqlField
     private String title;
     private String description;
     private String image_link;

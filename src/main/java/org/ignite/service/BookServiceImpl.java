@@ -15,42 +15,52 @@ import java.util.Collection;
 import java.util.List;
 
 @Component
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl{
 
-    @Autowired
-    private Ignite ignite;
+//    @Autowired
+//    private IgniteConfig igniteConfig;
+//
+//    private IgniteCache<eBookKey, eBook> getCache() {
+//        if (igniteConfig.client != null) {
+//            return igniteConfig.client.cache("eBook");
+//        } else {
+//            return igniteConfig.ignite().cache("eBook");
+//        }
+//    }
+//
+//    IgniteCache<eBookKey, eBook> bookCache = igniteConfig.ignite().cache("eBook");
+//    SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK");
+//    List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
+//
+//    ArrayList<eBook> books = new ArrayList<eBook>();
 
-    IgniteCache<eBookKey, eBook> bookCache = ignite.cache("eBook");
-    SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK");
-    List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
-
-    ArrayList<eBook> books = new ArrayList<eBook>();
 
 
 
-    @Override
     public List<List<?>> getListBook() {
-        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK");
-        List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
-        if(res != null) return res;
-        throw new NotFoundException("Chưa có sách trong hệ thống");
+//        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK");
+//        List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
+//        if(res != null) return res;
+//        throw new NotFoundException("Chưa có sách trong hệ thống");
+        return null;
     }
 
-    @Override
     public eBook getBookById(String id) {
-        eBookKey bookKey = new eBookKey(id, 1);
-        eBook book = bookCache.get(bookKey);
-
-        if (book != null) return book;
-
-        throw new NotFoundException("Book không tồn tại trong hệ thống");
+//        eBookKey bookKey = new eBookKey(id, 1);
+//        eBook book = bookCache.get(bookKey);
+//
+//        if (book != null) return book;
+//
+//        throw new NotFoundException("Book không tồn tại trong hệ thống");
+        return null;
     }
 
-    @Override
+
     public List<List<?>> searchBook(String keyword) {
-        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK WHERE title LIKE \'%" + keyword + "%\';");
-        List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
-        if (res != null) return res;
-        throw new NotFoundException("Không tìm thấy sách");
+//        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK WHERE title LIKE \'%" + keyword + "%\';");
+//        List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
+//        if (res != null) return res;
+//        throw new NotFoundException("Không tìm thấy sách");
+        return null;
     }
 }

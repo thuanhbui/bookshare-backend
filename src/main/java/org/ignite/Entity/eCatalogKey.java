@@ -2,9 +2,10 @@ package org.ignite.Entity;
 
 import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class eCatalogKey {
+public class eCatalogKey implements Serializable {
     private int catalog_id;
 
     @AffinityKeyMapped

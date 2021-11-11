@@ -4,6 +4,7 @@ import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
+import org.ignite.Dao.CatalogRepository;
 import org.ignite.Entity.Admin;
 import org.ignite.Entity.User;
 import org.ignite.Entity.eCatalog;
@@ -21,30 +22,42 @@ import java.util.List;
 
 @Service
 public class CatalogService {
+//    @Autowired
+//    private IgniteConfig igniteConfig;
+//
+//    private IgniteCache<eCatalogKey, eCatalog> getCache() {
+//        if (igniteConfig.client != null) {
+//            return igniteConfig.client.cache("catalog");
+//        } else {
+//            return igniteConfig.ignite().cache("catalog");
+//        }
+//    }
+//   IgniteCache<eCatalogKey, eCatalog> cataCache = igniteConfig.ignite().cache("catalog");
+//
+
     @Autowired
-    private Ignite ignite;
-
-    IgniteCache<eCatalogKey, eCatalog> cataCache = ignite.cache("catalog");
-    SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM ECATALOG");
-    List<List<?>> res = cataCache.query(qry.setDistributedJoins(true)).getAll();
-
-    ArrayList<eCatalog> catas = new ArrayList<eCatalog>((Collection<? extends eCatalog>) res);
+    CatalogRepository cataDao;
 
 
-    public List<eCatalog> getListCatalog() {
+    public List<List<?>> getListCatalog() {
+       // IgniteCache<eCatalogKey, eCatalog> cataCache = Ca
+//        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM ECATALOG");
+//        List<List<?>> res = cataCache.query(qry.setDistributedJoins(true)).getAll();
+//        if (res != null) return null;
+//        throw new NotFoundException("Không có nào Catalog trong hệ thống");
+        List<List<?>> catas = cataDao.getListCatalog();
         return null;
     }
 
 
 
-    public List<eCatalog> searchCatalog(String keyword) {
-        List<eCatalog> result = new ArrayList<>();
-//        for(eCatalog cata : catas) {
-//            if (cata.getNameeCatalog().contains(keyword)) {
-//                result.add(cata);
-//            }
-//        }
-        return result;
+    public List<List<?>> searchCatalog(String keyword) {
+//        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM eCatlog WHERE name_catalog LIKE \'%" + keyword + "%\';");
+//        List<List<?>> res = cataCache.query(qry.setDistributedJoins(true)).getAll();
+//        if (res != null) return res;
+//        throw new NotFoundException("Không tìm thấy sách");
+//        List<List<?>> entries = cataDao.searchCatalog(keyword == null ? null : keyword);
+        return  null;
     }
 
 }

@@ -1,7 +1,7 @@
 package org.ignite.controller;
 
 import org.ignite.Entity.eBook;
-import org.ignite.service.BookService;
+import org.ignite.service.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private BookServiceImpl bookService;
 
     @GetMapping("/search")
     public ResponseEntity<?> searchBook(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
