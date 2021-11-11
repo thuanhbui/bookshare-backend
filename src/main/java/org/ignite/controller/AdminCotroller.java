@@ -17,11 +17,13 @@ public class AdminCotroller {
 
 
 
-    @GetMapping("")
-    public ResponseEntity<?> getListAdmin() {
-        List<List<?>> admins = adminService.getListAdmin();
-        return ResponseEntity.ok(admins);
-    }
+//    @GetMapping("")
+//    public ResponseEntity<?> getListAdmin() {
+//        List<List<?>> admins = adminService.getListAdmin();
+//        return ResponseEntity.ok(admins);
+//    }
+
+    @GetMapping
 
     @PostMapping("")
     public ResponseEntity<?> createCatalog() {

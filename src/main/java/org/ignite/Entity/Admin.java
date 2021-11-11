@@ -1,8 +1,13 @@
 package org.ignite.Entity;
 
 
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
+
 public class Admin {
+    @QuerySqlField(index = true)
     private String username;
+
+    @QuerySqlField(index = true)
     private String password;
     private String registered_date;
 
@@ -30,11 +35,11 @@ public class Admin {
         this.registered_date = registeredDate;
     }
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", registered_date='" + registered_date + "\'}";
-    }
+//    @Override
+//    public String toString() {
+//        return "Admin [" +
+//                "username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", registered_date='" + registered_date + "\'";
+//    }
 }

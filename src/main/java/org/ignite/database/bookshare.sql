@@ -4,7 +4,7 @@ CREATE TABLE admin(
     username CHAR(32),
     password CHAR(32),
     registered_date DATE
-)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=admin, VALUE_TYPE=my.uet.model.Entity.Admin";
+)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=admin1, VALUE_TYPE=my.uet.model.Entity.Admin";
 
 DROP TABLE IF EXISTS eCatalog;
 CREATE TABLE eCatalog(
@@ -12,7 +12,7 @@ CREATE TABLE eCatalog(
     name_catalog CHAR(128),
     eBook_id CHAR,
     PRIMARY KEY (catalog_id, eBook_id)
-)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=eBook_id, CACHE_NAME=catalog, KEY_TYPE=my.uet.model.Key.eCatalogKey, VALUE_TYPE=my.uet.model.Entity.eCatalog";
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=eBook_id, CACHE_NAME=catalog1, KEY_TYPE=my.uet.model.Key.eCatalogKey, VALUE_TYPE=my.uet.model.Entity.eCatalog";
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE user(
@@ -25,7 +25,7 @@ CREATE TABLE user(
     registered_date DATE,
     admin_id INT(15),
     PRIMARY KEY (user_id, admin_id)
-)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=admin_id, CACHE_NAME=user, KEY_TYPE=my.uet.model.Key.UserKey, VALUE_TYPE=my.uet.model.Entity.User";
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=admin_id, CACHE_NAME=user1, KEY_TYPE=my.uet.model.Key.UserKey, VALUE_TYPE=my.uet.model.Entity.User";
 
 DROP TABLE IF EXISTS eBook;
 CREATE TABLE eBook(
@@ -41,19 +41,19 @@ CREATE TABLE eBook(
     eCatalog_id INT(15),
     user_id INT(15),
     PRIMARY KEY (eBook_id, user_id)
-)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=user_id, CACHE_NAME=eBook, KEY_TYPE=my.uet.model.Key.eBookKey, VALUE_TYPE=my.uet.model.Entity.eBook";
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=user_id, CACHE_NAME=eBook1, KEY_TYPE=my.uet.model.Key.eBookKey, VALUE_TYPE=my.uet.model.Entity.eBook";
 
 DROP TABLE if EXISTS eBookshelf;
 CREATE TABLE eBookshelf(
     user_id INT(15) PRIMARY KEY,
     eBook_id INT(15)
-) WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=eBookshelf";
+) WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=eBookshelf1";
 
 DROP TABLE if EXISTS histories;
 CREATE TABLE histories (
     user_id INT(15) PRIMARY KEY,
     eBook_id INT(15),
-)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories";
+)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories1";
 
 
 

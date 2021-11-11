@@ -43,8 +43,4 @@ public class eCatalogKey implements Serializable {
         return Objects.hash(catalog_id, EBOOK_ID);
     }
 
-    @Override
-    public String toString() {
-        return "CatalogKey{" + "catalog_id=" + catalog_id + ", EBOOK_ID='" + EBOOK_ID + "\'}";
-    }
 }

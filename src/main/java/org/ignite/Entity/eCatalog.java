@@ -7,6 +7,7 @@ public class eCatalog {
         this.name_catalog = name_catalog;
     }
 
+
     public String getNameeCatalog() {
         return name_catalog;
     }
@@ -15,8 +16,5 @@ public class eCatalog {
         this.name_catalog = nameCatalog;
     }
 
-    @Override
-    public String toString() {
-        return "eCatalog{" + "name_catalog='" + name_catalog + "\'}";
-    }
+
 }

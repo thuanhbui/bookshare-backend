@@ -11,12 +11,13 @@ import java.util.List;
 
 
 @Repository
-@RepositoryConfig(cacheName = "admin")
+@RepositoryConfig(cacheName = "admin1")
 public interface AdminRepository extends IgniteRepository<Admin, Integer> {
 
-    @Query("SELECT * FROM ADMIN")
-    List<List<?>> getListAdmin();
+//    @Query("SELECT * FROM ADMIN")
+//    List<List<?>> getListAdmin();
 
+   // Admin findByAdminName(String userName);
 
 
 }

@@ -17,7 +17,7 @@ public class IgniteAPI {
 
          IgniteCache<eBookKey, eBook> bookCache = client.cache("eBook");
          eBook book = new eBook("Mèo lười", null, null, null, "Việt Nam", null, "2021-01-01", 0);
-         eBookKey bookKey = new eBookKey("132", 1);
+         eBookKey bookKey = new eBookKey("ad2", 1);
          insertEBook(client, book, bookKey);
         // List<List<?>> newT = getCatalogs(client);
         // List<List<?>> new = getNewEBook(client);

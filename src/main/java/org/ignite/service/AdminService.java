@@ -32,11 +32,16 @@ public class AdminService {
     @Inject
     AdminRepository adminRepository;
 
-    public List<List<?>> getListAdmin() {
-//        final List<Admin> admins = adminRepository.getListAdmin();
-        List<List<?>> admins = adminRepository.getListAdmin();
-        return admins;
-    }
+//    public List<List<?>> getListAdmin() {
+////        final List<Admin> admins = adminRepository.getListAdmin();
+//        List<List<?>> admins = adminRepository.getListAdmin();
+//        return admins;
+//    }
+
+//    public Admin findByAdminName(String userName) {
+//        Admin admin = adminRepository.findByAdminName(userName);
+//        return admin;
+//    }
 
     protected IgniteCache<String, Admin> getAlertsCache() {
         return null;
