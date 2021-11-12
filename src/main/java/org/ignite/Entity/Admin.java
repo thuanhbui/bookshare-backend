@@ -1,13 +1,9 @@
 package org.ignite.Entity;
 
 
-import org.apache.ignite.cache.query.annotations.QuerySqlField;
-
 public class Admin {
-    @QuerySqlField(index = true)
-    private String username;
 
-    @QuerySqlField(index = true)
+    private String username;
     private String password;
     private String registered_date;
 

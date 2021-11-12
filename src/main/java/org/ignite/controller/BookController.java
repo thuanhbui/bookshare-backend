@@ -1,7 +1,7 @@
 package org.ignite.controller;
 
 import org.ignite.Entity.eBook;
-import org.ignite.service.BookServiceImpl;
+import org.ignite.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private BookServiceImpl bookService;
+    private BookService bookService;
 
     @GetMapping("/search")
     public ResponseEntity<?> searchBook(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
@@ -24,13 +24,13 @@ public class BookController {
 
     @GetMapping("")
     public ResponseEntity<?> getListBook() {
-        List<List<?>> books = bookService.getListBook();
+        List<?> books = bookService.getListBooks();
         return ResponseEntity.ok(books);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookById(@PathVariable String id) {
-        eBook result = bookService.getBookById(id);
+        List<?> result = bookService.findBookById(id);
 
         return ResponseEntity.ok(result);
     }

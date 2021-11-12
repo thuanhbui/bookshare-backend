@@ -1,23 +1,23 @@
 package org.ignite.Entity;
 
 import org.apache.ignite.cache.affinity.AffinityKeyMapped;
-
 import java.io.Serializable;
 import java.util.Objects;
 
+
 public class eCatalogKey implements Serializable {
-    private int catalog_id;
+    private int CATALOG_ID;
 
     @AffinityKeyMapped
     private String EBOOK_ID;
 
     public eCatalogKey(int catalogID, String bookID) {
-        this.catalog_id = catalogID;
+        this.CATALOG_ID = catalogID;
         this.EBOOK_ID = bookID;
     }
 
     public int geteCatalogId() {
-        return catalog_id;
+        return CATALOG_ID;
     }
 
     public String geteBookID() {
@@ -34,13 +34,13 @@ public class eCatalogKey implements Serializable {
         }
 
         eCatalogKey key = (eCatalogKey) object;
-        return catalog_id == key.catalog_id && EBOOK_ID.equals(key.EBOOK_ID);
+        return CATALOG_ID == key.CATALOG_ID && EBOOK_ID.equals(key.EBOOK_ID);
 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(catalog_id, EBOOK_ID);
+        return Objects.hash(CATALOG_ID, EBOOK_ID);
     }
 
 }

@@ -1,8 +1,6 @@
 package org.ignite.controller;
 
 
-import org.ignite.Entity.eCatalog;
-import org.ignite.model.dto.eCatalogDto;
 import org.ignite.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +20,11 @@ public class CatalogController {
         return ResponseEntity.ok(catas);
     }
 
-//    @GetMapping("")
-//    public ResponseEntity<?> getListCatalog() {
-//        List<List<?>> catas = catalogService.getListCatalog();
-//        return ResponseEntity.ok(catas);
-//    }
+    @GetMapping("")
+    public ResponseEntity<?> getListCatalogs() {
+        List<?> catas = catalogService.getListCatalogs();
+        return ResponseEntity.ok(catas);
+    }
 
 
 //    @PutMapping("/{id}")
@@ -35,9 +33,8 @@ public class CatalogController {
 //    }
 
     @GetMapping("/{catalog_id}")
-    public ResponseEntity<?> getById(@PathVariable int catalog_id) {
-        eCatalogDto eCatalogDto = catalogService.findById(catalog_id);
-        return ResponseEntity.ok(eCatalogDto);
+    public List<? > getCatalogById(@PathVariable int catalog_id) {
+        return catalogService.findCatalogById(catalog_id);
     }
 
 

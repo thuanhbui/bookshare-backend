@@ -1,4 +1,4 @@
-package org.ignite.model.dto;
+package org.ignite.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

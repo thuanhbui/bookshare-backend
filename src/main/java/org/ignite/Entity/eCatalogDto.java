@@ -1,7 +1,6 @@
-package org.ignite.model.dto;
+package org.ignite.Entity;
 
-import org.ignite.Entity.eCatalog;
-import org.ignite.Entity.eCatalogKey;
+
 
 public class eCatalogDto {
     private int catalog_id;

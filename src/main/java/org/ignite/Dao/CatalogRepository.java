@@ -8,6 +8,7 @@ import org.ignite.Entity.eCatalogKey;
 import org.springframework.stereotype.Repository;
 
 import javax.cache.Cache;
+import java.util.List;
 
 
 @Repository
@@ -15,13 +16,13 @@ import javax.cache.Cache;
 public interface CatalogRepository extends IgniteRepository<eCatalog, eCatalogKey>{
 
 
-//    @Query("SELECT * FROM ECATALOG")
-//    public List<List<?>> getListCatalog();
+    @Query("SELECT catalog_id, name_catalog, eBook_id FROM ECATALOG")
+    public List<?> getListCatalogs();
 //
 //    @Query("SELECT * FROM eCatalog WHERE name_catalog = ? ")
-//    public List<List<?>> searchCatalog(String keyword);
+//    public List<?> searchCatalog(String keyword);
 
-    @Query("SELECT * FROM eCatalog WHERE catalog_id = ?")
-    public Cache.Entry<eCatalogKey, eCatalog> findById(int catalog_id);
+    @Query("SELECT catalog_id, name_catalog, eBook_id FROM eCatalog WHERE catalog_id = ?")
+    public List<?> findCatalogById(int catalog_id);
 
 }

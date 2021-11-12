@@ -2,9 +2,10 @@ package org.ignite.Entity;
 
 import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserKey {
+public class UserKey implements Serializable {
     private int user_id;
     @AffinityKeyMapped
     private int ADMIN_ID;

@@ -1,12 +1,10 @@
 package org.ignite.controller;
 
-import org.ignite.Entity.Admin;
 import org.ignite.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @RequestMapping("/admin")
@@ -15,15 +13,21 @@ public class AdminCotroller {
     @Autowired
     private AdminService adminService;
 
+    @GetMapping("/{admin_id}")
+    public ResponseEntity<?> getById(@PathVariable int admin_id) {
+        List<?> adminDto = adminService.findAdminById(admin_id);
+        return ResponseEntity.ok(adminDto);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllAdmin() {
+        List<?> admins = adminService.getListAdmins();
+        return ResponseEntity.ok(admins);
+    }
 
 
-//    @GetMapping("")
-//    public ResponseEntity<?> getListAdmin() {
-//        List<List<?>> admins = adminService.getListAdmin();
-//        return ResponseEntity.ok(admins);
-//    }
 
-    @GetMapping
+
 
     @PostMapping("")
     public ResponseEntity<?> createCatalog() {

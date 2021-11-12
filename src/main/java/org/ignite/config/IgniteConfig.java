@@ -15,20 +15,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IgniteConfig {
-
-
     @Bean(name = "igniteInstance")
     public Ignite igniteInstance(Ignite ignite) {
-        ignite.active(true);
         return ignite;
     }
 
     @Bean
     public IgniteConfigurer configurer() {
         return igniteConfiguration -> {
-//
+            igniteConfiguration.setClientMode(true);
         };
     }
-
-
 }
