@@ -11,6 +11,7 @@ import org.ignite.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.cache.Cache;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,22 +23,41 @@ public class BookService {
     private BookRepository bookRepository;
 
 
-    public List<?> getListBooks() {
-        List<?> books = bookRepository.getListBooks();
-        return books;
+    public List<eBookDto> findBookByTitle(String title) {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByTitle(title);
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for(Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
     }
 
-    public List<?> findBookById(String id) {
-        List<?> book = bookRepository.findBookById(id);
-        return book;
+    public eBookDto findBookById(String book_id) {
+        Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(book_id);
+        return new eBookDto(entry.getKey(), entry.getValue());
     }
 
+    public List<eBookDto> getListBooks() {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListBooks();
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for(Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
+    }
 
-    public List<List<?>> searchBook(String keyword) {
-//        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM EBOOK WHERE title LIKE \'%" + keyword + "%\';");
-//        List<List<?>> res = bookCache.query(qry.setDistributedJoins(true)).getAll();
-//        if (res != null) return res;
-//        throw new NotFoundException("Không tìm thấy sách");
-        return null;
+    public eBookDto updateTitle(String bookId, String title) {
+        Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
+        entry.getValue().setTitle(title);
+        bookRepository.save(entry.getKey(), entry.getValue());
+        return new eBookDto(entry.getKey(), entry.getValue());
+    }
+
+    public void deleteBook(String bookId) {
+        bookRepository.deleteById(bookId);
+    }
+
+    public void addBook(eBook book) {
+        bookRepository.save(book);
     }
 }

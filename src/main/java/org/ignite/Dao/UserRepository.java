@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-@RepositoryConfig(cacheName = "user1")
+@RepositoryConfig(cacheName = "user")
 public interface UserRepository extends IgniteRepository<User, UserKey> {
     @Query("SELECT user_id, username, email, phone, avatar, registered_date, admin_id FROM USER")
     public List<?> getListUsers();

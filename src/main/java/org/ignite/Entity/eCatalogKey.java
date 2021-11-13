@@ -11,6 +11,10 @@ public class eCatalogKey implements Serializable {
     @AffinityKeyMapped
     private String EBOOK_ID;
 
+    public eCatalogKey() {
+
+    }
+
     public eCatalogKey(int catalogID, String bookID) {
         this.CATALOG_ID = catalogID;
         this.EBOOK_ID = bookID;
@@ -43,4 +47,11 @@ public class eCatalogKey implements Serializable {
         return Objects.hash(CATALOG_ID, EBOOK_ID);
     }
 
+    @Override
+    public String toString() {
+        return "eCatalogKey{" +
+                "CATALOG_ID=" + CATALOG_ID +
+                ", EBOOK_ID='" + EBOOK_ID + '\'' +
+                '}';
+    }
 }

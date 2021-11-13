@@ -1,6 +1,6 @@
 package org.ignite.controller;
 
-import org.ignite.Entity.eBook;
+import org.ignite.Entity.*;
 import org.ignite.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,37 +16,41 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/search")
-    public ResponseEntity<?> searchBook(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
-        List<List<?>> books = bookService.searchBook(name);
-        return ResponseEntity.ok(books);
-    }
-
-    @GetMapping("")
-    public ResponseEntity<?> getListBook() {
-        List<?> books = bookService.getListBooks();
-        return ResponseEntity.ok(books);
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookById(@PathVariable String id) {
-        List<?> result = bookService.findBookById(id);
-
-        return ResponseEntity.ok(result);
+    public ResponseEntity<eBookDto> getBookById(@PathVariable String id) {
+        eBookDto bookDto = bookService.findBookById(id);
+        return ResponseEntity.ok(bookDto);
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> createBook() {
-        return null;
+    @GetMapping("/all")
+    public ResponseEntity<List<eBookDto>> getAllBook() {
+        List<eBookDto> bookDtos = bookService.getListBooks();
+        return ResponseEntity.ok(bookDtos);
+    }
+
+    @GetMapping("/{title}")
+    public ResponseEntity<List<eBookDto>> findByTitle(@PathVariable String title) {
+        List<eBookDto> bookDtos = bookService.findBookByTitle(title);
+        return ResponseEntity.ok(bookDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateBook() {
-        return null;
+    public ResponseEntity<eBookDto> updateBookTitle(@PathVariable String id, @RequestBody eBookDto bookDto) {
+        eBookDto bookDto1 = bookService.updateTitle(id, bookDto.getTitle());
+        return ResponseEntity.ok(bookDto1);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBook() {
-        return null;
+    public ResponseEntity<eBookDto> deleteBook(@PathVariable String id) {
+        eBookDto bookDto = bookService.findBookById(id);
+        bookService.deleteBook(id);
+        return ResponseEntity.ok(bookDto);
     }
+
+    @PostMapping("")
+    public ResponseEntity<eBook> createBook(@RequestBody eBook book) {
+        bookService.addBook(book);
+        return ResponseEntity.ok(book);
+    }
+
 }

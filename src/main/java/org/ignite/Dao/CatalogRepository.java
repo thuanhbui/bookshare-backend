@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-@RepositoryConfig(cacheName = "catalog1")
+@RepositoryConfig(cacheName = "catalog")
 public interface CatalogRepository extends IgniteRepository<eCatalog, eCatalogKey>{
 
 
