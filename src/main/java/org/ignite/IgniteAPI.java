@@ -17,7 +17,7 @@ public class IgniteAPI {
 
          IgniteCache<eBookKey, eBook> bookCache = client.cache("eBook");
          eBook book = new eBook("Mèo lười", null, null, null, "Việt Nam", null, "2021-01-01", 0);
-         eBookKey bookKey = new eBookKey("ad2", 1);
+         eBookKey bookKey = new eBookKey("ad2", 1, 1);
          insertEBook(client, book, bookKey);
         // List<List<?>> newT = getCatalogs(client);
         // List<List<?>> new = getNewEBook(client);
@@ -54,10 +54,10 @@ public class IgniteAPI {
     public static void insertEBook(Ignite client, eBook book, eBookKey bookKey) {
         IgniteCache<eBookKey, eBook> bookCache = client.cache("eBook");
         SqlFieldsQuery qry = new SqlFieldsQuery(
-                "INSERT INTO eBook(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        bookCache.query(qry.setArgs(bookKey.geteBookID(), book.getTitle(), book.getDescription(), book.getImageLink(),
+                "INSERT INTO eBook(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        bookCache.query(qry.setArgs(bookKey.geteBook_id(), book.getTitle(), book.getDescription(), book.getImageLink(),
                 book.getFileLink(), book.getLanguage(), book.getReleaseYear(), book.getLastUpdate(), book.getViewers(),
-                bookKey.getUserID()));
+                bookKey.getUSER_ID(), bookKey.getCATALOG_ID()));
         System.out.println("Insert Book Success!");
     }
 

@@ -46,9 +46,16 @@ public class BookService {
         return bookDtos;
     }
 
-    public eBookDto updateTitle(String bookId, String title) {
+    public eBookDto updateBook(String bookId, eBook book) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
-        entry.getValue().setTitle(title);
+        entry.getValue().setTitle(book.getTitle());
+        entry.getValue().setDescription(book.getDescription());
+        entry.getValue().setImageLink(book.getImageLink());
+        entry.getValue().setFileLink(book.getFileLink());
+        entry.getValue().setLanguage(book.getLanguage());
+        entry.getValue().setReleaseYear(book.getReleaseYear());
+        entry.getValue().setLastUpdate(book.getLastUpdate());
+        entry.getValue().setViewers(book.getViewers());
         bookRepository.save(entry.getKey(), entry.getValue());
         return new eBookDto(entry.getKey(), entry.getValue());
     }

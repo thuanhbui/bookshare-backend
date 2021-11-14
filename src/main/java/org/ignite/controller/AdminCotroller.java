@@ -3,6 +3,7 @@ package org.ignite.controller;
 import org.ignite.Entity.Admin;
 import org.ignite.Entity.AdminDto;
 import org.ignite.Entity.AdminMapper;
+import org.ignite.Entity.UserDto;
 import org.ignite.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,9 @@ public class AdminCotroller {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdminDto> updateNameAdmin(@PathVariable Integer id, @RequestBody AdminDto adminDto) {
-        AdminDto adminDto1 = adminService.updateNameAdmin(id, adminDto.getUsername());
-        return ResponseEntity.ok(adminDto1);
+    public ResponseEntity<AdminDto> updateAdmin(@PathVariable Integer id, @RequestBody Admin admin) {
+        AdminDto adminDto = adminService.updateAdmin(id, admin);
+        return ResponseEntity.ok(adminDto);
     }
 
     @DeleteMapping("/{id}")
@@ -62,18 +63,5 @@ public class AdminCotroller {
 
 
 
-    @PostMapping("")
-    public ResponseEntity<?> createCatalog() {
-        return null;
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateCatalog() {
-        return null;
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCatalog() {
-        return null;
-    }
 }

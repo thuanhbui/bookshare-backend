@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RepositoryConfig(cacheName = "eBook")
+@RepositoryConfig(cacheName = "eBook1")
 public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Query("SELECT * FROM EBOOK")
     List<Cache.Entry<eBookKey, eBook>> getListBooks();

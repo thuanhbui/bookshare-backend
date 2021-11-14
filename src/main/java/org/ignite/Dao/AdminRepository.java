@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @Repository
-@RepositoryConfig(cacheName = "admin")
+@RepositoryConfig(cacheName = "admin1")
 public interface AdminRepository extends IgniteRepository<Admin, Integer> {
 
     @Query("SELECT * FROM ADMIN")

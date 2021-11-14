@@ -1,6 +1,6 @@
 package org.ignite.controller;
 
-import org.ignite.Entity.UserDto;
+import org.ignite.Entity.*;
 import org.ignite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,38 +16,42 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/search")
-    public ResponseEntity<?> searchUser(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
-        List<List<?>>  users = userService.searchUser(name);
-        return ResponseEntity.ok(users);
-    }
-
-    @GetMapping("")
-    public ResponseEntity<?> getListUser() {
-        List<?> users = userService.getListUsers();
-        return ResponseEntity.ok(users);
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id) {
-        List<?> result = userService.getUserById(id);
-
-        return ResponseEntity.ok(result);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
+        UserDto userDto = userService.findUserById(id);
+        return ResponseEntity.ok(userDto);
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> createUser() {
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDto>> getAllUser() {
+        List<UserDto> userDtos = userService.getListUsers();
+        return ResponseEntity.ok(userDtos);
+    }
 
-        return null;
+    @GetMapping("/{username}")
+    public ResponseEntity<List<UserDto>> findByUsername(@PathVariable String username) {
+        List<UserDto> userDtos = userService.findUserByUsername(username);
+        return ResponseEntity.ok(userDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser() {
-        return null;
+    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        UserDto userDto = userService.updateUser(id, user);
+        return ResponseEntity.ok(userDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser() {
-        return null;
+    public ResponseEntity<UserDto> deleteUser(@PathVariable Integer id) {
+        UserDto userDto = userService.findUserById(id);
+        userService.deleteUser(id);
+        return ResponseEntity.ok(userDto);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<UserMapper> createUser(@RequestBody User user, int adminID) {
+        UserMapper userMapper = new UserMapper();
+        userMapper.toUserDto(user);
+        userService.addUser(user, adminID);
+        return ResponseEntity.ok(userMapper);
     }
 }

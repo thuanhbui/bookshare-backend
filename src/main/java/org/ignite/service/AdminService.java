@@ -2,8 +2,7 @@ package org.ignite.service;
 
 import org.apache.ignite.IgniteCache;
 import org.ignite.Dao.AdminRepository;
-import org.ignite.Entity.Admin;
-import org.ignite.Entity.AdminDto;
+import org.ignite.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -44,9 +43,11 @@ public class AdminService {
         return admins;
     }
 
-    public AdminDto updateNameAdmin(int adminId, String username) {
+    public AdminDto updateAdmin(int adminId, Admin admin) {
         Cache.Entry<Integer, Admin> entry = adminDao.findById(adminId);
-        entry.getValue().setUsername(username);
+        entry.getValue().setUsername(admin.getUsername());
+        entry.getValue().setPassword(admin.getPassword());
+        entry.getValue().setRegistered_date(admin.getRegistered_date());
         adminDao.save(entry.getKey(), entry.getValue());
         return new AdminDto(entry.getKey(), entry.getValue());
     }

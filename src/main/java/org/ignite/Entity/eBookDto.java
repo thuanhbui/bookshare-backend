@@ -11,13 +11,14 @@ public class eBookDto {
     private String last_update;
     private int viewers;
     private int userId;
+    private int catalogId;
 
     public eBookDto() {
 
     }
 
     public eBookDto(eBookKey key, eBook value) {
-        this.bookId = key.geteBookID();
+        this.bookId = key.geteBook_id();
         this.title = value.getTitle();
         this.description = value.getDescription();
         this.image_link = value.getImageLink();
@@ -26,7 +27,8 @@ public class eBookDto {
         this.release_year = value.getReleaseYear();
         this.last_update = value.getLastUpdate();
         this.viewers = value.getViewers();
-        this.userId = key.getUserID();
+        this.userId = key.getUSER_ID();
+        this.catalogId = key.getCATALOG_ID();
     }
 
     public String getBookId() {
@@ -107,5 +109,13 @@ public class eBookDto {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
     }
 }

@@ -1,30 +1,24 @@
 package org.ignite.Entity;
 
 public class eCatalog {
-    private String name_catalog;
+    private String nameCatalog;
 
     public eCatalog() {
 
     }
 
-    public eCatalog(String name_catalog) {
-        this.name_catalog = name_catalog;
+    public String getNameCatalog() {
+        return nameCatalog;
     }
 
-
-    public String getNameeCatalog() {
-        return name_catalog;
+    public void setNameCatalog(String nameCatalog) {
+        this.nameCatalog = nameCatalog;
     }
-
-    public void setNameeCatalog(String nameCatalog) {
-        this.name_catalog = nameCatalog;
-    }
-
 
     @Override
     public String toString() {
         return "eCatalog{" +
-                "name_catalog='" + name_catalog + '\'' +
+                "nameCatalog='" + nameCatalog + '\'' +
                 '}';
     }
 }

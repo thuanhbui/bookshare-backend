@@ -1,6 +1,7 @@
 package org.ignite.controller;
 
 
+import org.ignite.Entity.*;
 import org.ignite.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,42 +15,41 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-    @GetMapping("/search")
-    public ResponseEntity<?> searchCatalog(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
-        List<List<?>> catas = catalogService.searchCatalog(name);
-        return ResponseEntity.ok(catas);
+    @GetMapping("/{id}")
+    public ResponseEntity<eCatalogDto> getCatalogById(@PathVariable Integer id) {
+        eCatalogDto catalogDto = catalogService.findCatalogById(id);
+        return ResponseEntity.ok(catalogDto);
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> getListCatalogs() {
-        List<?> catas = catalogService.getListCatalogs();
-        return ResponseEntity.ok(catas);
+    @GetMapping("/all")
+    public ResponseEntity<List<eCatalogDto>> getAllCatalog() {
+        List<eCatalogDto> catalogDtos = catalogService.getListCatalogs();
+        return ResponseEntity.ok(catalogDtos);
     }
 
-
-//    @PutMapping("/{id}")
-//    public eCatalogDto updateCatalog(@PathVariable Integer id, @RequestBody eCatalogDto catalogDto) {
-//        return catalogService.updateCatalog(id, catalogDto.getName_catalog());
-//    }
-
-    @GetMapping("/{catalog_id}")
-    public List<? > getCatalogById(@PathVariable int catalog_id) {
-        return catalogService.findCatalogById(catalog_id);
-    }
-
-
-    @PostMapping("")
-    public ResponseEntity<?> createCatalog() {
-        return null;
+    @GetMapping("/{name}")
+    public ResponseEntity<List<eCatalogDto>> findByNameCatalog(@PathVariable String name) {
+        List<eCatalogDto> catalogDtos = catalogService.findCatalogByName(name);
+        return ResponseEntity.ok(catalogDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCatalog() {
-        return null;
+    public ResponseEntity<eCatalogDto> updateNameCatalog(@PathVariable Integer id, @RequestBody eCatalog catalog) {
+        eCatalogDto catalogDto = catalogService.updateCatalog(id, catalog);
+        return ResponseEntity.ok(catalogDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCatalog() {
-        return null;
+    public ResponseEntity<eCatalogDto> deleteCatalog(@PathVariable Integer id) {
+        eCatalogDto catalogDto = catalogService.findCatalogById(id);
+        catalogService.deleteCatalog(id);
+        return ResponseEntity.ok(catalogDto);
     }
+
+    @PostMapping("")
+    public ResponseEntity<eCatalog> createCatalog(@RequestBody eCatalog catalog) {
+        catalogService.addCatalog(catalog);
+        return ResponseEntity.ok(catalog);
+    }
+
 }

@@ -1,56 +1,57 @@
 package org.ignite.service;
 
 import org.ignite.Dao.CatalogRepository;
+import org.ignite.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.cache.Cache;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CatalogService {
-//    @Autowired
-//    private IgniteConfig igniteConfig;
-//
-//    private IgniteCache<eCatalogKey, eCatalog> getCache() {
-//        if (igniteConfig.client != null) {
-//            return igniteConfig.client.cache("catalog");
-//        } else {
-//            return igniteConfig.ignite().cache("catalog");
-//        }
-//    }
-//   IgniteCache<eCatalogKey, eCatalog> cataCache = igniteConfig.ignite().cache("catalog");
-//
 
     @Autowired CatalogRepository cataDao;
 
 
-    public List<?> getListCatalogs() {
-        List<?> catas = cataDao.getListCatalogs();
-        return catas;
+    public List<eCatalogDto> findCatalogByName(String name) {
+        List<Cache.Entry<eCatalogKey, eCatalog>> entries = cataDao.findByNameCatalog(name);
+        List<eCatalogDto> catalogDtos = new ArrayList<>();
+        for(Cache.Entry<eCatalogKey, eCatalog> entry : entries) {
+            catalogDtos.add(new eCatalogDto(entry.getKey(), entry.getValue()));
+        }
+        return catalogDtos;
     }
 
-
-//    public eCatalogDto updateCatalog(int catalog_id, String name_catalog) {
-//        Cache.Entry<eCatalogKey, eCatalog> entry = cataDao.findById(catalog_id);
-//        entry.getValue().setNameeCatalog(name_catalog);
-//        cataDao.save(entry.getKey(), entry.getValue());
-//
-//        return new eCatalogDto(entry.getKey(), entry.getValue());
-//    }
-
-    public List<?> findCatalogById(int catalog_id) {
-        List<?> entries = cataDao.findCatalogById(catalog_id);
-        return entries;
+    public eCatalogDto findCatalogById(int catalog_id) {
+        Cache.Entry<eCatalogKey, eCatalog> entry = cataDao.findById(catalog_id);
+        return new eCatalogDto(entry.getKey(), entry.getValue());
     }
 
+    public List<eCatalogDto> getListCatalogs() {
+        List<Cache.Entry<eCatalogKey, eCatalog>> entries = cataDao.getListCatalogs();
+        List<eCatalogDto> catalogDtos = new ArrayList<>();
+        for(Cache.Entry<eCatalogKey, eCatalog> entry : entries) {
+            catalogDtos.add(new eCatalogDto(entry.getKey(), entry.getValue()));
+        }
+        return catalogDtos;
+    }
 
-    public List<List<?>> searchCatalog(String keyword) {
-//        SqlFieldsQuery qry = new SqlFieldsQuery("SELECT * FROM eCatlog WHERE name_catalog LIKE \'%" + keyword + "%\';");
-//        List<List<?>> res = cataCache.query(qry.setDistributedJoins(true)).getAll();
-//        if (res != null) return res;
-//        throw new NotFoundException("Không tìm thấy sách");
-//        List<List<?>> entries = cataDao.searchCatalog(keyword == null ? null : keyword);
-        return  null;
+    public eCatalogDto updateCatalog(int cataId, eCatalog catalog) {
+        Cache.Entry<eCatalogKey, eCatalog> entry = cataDao.findById(cataId);
+        entry.getValue().setNameCatalog(catalog.getNameCatalog());
+        cataDao.save(entry.getKey(), entry.getValue());
+        return new eCatalogDto(entry.getKey(), entry.getValue());
+    }
+
+    public void deleteCatalog(int cataId) {
+        eCatalogKey key = new eCatalogKey(cataId, 1);
+        cataDao.deleteById(key);
+    }
+
+    public void addCatalog(eCatalog value) {
+        cataDao.save(value);
     }
 
 }

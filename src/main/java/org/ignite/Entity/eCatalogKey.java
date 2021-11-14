@@ -9,23 +9,31 @@ public class eCatalogKey implements Serializable {
     private int CATALOG_ID;
 
     @AffinityKeyMapped
-    private String EBOOK_ID;
+    private int ADMIN_ID;
 
     public eCatalogKey() {
 
     }
 
-    public eCatalogKey(int catalogID, String bookID) {
+    public eCatalogKey(int catalogID, int adminID) {
         this.CATALOG_ID = catalogID;
-        this.EBOOK_ID = bookID;
+        this.ADMIN_ID = adminID;
     }
 
-    public int geteCatalogId() {
+    public int getCATALOG_ID() {
         return CATALOG_ID;
     }
 
-    public String geteBookID() {
-        return EBOOK_ID;
+    public int getADMIN_ID() {
+        return ADMIN_ID;
+    }
+
+    public void setCATALOG_ID(int CATALOG_ID) {
+        this.CATALOG_ID = CATALOG_ID;
+    }
+
+    public void setADMIN_ID(int ADMIN_ID) {
+        this.ADMIN_ID = ADMIN_ID;
     }
 
     @Override
@@ -38,20 +46,20 @@ public class eCatalogKey implements Serializable {
         }
 
         eCatalogKey key = (eCatalogKey) object;
-        return CATALOG_ID == key.CATALOG_ID && EBOOK_ID.equals(key.EBOOK_ID);
+        return CATALOG_ID == key.CATALOG_ID && ADMIN_ID == key.ADMIN_ID;
 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(CATALOG_ID, EBOOK_ID);
+        return Objects.hash(CATALOG_ID, ADMIN_ID);
     }
 
     @Override
     public String toString() {
         return "eCatalogKey{" +
                 "CATALOG_ID=" + CATALOG_ID +
-                ", EBOOK_ID='" + EBOOK_ID + '\'' +
+                ", ADMIN_ID=" + ADMIN_ID +
                 '}';
     }
 }
