@@ -7,7 +7,7 @@ public class User {
     private String email;
     private String phone;
     private String avatar;
-    private String registered_date;
+    private String registeredDate;
 
     public String getUsername() {
         return username;
@@ -49,11 +49,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public String getRegistered_date() {
-        return registered_date;
+    public String getRegisteredDate() {
+        return registeredDate;
     }
 
-    public void setRegistered_date(String registered_date) {
-        this.registered_date = registered_date;
+    public void setRegisteredDate(String registeredDate) {
+        this.registeredDate = registeredDate;
     }
 }

@@ -13,18 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RepositoryConfig(cacheName = "user1")
+@RepositoryConfig(cacheName = "user")
 public interface UserRepository extends IgniteRepository<User, UserKey> {
     @Query("SELECT * FROM USER")
     public List<Cache.Entry<UserKey, User>> getListUsers();
 
-    public List<Cache.Entry<UserKey, User>> findByUserName(String name);
+    public List<Cache.Entry<UserKey, User>> findByUsername(String name);
 
-    @Override
-    Optional<User> findById(UserKey userKey);
 
-    @Query("SELECT * FROM USER WHERE user_id = ?")
+   // Optional<User> findById(UserKey userKey);
+
+    @Query("SELECT * FROM USER WHERE userId = ?")
     public Cache.Entry<UserKey, User> findById(Integer user_id);
 
-    void deleteById(UserKey key);
+   // void deleteById(UserKey key);
 }

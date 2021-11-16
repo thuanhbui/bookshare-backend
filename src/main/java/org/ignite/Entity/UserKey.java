@@ -6,21 +6,29 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class UserKey implements Serializable {
-    private int user_id;
+    private int userId;
     @AffinityKeyMapped
-    private int ADMIN_ID;
+    private int ADMINID;
 
     public UserKey(int userID, int AdminID) {
-        this.user_id = userID;
-        this.ADMIN_ID = AdminID;
+        this.userId = userID;
+        this.ADMINID = AdminID;
     }
 
-    public int getUserID() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public int getAdminID() {
-        return ADMIN_ID;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getADMINID() {
+        return ADMINID;
+    }
+
+    public void setADMINID(int ADMINID) {
+        this.ADMINID = ADMINID;
     }
 
     @Override
@@ -30,19 +38,19 @@ public class UserKey implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         UserKey key = (UserKey)o;
-        return user_id == key.user_id && ADMIN_ID == key.ADMIN_ID;
+        return userId == key.userId && ADMINID == key.ADMINID;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, ADMIN_ID);
+        return Objects.hash(userId, ADMINID);
     }
 
     @Override
     public String toString() {
         return "UserKey{" +
-                "user_id=" + user_id +
-                ", ADMIN_ID=" + ADMIN_ID +
+                "userId=" + userId +
+                ", ADMINID=" + ADMINID +
                 '}';
     }
 }

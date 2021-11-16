@@ -47,17 +47,18 @@ public class AdminService {
         Cache.Entry<Integer, Admin> entry = adminDao.findById(adminId);
         entry.getValue().setUsername(admin.getUsername());
         entry.getValue().setPassword(admin.getPassword());
-        entry.getValue().setRegistered_date(admin.getRegistered_date());
+        entry.getValue().setRegisteredDate(admin.getRegisteredDate());
         adminDao.save(entry.getKey(), entry.getValue());
         return new AdminDto(entry.getKey(), entry.getValue());
     }
 
     public void deleteAdmin(int adminId) {
-        adminDao.deleteById(adminId);
+        System.out.println("delete success 2");
+        adminDao.deleteByAdminId(adminId);
     }
 
-    public void addAdmin(Admin value) {
-        adminDao.save(value);
+    public Admin addAdmin(Admin value) {
+        return adminDao.save(value);
     }
 
 }

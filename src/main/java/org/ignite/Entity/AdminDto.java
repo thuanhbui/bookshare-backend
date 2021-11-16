@@ -3,51 +3,43 @@ package org.ignite.Entity;
 import org.ignite.Entity.Admin;
 
 public class AdminDto {
-    private int admin_id;
+    private int adminId;
     private String username;
   //  private String password;
-    private String registered_date;
+    private String registeredDate;
 
     public AdminDto() {
 
     }
 
     public AdminDto(Integer key, Admin value) {
-        this.admin_id = key;
+        this.adminId = key;
         this.username = value.getUsername();
        // this.password = value.getPassword();
-        this.registered_date = value.getRegistered_date();
+        this.registeredDate = value.getRegisteredDate();
     }
 
-    public int getAdmin_id() {
-        return admin_id;
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
     public String getUsername() {
         return username;
     }
 
-//    public String getPassword() {
-//        return password;
-//    }
-
-    public String getRegistered_date() {
-        return registered_date;
-    }
-
-    public void setAdmin_id(int admin_id) {
-        this.admin_id = admin_id;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public String getRegisteredDate() {
+        return registeredDate;
+    }
 
-    public void setRegistered_date(String registered_date) {
-        this.registered_date = registered_date;
+    public void setRegisteredDate(String registeredDate) {
+        this.registeredDate = registeredDate;
     }
 }

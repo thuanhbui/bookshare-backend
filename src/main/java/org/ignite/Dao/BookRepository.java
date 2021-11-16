@@ -11,21 +11,28 @@ import org.springframework.stereotype.Repository;
 
 import javax.cache.Cache;
 import java.util.List;
-import java.util.Optional;
+
 
 @Repository
-@RepositoryConfig(cacheName = "eBook1")
+@RepositoryConfig(cacheName = "eBook")
 public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
+
     @Query("SELECT * FROM EBOOK")
     List<Cache.Entry<eBookKey, eBook>> getListBooks();
 
     public List<Cache.Entry<eBookKey, eBook>> findByTitle(String title);
 
-    @Query("SELECT * FROM EBOOK WHERE eBook_id = ?")
+    @Query("SELECT * FROM EBOOK WHERE eBookId = ?")
     public Cache.Entry<eBookKey, eBook> findById(String id);
 
-
+    @Query("DELETE FROM eBook WHERE bookId = ?")
     void deleteById(String bookId);
+
+    @Query("SELECT * FROM eBook " +
+            "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
+            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook) " +
+            "ORDER BY lastUpdate DESC LIMIT 5")
+    public List<Cache.Entry<eBookKey, eBook>> getListNewBooks();
 
 
 }

@@ -15,8 +15,8 @@ public class CatalogService {
     @Autowired CatalogRepository cataDao;
 
 
-    public List<eCatalogDto> findCatalogByName(String name) {
-        List<Cache.Entry<eCatalogKey, eCatalog>> entries = cataDao.findByNameCatalog(name);
+    public List<eCatalogDto> findCatalogByNameCatalog(String name_catalog) {
+        List<Cache.Entry<eCatalogKey, eCatalog>> entries = cataDao.findByNameCatalog(name_catalog);
         List<eCatalogDto> catalogDtos = new ArrayList<>();
         for(Cache.Entry<eCatalogKey, eCatalog> entry : entries) {
             catalogDtos.add(new eCatalogDto(entry.getKey(), entry.getValue()));

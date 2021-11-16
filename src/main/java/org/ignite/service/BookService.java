@@ -46,6 +46,15 @@ public class BookService {
         return bookDtos;
     }
 
+    public List<eBookDto> getListNewBooks() {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListNewBooks();
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for (Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
+    }
+
     public eBookDto updateBook(String bookId, eBook book) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
         entry.getValue().setTitle(book.getTitle());
@@ -61,7 +70,8 @@ public class BookService {
     }
 
     public void deleteBook(String bookId) {
-        bookRepository.deleteById(bookId);
+
+//        bookRepository.deleteById(bookId);
     }
 
     public void addBook(eBook book) {

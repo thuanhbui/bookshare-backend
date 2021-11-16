@@ -6,42 +6,42 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class eBookKey implements Serializable {
-    private String eBook_id;
+    private String eBookId;
 
     @AffinityKeyMapped
-    private int USER_ID;
+    private int USERID;
 
 
-    private int CATALOG_ID;
+    private int CATALOGID;
 
     public eBookKey(String eBookID, int userID, int catalogID) {
-        this.eBook_id = eBookID;
-        this.USER_ID = userID;
-        this.CATALOG_ID = catalogID;
+        this.eBookId = eBookID;
+        this.USERID = userID;
+        this.CATALOGID = catalogID;
     }
 
-    public String geteBook_id() {
-        return eBook_id;
+    public String geteBookId() {
+        return eBookId;
     }
 
-    public void seteBook_id(String eBook_id) {
-        this.eBook_id = eBook_id;
+    public void seteBookId(String eBookId) {
+        this.eBookId = eBookId;
     }
 
-    public int getUSER_ID() {
-        return USER_ID;
+    public int getUSERID() {
+        return USERID;
     }
 
-    public void setUSER_ID(int USER_ID) {
-        this.USER_ID = USER_ID;
+    public void setUSERID(int USERID) {
+        this.USERID = USERID;
     }
 
-    public int getCATALOG_ID() {
-        return CATALOG_ID;
+    public int getCATALOGID() {
+        return CATALOGID;
     }
 
     public void setCATALOG_ID(int CATALOG_ID) {
-        this.CATALOG_ID = CATALOG_ID;
+        this.CATALOGID = CATALOG_ID;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class eBookKey implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         eBookKey key = (eBookKey) o;
-        return eBook_id.equals(key.eBook_id) && USER_ID == key.USER_ID && CATALOG_ID == key.CATALOG_ID;
+        return eBookId.equals(key.eBookId) && USERID == key.USERID && CATALOGID == key.CATALOGID;
     }
 
 
@@ -59,15 +59,15 @@ public class eBookKey implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(eBook_id, USER_ID, CATALOG_ID);
+        return Objects.hash(eBookId, USERID, CATALOGID);
     }
 
     @Override
     public String toString() {
         return "eBookKey{" +
-                "eBook_id='" + eBook_id + '\'' +
-                ", USER_ID=" + USER_ID +
-                ", CATALOG_ID=" + CATALOG_ID +
+                "eBookId='" + eBookId + '\'' +
+                ", USERID=" + USERID +
+                ", CATALOGID=" + CATALOGID +
                 '}';
     }
 }

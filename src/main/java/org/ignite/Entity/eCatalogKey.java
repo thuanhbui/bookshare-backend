@@ -6,34 +6,34 @@ import java.util.Objects;
 
 
 public class eCatalogKey implements Serializable {
-    private int CATALOG_ID;
+    private int CATALOGID;
 
     @AffinityKeyMapped
-    private int ADMIN_ID;
+    private int ADMINID;
 
     public eCatalogKey() {
 
     }
 
     public eCatalogKey(int catalogID, int adminID) {
-        this.CATALOG_ID = catalogID;
-        this.ADMIN_ID = adminID;
+        this.CATALOGID = catalogID;
+        this.ADMINID = adminID;
     }
 
-    public int getCATALOG_ID() {
-        return CATALOG_ID;
+    public int getCATALOGID() {
+        return CATALOGID;
     }
 
-    public int getADMIN_ID() {
-        return ADMIN_ID;
+    public void setCATALOGID(int CATALOGID) {
+        this.CATALOGID = CATALOGID;
     }
 
-    public void setCATALOG_ID(int CATALOG_ID) {
-        this.CATALOG_ID = CATALOG_ID;
+    public int getADMINID() {
+        return ADMINID;
     }
 
-    public void setADMIN_ID(int ADMIN_ID) {
-        this.ADMIN_ID = ADMIN_ID;
+    public void setADMINID(int ADMINID) {
+        this.ADMINID = ADMINID;
     }
 
     @Override
@@ -46,20 +46,20 @@ public class eCatalogKey implements Serializable {
         }
 
         eCatalogKey key = (eCatalogKey) object;
-        return CATALOG_ID == key.CATALOG_ID && ADMIN_ID == key.ADMIN_ID;
+        return CATALOGID == key.CATALOGID && ADMINID == key.ADMINID;
 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(CATALOG_ID, ADMIN_ID);
+        return Objects.hash(CATALOGID, ADMINID);
     }
 
     @Override
     public String toString() {
         return "eCatalogKey{" +
-                "CATALOG_ID=" + CATALOG_ID +
-                ", ADMIN_ID=" + ADMIN_ID +
+                "CATALOGID=" + CATALOGID +
+                ", ADMINID=" + ADMINID +
                 '}';
     }
 }

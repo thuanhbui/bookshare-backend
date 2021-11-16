@@ -1,160 +1,143 @@
-DROP TABLE IF EXISTS admin1;
-CREATE TABLE admin1(
-    admin_id INT(15) PRIMARY KEY,
+DROP TABLE IF EXISTS admin;
+CREATE TABLE admin(
+    adminId INT(15) PRIMARY KEY,
     username CHAR(32),
     password CHAR(32),
-    registered_date DATE
-)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=admin1, VALUE_TYPE=org.ignite.Entity.Admin";
+    registeredDate DATE
+)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=admin, VALUE_TYPE=org.ignite.Entity.Admin";
 
-DROP TABLE IF EXISTS eCatalog1;
-CREATE TABLE eCatalog1(
-    catalog_id INT(15),
-    name_catalog CHAR(128),
-    admin_id INT(15),
-    PRIMARY KEY (catalog_id, admin_id)
-)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=admin_id, CACHE_NAME=catalog1, KEY_TYPE=org.ignite.Entity.eCatalogKey, VALUE_TYPE=org.ignite.Entity.eCatalog";
+DROP TABLE IF EXISTS eCatalog;
+CREATE TABLE eCatalog(
+    catalogId INT(15),
+    nameCatalog CHAR(128),
+    adminId INT(15),
+    PRIMARY KEY (catalogId, adminId)
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=adminId, CACHE_NAME=catalog, KEY_TYPE=org.ignite.Entity.eCatalogKey, VALUE_TYPE=org.ignite.Entity.eCatalog";
 
-DROP TABLE IF EXISTS user1;
-CREATE TABLE user1(
-    user_id INT(15),
+--CREATE INDEX idx_nameCatalog ON eCatalog (nameCatalog);
+
+DROP TABLE IF EXISTS user;
+CREATE TABLE user(
+    userId INT(15),
     username CHAR(32),
     password CHAR(32),
     email CHAR(50),
     phone CHAR(15),
     avatar CHAR(128),
-    registered_date DATE,
-    admin_id INT(15),
-    PRIMARY KEY (user_id, admin_id)
-)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=admin_id, CACHE_NAME=user1, KEY_TYPE=org.ignite.Entity.UserKey, VALUE_TYPE=org.ignite.Entity.User";
+    registeredDate DATE,
+    adminId INT(15),
+    PRIMARY KEY (userId, adminId)
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=adminId, CACHE_NAME=user, KEY_TYPE=org.ignite.Entity.UserKey, VALUE_TYPE=org.ignite.Entity.User";
 
-DROP TABLE IF EXISTS eBook1;
-CREATE TABLE eBook1(
-    eBook_id CHAR,
+
+DROP TABLE IF EXISTS eBook;
+CREATE TABLE eBook(
+    eBookId CHAR,
     title CHAR(128),
     description CHAR(1000),
-    image_link CHAR(50),
-    file_link CHAR(50),
+    imageLink CHAR(50),
+    fileLink CHAR(50),
     language CHAR(50),
-    release_year YEAR,
-    last_update date,
+    releaseYear YEAR,
+    lastUpdate date,
     viewers INT(11),
-    eCatalog_id INT(15),
-    user_id INT(15),
-    PRIMARY KEY (eBook_id, user_id, eCatalog_id)
-)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=user_id, CACHE_NAME=eBook1, KEY_TYPE=org.ignite.Entity.eBookKey, VALUE_TYPE=org.ignite.Entity.eBook";
+    eCatalogId INT(15),
+    userId INT(15),
+    PRIMARY KEY (eBookId, userId, eCatalogId)
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=userId, CACHE_NAME=eBook, KEY_TYPE=org.ignite.Entity.eBookKey, VALUE_TYPE=org.ignite.Entity.eBook";
+
+--CREATE INDEX idx_title ON eBook (title);
 
 DROP TABLE if EXISTS eBookshelf;
 CREATE TABLE eBookshelf(
-    user_id INT(15) PRIMARY KEY,
-    eBook_id INT(15)
+    userId INT(15) PRIMARY KEY,
+    eBookId INT(15)
 ) WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=eBookshelf";
 
 DROP TABLE if EXISTS histories;
 CREATE TABLE histories (
-    user_id INT(15) PRIMARY KEY,
-    eBook_id INT(15),
+    userId INT(15) PRIMARY KEY,
+    eBookId INT(15),
 )WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories";
 
 SET STREAMING ON;
 
-INSERT INTO admin1(admin_id, username, password, registered_date) VALUES(1, 'tran hien', '123456', null);
+INSERT INTO admin(adminId, username, password, registeredDate) VALUES(1, 'tran hien', '123456', null);
 
-INSERT INTO user1(user_id, username, password, email, phone, avatar, registered_date, admin_id)
+INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
 VALUES(1, 'eBookshare', '123456', '19020281@vnu.edu.vn', '1234567890', null, null, 1);
-INSERT INTO user1(user_id, username, password, email, phone, avatar, registered_date, admin_id)
+INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
 VALUES(2, 'XZ', '09876', 'adghj@gmail.com', '76543', null, null, 1);
 
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(1, 'Nhiếp ảnh, dựng phim', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(2, 'Hôn nhân & Gia đình', 1);
-<<<<<<< HEAD
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(3, 'Kỹ năng sống', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(4, 'Sức khỏe - Giới tính', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(5, 'Công nghệ thông tin', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(6, 'Sale - Bán hàng', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(7, 'Sách hay về cuộc sống', 1);
-=======
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(3, 'Phong cách sống', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(4, 'Sức khỏe - Giới tính', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(5, 'Công nghệ thông tin', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(6, 'Sale - Bán hàng', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(7, 'Phát triển cá nhân', 1);
->>>>>>> 74f707ff095b7f5a0a324ca3fa4c9323c094c52a
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(8, 'Kinh doanh - Khởi nghiệp', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(9, 'Thiết kế', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(10, 'Tin học văn phòng', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(11, 'Marketing', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(12, 'Ngoại Ngữ', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(13, 'Đề Thi', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(14, 'Thư Viện Pháp Luật', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(15, 'Sách khoa học', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(16, 'Sách ngoại ngữ', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(17, 'Sách kinh doanh', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(18, 'Phát triển cá nhân', 1);
-<<<<<<< HEAD
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(19, 'Sách văn học Việt Nam', 1);
-=======
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(19, 'Sách văn học', 1);
->>>>>>> 74f707ff095b7f5a0a324ca3fa4c9323c094c52a
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(20, 'Sách kinh tế', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(21, 'Ẩm thực - Nấu ăn', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(22, 'Tiểu thuyết', 1);
-INSERT INTO eCatalog1(catalog_id, name_catalog, admin_id) VALUES(23, 'Nông - Lâm - Ngư', 1);
-<<<<<<< HEAD
-=======
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(1, 'Nhiếp ảnh, dựng phim', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(2, 'Hôn nhân & Gia đình', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(3, 'Kỹ năng sống', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(4, 'Sức khỏe - Giới tính', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(5, 'Công nghệ thông tin', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(6, 'Sale - Bán hàng', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(7, 'Sách hay về cuộc sống', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(3, 'Phong cách sống', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(4, 'Sức khỏe - Giới tính', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(5, 'Công nghệ thông tin', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(6, 'Sale - Bán hàng', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(7, 'Phát triển cá nhân', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(8, 'Kinh doanh - Khởi nghiệp', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(9, 'Thiết kế', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(10, 'Tin học văn phòng', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(11, 'Marketing', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(12, 'Ngoại Ngữ', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(13, 'Đề Thi', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(14, 'Thư Viện Pháp Luật', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(15, 'Sách khoa học', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(16, 'Sách ngoại ngữ', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(17, 'Sách kinh doanh', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(18, 'Phát triển cá nhân', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(19, 'Sách văn học Việt Nam', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(19, 'Sách văn học', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(20, 'Sách kinh tế', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(21, 'Ẩm thực - Nấu ăn', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(22, 'Tiểu thuyết', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(23, 'Nông - Lâm - Ngư', 1);
 
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('abc', 'Tư Duy Nhanh Và Chậm', null, null, null,'Việt Nam', null, '2021-01-01', 0, 1, null);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('2', 'Bạn thật sự có tài', null, null, null,'Việt Nam', null, '2021-01-02', 0, 1, null);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('3', 'Nếu Tôi Biết Được Khi Còn 20', null, null, null,'Việt Nam', null, '2001-06-23', 0, 2, null);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('4', 'Khéo Ăn Nói Sẽ Có Được Thiên Hạ', null, null, null,'Việt Nam', null, '1991-10-05', 0, 1, null);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('5', 'Phải Trái Đúng Sai', null, null, null,'Việt Nam', null, '2001-01-28', 0, 2, null);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('6', 'Lối Sống Tối Giản Của Người Nhật', null, null, null,'Việt Nam', null, '2018-12-31', 0, 1, null);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
-VALUES('7', 'Đời Ngắn Đừng Ngủ Dài', null, null, null,'Việt Nam', null, '2021-11-06', 0, 2, null);
->>>>>>> 74f707ff095b7f5a0a324ca3fa4c9323c094c52a
 
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('1', 'Tư Duy Nhanh Và Chậm', null, 'Tu-Duy-Nhanh-Va-Cham.jpg', 'Tu-duy-nhanh-va-cham.pdf','Việt Nam', null, '2021-01-01', 0, 1, 18);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('2', 'Bạn thật sự có tài', null, 'ban-that-su-co-tai.jpg', 'ban-that-su-co-tai.pdf','Việt Nam', null, '2021-01-02', 0, 1, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('3', 'Nếu Tôi Biết Được Khi Còn 20', null, 'neu-toi-biet-duoc-khi-con-20.png', 'neu-toi-biet-duoc-khi-con-20.pdf','Việt Nam', null, '2001-06-23', 0, 2, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('4', 'Khéo Ăn Nói Sẽ Có Được Thiên Hạ', null, 'kheo-an-noi-se-co-duoc-thien-ha.jpg', 'kheo-an-noi-se-co-duoc-thien-ha.pdf','Việt Nam', null, '1991-10-05', 0, 1, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('5', 'Phải Trái Đúng Sai', null, 'phai-trai-dung-sai.jpg', 'phai-trai-dung-sai.pdf','Việt Nam', null, '2001-01-28', 0, 2, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('6', 'Lối Sống Tối Giản Của Người Nhật', null, 'loi-song-toi-gian-cua-nguoi-Nhat.png', 'loi-song-toi-gian-cua-nguoi-Nhat.pdf','Việt Nam', null, '2018-12-31', 0, 1, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('7', 'Đời Ngắn Đừng Ngủ Dài', null, 'doi-ngan-dung-ngu-dai.jpg', 'doi-ngan-dung-ngu-dai.pdf','Việt Nam', null, '2021-11-06', 0, 2, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('8', 'Đọc Vị Bất Kỳ Ai', null, 'Doc-vi-bat-ky-ai.ipg', 'Doc-vi-bat-ky-ai.pdf', 'Việt Nam', null, null, 0, 1, 3);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('9', 'Cỗ Máy Bán Hàng Tối Ưu', null, 'Co-may-ban-hang-toi-uu.jpg', 'Co-may-ban-hang-toi-uu.pdf', 'Việt Nam', null, null, 0, 1, 20);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('10', 'Những Nguyên Tắc Thành Công', null, 'Nhung-nguyen-tac-thanh-cong.jpg', 'Nhung-nguyen-tac-thanh-cong.pdf', 'Việt Nam', null, null, 0, 1, 18);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('11', '21 nguyên tắc tự do tài chính - Brian Tracy', null, '21-nguyen-tac-tu-do-tai-chinh.jpg', '21-nguyen-tac-tu-do-tai-chinh.pdf', 'Việt Nam', null, null, 0, 1, 20);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('12', '7 Chiến Lược Thịnh Vượng Và Hạnh Phúc', null, '7-chien-luoc-thinh-vuong-va-hanh-phuc-jim-rohn.jpg', '7-chien-luoc-thinh-vuong-va-hanh-phuc-jim-rohn.pdf', 'Việt Nam', null, null, 0, 1, 20);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('13', 'Bí Mật Dotcom', null, 'bi-mat-dotcom,jpg', 'bi-mat-dotcom.pdf', null, null, null, 0, 1, 17);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('14', 'Viết Gì Cũng Đúng', null, 'viet-gi-cung-dung.jpg', 'viet-gi-cung-dung.pdf', null, null, null, 0, 1, 17);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('15', 'Bán Niềm Tin', null, 'Ban-Niem-Tin.jpg', null, null, null, null, 0, 1, 17);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('16', 'Cổ Phiếu Thường Lợi Nhuận Phi Thường', null, 'co-phieu-thuong-loi-nhuan-phi-thuong-min.jpg', 'co-phieu-thuong-loi-nhuan-phi-thuong-min.pdf', null, null, null, 0, 1, 17);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('17', 'Điểm Bùng Phát', null, 'diem-bung-phat.jpg', 'diem-bung-phat.pdf', null, null, null, 0, 1, 17);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('18', 'Trí Tuệ Tài Chính', null, 'tri-tue-tai-chinh.jpg', 'tri-tue-tai-chinh.pdf', null, null, null, 0, 1,17);
-INSERT INTO eBook1(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id)
+INSERT INTO eBook(eBookId, title, description, imageLink, fileLink, language, releaseYear, lastUpdate, viewers, userId, ecatalogId)
 VALUES('19', 'Tung Sản phẩm', null, 'tung-san-pham.jpg', null, 'Việt Nam', null, null, 0, 1, 17),
 ('20', 'Thư Bán Hàng Đỉnh Cao', null, 'thu-ban-hang-đinh-cao.jpg', null, 'Việt Nam', null, null, 0, 1, 17),
 ('21', 'Tiếp Thị Số Từ A Đến Z', null, 'tiepthisotuatoiz.jpg', 'tiepthisotuatoiz.pdf', 'Việt Nam', null, null, 0, 1, 17),

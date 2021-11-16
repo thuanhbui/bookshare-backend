@@ -55,9 +55,9 @@ public class IgniteAPI {
         IgniteCache<eBookKey, eBook> bookCache = client.cache("eBook");
         SqlFieldsQuery qry = new SqlFieldsQuery(
                 "INSERT INTO eBook(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        bookCache.query(qry.setArgs(bookKey.geteBook_id(), book.getTitle(), book.getDescription(), book.getImageLink(),
+        bookCache.query(qry.setArgs(bookKey.geteBookId(), book.getTitle(), book.getDescription(), book.getImageLink(),
                 book.getFileLink(), book.getLanguage(), book.getReleaseYear(), book.getLastUpdate(), book.getViewers(),
-                bookKey.getUSER_ID(), bookKey.getCATALOG_ID()));
+                bookKey.getUSERID(), bookKey.getCATALOGID()));
         System.out.println("Insert Book Success!");
     }
 
@@ -65,8 +65,8 @@ public class IgniteAPI {
         IgniteCache<UserKey, User> userCache = client.cache("user");
         SqlFieldsQuery qry = new SqlFieldsQuery(
                 "INSERT INTO user(user_id, username, password, email, phone, address, registered_date, admin_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-        userCache.query(qry.setArgs(userKey.getUserID(), user.getUsername(), user.getPassword(), user.getEmail(),
-                user.getPhone(), user.getAvatar(), user.getRegistered_date(), userKey.getAdminID()));
+        userCache.query(qry.setArgs(userKey.getUserId(), user.getUsername(), user.getPassword(), user.getEmail(),
+                user.getPhone(), user.getAvatar(), user.getRegisteredDate(), userKey.getADMINID()));
         System.out.println("Insert User Success!");
     }
 }

@@ -7,21 +7,21 @@ public class UserDto {
     private String email;
     private String phone;
     private String avatar;
-    private String registered_date;
-    private int admin_id;
+    private String registeredDate;
+    private int adminId;
 
     public UserDto() {
 
     }
 
     public UserDto(UserKey key, User value) {
-        this.id = key.getUserID();
+        this.id = key.getUserId();
         this.name = value.getUsername();
         this.email = value.getEmail();
         this.phone = value.getPhone();
         this.avatar = value.getAvatar();
-        this.registered_date = value.getRegistered_date();
-        this.admin_id = key.getAdminID();
+        this.registeredDate = value.getRegisteredDate();
+        this.adminId = key.getADMINID();
     }
 
     public int getId() {
@@ -64,19 +64,19 @@ public class UserDto {
         this.avatar = avatar;
     }
 
-    public int getAdmin_id() {
-        return admin_id;
+    public String getRegisteredDate() {
+        return registeredDate;
     }
 
-    public void setAdmin_id(int admin_id) {
-        this.admin_id = admin_id;
+    public void setRegisteredDate(String registeredDate) {
+        this.registeredDate = registeredDate;
     }
 
-    public String getRegistered_date() {
-        return registered_date;
+    public int getAdminId() {
+        return adminId;
     }
 
-    public void setRegistered_date(String registered_date) {
-        this.registered_date = registered_date;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 }

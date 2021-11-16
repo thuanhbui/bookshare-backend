@@ -12,19 +12,17 @@ import java.util.List;
 
 
 @Repository
-@RepositoryConfig(cacheName = "catalog1")
+@RepositoryConfig(cacheName = "catalog")
 public interface CatalogRepository extends IgniteRepository<eCatalog, eCatalogKey>{
 
 
-    @Query("SELECT catalog_id, name_catalog, eBook_id FROM ECATALOG")
+    @Query("SELECT * FROM ECATALOG")
     public List<Cache.Entry<eCatalogKey, eCatalog>> getListCatalogs();
 
+    //@Query("Select * from eCatalog")
+    public List<Cache.Entry<eCatalogKey, eCatalog>> findByNameCatalog(String name_catalog);
 
-    public List<Cache.Entry<eCatalogKey, eCatalog>> findByNameCatalog(String keyword);
-
-    @Query("SELECT * FROM eCatalog WHERE catalog_id = ?")
-    public List<?> findCatalogById(int catalog_id);
-
+    @Query("SELECT * FROM eCatalog WHERE catalogId = ?")
     public Cache.Entry<eCatalogKey, eCatalog> findById(Integer id);
 
 

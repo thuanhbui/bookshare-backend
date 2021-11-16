@@ -3,40 +3,40 @@ package org.ignite.Entity;
 
 
 public class eCatalogDto {
-    private int catalog_id;
-    private int admin_id;
-    private String name_catalog;
+    private int catalogId;
+    private String nameCatalog;
+    private int adminId;
     public eCatalogDto() {
 
     }
 
     public eCatalogDto(eCatalogKey key, eCatalog value){
-        this.catalog_id = key.getCATALOG_ID();
-        this.admin_id = key.getADMIN_ID();
-        this.name_catalog = value.getNameCatalog();
+        this.catalogId = key.getCATALOGID();
+        this.adminId = key.getADMINID();
+        this.nameCatalog = value.getNameCatalog();
     }
 
-    public int getCatalog_id() {
-        return catalog_id;
+    public int getCatalogId() {
+        return catalogId;
     }
 
-    public void setCatalog_id(int catalog_id) {
-        this.catalog_id = catalog_id;
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
     }
 
-    public int getAdmin_id() {
-        return admin_id;
+    public String getNameCatalog() {
+        return nameCatalog;
     }
 
-    public void setAdmin_id(int admin_id) {
-        this.admin_id = admin_id;
+    public void setNameCatalog(String nameCatalog) {
+        this.nameCatalog = nameCatalog;
     }
 
-    public String getName_catalog() {
-        return name_catalog;
+    public int getAdminId() {
+        return adminId;
     }
 
-    public void setName_catalog(String name_catalog) {
-        this.name_catalog = name_catalog;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 }

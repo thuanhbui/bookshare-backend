@@ -17,7 +17,7 @@ public class UserService {
     UserRepository userRepository;
 
     public List<UserDto> findUserByUsername(String name) {
-        List<Cache.Entry<UserKey, User>> entries = userRepository.findByUserName(name);
+        List<Cache.Entry<UserKey, User>> entries = userRepository.findByUsername(name);
         List<UserDto> userDtos = new ArrayList<>();
         for(Cache.Entry<UserKey, User> entry : entries) {
             userDtos.add(new UserDto(entry.getKey(), entry.getValue()));
@@ -46,14 +46,14 @@ public class UserService {
         entry.getValue().setEmail(user.getEmail());
         entry.getValue().setPhone(user.getPhone());
         entry.getValue().setAvatar(user.getAvatar());
-        entry.getValue().setRegistered_date(user.getRegistered_date());
+        entry.getValue().setRegisteredDate(user.getRegisteredDate());
         userRepository.save(entry.getKey(), entry.getValue());
         return new UserDto(entry.getKey(), entry.getValue());
     }
 
     public void deleteUser(int userID) {
         UserKey key = new UserKey(userID, 1);
-        userRepository.deleteById(key);
+       // userRepository.deleteById(key);
     }
 
     public void addUser(User value, int adminID) {

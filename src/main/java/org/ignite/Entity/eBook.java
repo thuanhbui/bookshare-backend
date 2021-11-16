@@ -1,30 +1,28 @@
 package org.ignite.Entity;
 
-import org.apache.ignite.cache.query.annotations.QuerySqlField;
-
 
 
 public class eBook {
 
     private String title;
     private String description;
-    private String image_link;
-    private String file_link;
+    private String imageLink;
+    private String fileLink;
     private String language;
-    private String release_year;
-    private String last_update;
+    private String releaseYear;
+    private String lastUpdate;
     private int viewers;
 
-    public eBook(String title, String description, String image_link, String file_link,
-                 String language, String release_year, String last_update, int viewers) {
+    public eBook(String title, String description, String imageLink, String fileLink,
+                 String language, String releaseYear, String lastUpdate, int viewers) {
 
         this.title = title;
         this.description = description;
-        this.image_link = image_link;
-        this.file_link = file_link;
+        this.imageLink = imageLink;
+        this.fileLink = fileLink;
         this.language = language;
-        this.release_year = release_year;
-        this.last_update = last_update;
+        this.releaseYear = releaseYear;
+        this.lastUpdate = lastUpdate;
         this.viewers = viewers;
     }
 
@@ -45,19 +43,19 @@ public class eBook {
     }
 
     public String getImageLink() {
-        return image_link;
+        return imageLink;
     }
 
     public void setImageLink(String imageLink) {
-        this.image_link = imageLink;
+        this.imageLink = imageLink;
     }
 
     public String getFileLink() {
-        return file_link;
+        return fileLink;
     }
 
     public void setFileLink(String fileLink) {
-        this.file_link = fileLink;
+        this.fileLink = fileLink;
     }
 
     public String getLanguage() {
@@ -69,19 +67,19 @@ public class eBook {
     }
 
     public String getReleaseYear() {
-        return release_year;
+        return releaseYear;
     }
 
     public void setReleaseYear(String releaseYear) {
-        this.release_year = releaseYear;
+        this.releaseYear = releaseYear;
     }
 
     public String getLastUpdate() {
-        return last_update;
+        return lastUpdate;
     }
 
     public void setLastUpdate(String lastUpdate) {
-        this.last_update = lastUpdate;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getViewers() {
@@ -94,9 +92,9 @@ public class eBook {
 
     @Override
     public String toString() {
-        return "eBook{" + "title='" + title + '\'' + ", description='" + description + '\'' + ", image_link='"
-                + image_link + '\'' + ", file_link='" + file_link + '\'' + ", language='" + language + '\''
-                + ", release_year='" + release_year + '\'' + ", last_update='" + last_update + '\'' + ", viewers="
+        return "eBook{" + "title='" + title + '\'' + ", description='" + description + '\'' + ", imageLink='"
+                + imageLink + '\'' + ", fileLink='" + fileLink + '\'' + ", language='" + language + '\''
+                + ", releaseYear='" + releaseYear + '\'' + ", lastUpdate='" + lastUpdate + '\'' + ", viewers="
                 + viewers + "}";
     }
 }

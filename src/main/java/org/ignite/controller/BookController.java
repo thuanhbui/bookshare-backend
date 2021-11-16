@@ -23,14 +23,20 @@ public class BookController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<eBookDto>> getAllBook() {
+    public ResponseEntity<List<eBookDto>> getAllBooks() {
         List<eBookDto> bookDtos = bookService.getListBooks();
         return ResponseEntity.ok(bookDtos);
     }
 
-    @GetMapping("/{title}")
-    public ResponseEntity<List<eBookDto>> findByTitle(@PathVariable String title) {
+    @GetMapping("")
+    public ResponseEntity<List<eBookDto>> findByTitle(@RequestParam (value = "title") String title) {
         List<eBookDto> bookDtos = bookService.findBookByTitle(title);
+        return ResponseEntity.ok(bookDtos);
+    }
+
+    @GetMapping("/new")
+    public ResponseEntity<List<eBookDto>> getListNewBooks() {
+        List<eBookDto> bookDtos = bookService.getListNewBooks();
         return ResponseEntity.ok(bookDtos);
     }
 

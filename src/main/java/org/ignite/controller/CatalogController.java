@@ -22,14 +22,14 @@ public class CatalogController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<eCatalogDto>> getAllCatalog() {
+    public ResponseEntity<List<eCatalogDto>> getAllCatalogs() {
         List<eCatalogDto> catalogDtos = catalogService.getListCatalogs();
         return ResponseEntity.ok(catalogDtos);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<List<eCatalogDto>> findByNameCatalog(@PathVariable String name) {
-        List<eCatalogDto> catalogDtos = catalogService.findCatalogByName(name);
+    @GetMapping("")
+    public ResponseEntity<List<eCatalogDto>> findByNameCatalog(@RequestParam (value = "nameCatalog") String nameCatalog) {
+        List<eCatalogDto> catalogDtos = catalogService.findCatalogByNameCatalog(nameCatalog);
         return ResponseEntity.ok(catalogDtos);
     }
 

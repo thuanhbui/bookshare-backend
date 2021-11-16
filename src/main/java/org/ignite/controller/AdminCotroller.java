@@ -6,6 +6,7 @@ import org.ignite.Entity.AdminMapper;
 import org.ignite.Entity.UserDto;
 import org.ignite.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +28,13 @@ public class AdminCotroller {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AdminDto>> getAllAdmin() {
+    public ResponseEntity<List<AdminDto>> getAllAdmins() {
         List<AdminDto> admins = adminService.getListAdmins();
         return ResponseEntity.ok(admins);
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<List<AdminDto>> findByUsername(@PathVariable String username) {
+    @GetMapping("")
+    public ResponseEntity<List<AdminDto>> findByUsername(@RequestParam (value = "username") String username) {
         List<AdminDto> amins = adminService.findAdminByUsername(username);
         return ResponseEntity.ok(amins);
     }
@@ -47,8 +48,12 @@ public class AdminCotroller {
     @DeleteMapping("/{id}")
     public ResponseEntity<AdminDto> deleteAdmin(@PathVariable Integer id) {
         AdminDto admin = adminService.findAdminById(id);
-        adminService.deleteAdmin(id);
-        return ResponseEntity.ok(admin);
+        if (admin != null) {
+            System.out.println("delete success");
+            adminService.deleteAdmin(id);
+            return ResponseEntity.ok(admin);
+        }
+        return (ResponseEntity<AdminDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("")

@@ -10,7 +10,7 @@ public class UserMapper {
         tmp.setEmail(user.getEmail());
         tmp.setPhone(user.getPhone());
         tmp.setAvatar(user.getAvatar());
-        tmp.setRegistered_date(user.getRegistered_date());
+        tmp.setRegisteredDate(user.getRegisteredDate());
         return tmp;
     }
 

@@ -5,6 +5,8 @@ import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 
 
+import org.apache.ignite.cache.QueryEntity;
+import org.apache.ignite.cache.QueryIndex;
 import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.DataRegionConfiguration;
 import org.apache.ignite.configuration.DataStorageConfiguration;
@@ -14,6 +16,8 @@ import org.ignite.Entity.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 
 @Configuration
@@ -43,6 +47,7 @@ public class IgniteConfig {
 //
 //
 //            igniteConfiguration.setDataStorageConfiguration(storageCfg);
+
 
         };
     }

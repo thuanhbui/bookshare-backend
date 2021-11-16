@@ -4,11 +4,11 @@ public class eBookDto {
     private String bookId;
     private String title;
     private String description;
-    private String image_link;
-    private String file_link;
+    private String imageLink;
+    private String fileLink;
     private String language;
-    private String release_year;
-    private String last_update;
+    private String releaseYear;
+    private String lastUpdate;
     private int viewers;
     private int userId;
     private int catalogId;
@@ -18,93 +18,93 @@ public class eBookDto {
     }
 
     public eBookDto(eBookKey key, eBook value) {
-        this.bookId = key.geteBook_id();
+        this.bookId = key.geteBookId();
         this.title = value.getTitle();
         this.description = value.getDescription();
-        this.image_link = value.getImageLink();
-        this.file_link = value.getFileLink();
+        this.imageLink = value.getImageLink();
+        this.fileLink = value.getFileLink();
         this.language = value.getLanguage();
-        this.release_year = value.getReleaseYear();
-        this.last_update = value.getLastUpdate();
+        this.releaseYear = value.getReleaseYear();
+        this.lastUpdate = value.getLastUpdate();
         this.viewers = value.getViewers();
-        this.userId = key.getUSER_ID();
-        this.catalogId = key.getCATALOG_ID();
+        this.userId = key.getCATALOGID();
+        this.catalogId = key.getCATALOGID();
     }
 
     public String getBookId() {
         return bookId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImage_link() {
-        return image_link;
-    }
-
-    public String getFile_link() {
-        return file_link;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public String getRelease_year() {
-        return release_year;
-    }
-
-    public String getLast_update() {
-        return last_update;
-    }
-
-    public int getViewers() {
-        return viewers;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
     public void setBookId(String bookId) {
         this.bookId = bookId;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setImage_link(String image_link) {
-        this.image_link = image_link;
+    public String getImageLink() {
+        return imageLink;
     }
 
-    public void setFile_link(String file_link) {
-        this.file_link = file_link;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public String getFileLink() {
+        return fileLink;
+    }
+
+    public void setFileLink(String fileLink) {
+        this.fileLink = fileLink;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
     public void setLanguage(String language) {
         this.language = language;
     }
 
-    public void setRelease_year(String release_year) {
-        this.release_year = release_year;
+    public String getReleaseYear() {
+        return releaseYear;
     }
 
-    public void setLast_update(String last_update) {
-        this.last_update = last_update;
+    public void setReleaseYear(String releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public int getViewers() {
+        return viewers;
     }
 
     public void setViewers(int viewers) {
         this.viewers = viewers;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     public void setUserId(int userId) {

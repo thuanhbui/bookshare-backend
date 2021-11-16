@@ -12,26 +12,23 @@ import org.springframework.stereotype.Repository;
 
 import javax.cache.Cache;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
-@RepositoryConfig(cacheName = "admin1")
+@RepositoryConfig(cacheName = "admin")
 public interface AdminRepository extends IgniteRepository<Admin, Integer> {
 
     @Query("SELECT * FROM ADMIN")
     List<Cache.Entry<Integer, Admin>> getListAdmins();
 
-    public List<Cache.Entry<Integer, Admin>> findByUsername(String name);
+    public List<Cache.Entry<Integer, Admin>> findByUsername(String username);
 
-    @Query("SELECT * FROM Admin WHERE admin_id = ?")
+    @Query("SELECT * FROM Admin WHERE adminId = ?")
     public Cache.Entry<Integer, Admin> findById(int id);
 
+    @Query("DELETE FROM Admin WHERE adminId = ?")
+    public void deleteByAdminId(int id);
 
-    void deleteById(Integer integer);
-
-
-    //public Optional<Admin> findById(Integer id);
 
 
 
