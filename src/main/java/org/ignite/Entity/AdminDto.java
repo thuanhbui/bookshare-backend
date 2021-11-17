@@ -2,11 +2,13 @@ package org.ignite.Entity;
 
 import org.ignite.Entity.Admin;
 
+import java.sql.Date;
+
 public class AdminDto {
     private int adminId;
     private String username;
   //  private String password;
-    private String registeredDate;
+    private Date registeredDate;
 
     public AdminDto() {
 
@@ -35,11 +37,11 @@ public class AdminDto {
         this.username = username;
     }
 
-    public String getRegisteredDate() {
+    public Date getRegisteredDate() {
         return registeredDate;
     }
 
-    public void setRegisteredDate(String registeredDate) {
+    public void setRegisteredDate(Date registeredDate) {
         this.registeredDate = registeredDate;
     }
 }

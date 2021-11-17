@@ -1,5 +1,8 @@
 package org.ignite.Entity;
 
+import java.sql.Date;
+import java.time.Year;
+
 public class eBookDto {
     private String bookId;
     private String title;
@@ -7,8 +10,8 @@ public class eBookDto {
     private String imageLink;
     private String fileLink;
     private String language;
-    private String releaseYear;
-    private String lastUpdate;
+    private Date releaseYear;
+    private Date lastUpdate;
     private int viewers;
     private int userId;
     private int catalogId;
@@ -27,8 +30,8 @@ public class eBookDto {
         this.releaseYear = value.getReleaseYear();
         this.lastUpdate = value.getLastUpdate();
         this.viewers = value.getViewers();
-        this.userId = key.getCATALOGID();
-        this.catalogId = key.getCATALOGID();
+        this.catalogId = value.getCatalogId();
+        this.userId = key.getUSERID();
     }
 
     public String getBookId() {
@@ -79,19 +82,19 @@ public class eBookDto {
         this.language = language;
     }
 
-    public String getReleaseYear() {
+    public Date getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(String releaseYear) {
+    public void setReleaseYear(Date releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

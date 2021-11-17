@@ -1,6 +1,8 @@
 package org.ignite.Entity;
 
 
+import java.sql.Date;
+
 
 public class eBook {
 
@@ -9,13 +11,13 @@ public class eBook {
     private String imageLink;
     private String fileLink;
     private String language;
-    private String releaseYear;
-    private String lastUpdate;
+    private Date releaseYear;
+    private Date lastUpdate;
     private int viewers;
+    private int catalogId;
 
     public eBook(String title, String description, String imageLink, String fileLink,
-                 String language, String releaseYear, String lastUpdate, int viewers) {
-
+                 String language, Date releaseYear, Date lastUpdate, int viewers, int catalogId) {
         this.title = title;
         this.description = description;
         this.imageLink = imageLink;
@@ -24,6 +26,7 @@ public class eBook {
         this.releaseYear = releaseYear;
         this.lastUpdate = lastUpdate;
         this.viewers = viewers;
+        this.catalogId = catalogId;
     }
 
     public String getTitle() {
@@ -66,19 +69,19 @@ public class eBook {
         this.language = language;
     }
 
-    public String getReleaseYear() {
+    public Date getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(String releaseYear) {
+    public void setReleaseYear(Date releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -90,11 +93,26 @@ public class eBook {
         this.viewers = viewers;
     }
 
+    public int getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
+    }
+
     @Override
     public String toString() {
-        return "eBook{" + "title='" + title + '\'' + ", description='" + description + '\'' + ", imageLink='"
-                + imageLink + '\'' + ", fileLink='" + fileLink + '\'' + ", language='" + language + '\''
-                + ", releaseYear='" + releaseYear + '\'' + ", lastUpdate='" + lastUpdate + '\'' + ", viewers="
-                + viewers + "}";
+        return "eBook{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", imageLink='" + imageLink + '\'' +
+                ", fileLink='" + fileLink + '\'' +
+                ", language='" + language + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", lastUpdate=" + lastUpdate +
+                ", viewers=" + viewers +
+                ", catalogId=" + catalogId +
+                '}';
     }
 }

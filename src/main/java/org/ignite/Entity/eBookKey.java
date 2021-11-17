@@ -11,13 +11,13 @@ public class eBookKey implements Serializable {
     @AffinityKeyMapped
     private int USERID;
 
+    public eBookKey() {
 
-    private int CATALOGID;
+    }
 
-    public eBookKey(String eBookID, int userID, int catalogID) {
+    public eBookKey(String eBookID, int userID) {
         this.eBookId = eBookID;
         this.USERID = userID;
-        this.CATALOGID = catalogID;
     }
 
     public String geteBookId() {
@@ -36,14 +36,6 @@ public class eBookKey implements Serializable {
         this.USERID = USERID;
     }
 
-    public int getCATALOGID() {
-        return CATALOGID;
-    }
-
-    public void setCATALOG_ID(int CATALOG_ID) {
-        this.CATALOGID = CATALOG_ID;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -51,7 +43,7 @@ public class eBookKey implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         eBookKey key = (eBookKey) o;
-        return eBookId.equals(key.eBookId) && USERID == key.USERID && CATALOGID == key.CATALOGID;
+        return eBookId.equals(key.eBookId) && USERID == key.USERID;
     }
 
 
@@ -59,7 +51,7 @@ public class eBookKey implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(eBookId, USERID, CATALOGID);
+        return Objects.hash(eBookId, USERID);
     }
 
     @Override
@@ -67,7 +59,6 @@ public class eBookKey implements Serializable {
         return "eBookKey{" +
                 "eBookId='" + eBookId + '\'' +
                 ", USERID=" + USERID +
-                ", CATALOGID=" + CATALOGID +
                 '}';
     }
 }

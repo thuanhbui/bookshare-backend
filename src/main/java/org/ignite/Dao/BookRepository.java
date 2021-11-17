@@ -18,7 +18,7 @@ import java.util.List;
 public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
 
     @Query("SELECT * FROM EBOOK")
-    List<Cache.Entry<eBookKey, eBook>> getListBooks();
+    public List<Cache.Entry<eBookKey, eBook>> getListBooks();
 
     public List<Cache.Entry<eBookKey, eBook>> findByTitle(String title);
 
@@ -26,7 +26,7 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     public Cache.Entry<eBookKey, eBook> findById(String id);
 
     @Query("DELETE FROM eBook WHERE bookId = ?")
-    void deleteById(String bookId);
+    public void deleteById(String bookId);
 
     @Query("SELECT * FROM eBook " +
             "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
@@ -34,5 +34,10 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
             "ORDER BY lastUpdate DESC LIMIT 5")
     public List<Cache.Entry<eBookKey, eBook>> getListNewBooks();
 
+
+    public List<Cache.Entry<eBookKey, eBook>> findByCatalogId(Integer catalogId);
+
+    @Query("SELECT * FROM EBOOK WHERE userId = ?")
+    public List<Cache.Entry<eBookKey, eBook>> findByUserId(Integer userId);
 
 }

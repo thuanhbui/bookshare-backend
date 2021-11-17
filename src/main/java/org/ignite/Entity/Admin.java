@@ -1,23 +1,24 @@
 package org.ignite.Entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 
 public class Admin implements Serializable {
 
-    private int adminId;
+   // private int adminId;
 
     private String username;
 
     private String password;
 
-    private String registeredDate;
+    private Date registeredDate;
 
     public Admin() {
 
     }
 
-    public Admin(String username, String password, String registeredDate) {
+    public Admin(String username, String password, Date registeredDate) {
         this.username = username;
         this.password = password;
         this.registeredDate = registeredDate;
@@ -39,18 +40,17 @@ public class Admin implements Serializable {
         this.password = password;
     }
 
-    public String getRegisteredDate() {
+    public Date getRegisteredDate() {
         return registeredDate;
     }
 
-    public void setRegisteredDate(String registeredDate) {
+    public void setRegisteredDate(Date registeredDate) {
         this.registeredDate = registeredDate;
     }
 
     @Override
     public String toString() {
         return "Admin{" +
-                "adminId=" + adminId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", registeredDate='" + registeredDate + '\'' +

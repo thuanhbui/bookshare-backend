@@ -55,6 +55,25 @@ public class BookService {
         return bookDtos;
     }
 
+
+    public List<eBookDto> getBooksByCatalogId(Integer catalogId) {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByCatalogId(catalogId);
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for (Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
+    }
+
+    public List<eBookDto> getBooksByUserId(Integer catalogId) {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByUserId(catalogId);
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for (Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
+    }
+
     public eBookDto updateBook(String bookId, eBook book) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
         entry.getValue().setTitle(book.getTitle());

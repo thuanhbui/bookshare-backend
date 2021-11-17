@@ -3,17 +3,15 @@ package org.ignite.controller;
 import org.ignite.Entity.Admin;
 import org.ignite.Entity.AdminDto;
 import org.ignite.Entity.AdminMapper;
-import org.ignite.Entity.UserDto;
 import org.ignite.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.cache.Cache;
-import javax.swing.text.html.Option;
+
 import java.util.List;
-import java.util.Optional;
+
 
 @RequestMapping("/admin")
 @RestController
@@ -63,9 +61,6 @@ public class AdminCotroller {
         adminService.addAdmin(admin);
         return ResponseEntity.ok(adminMapper);
     }
-
-
-
 
 
 

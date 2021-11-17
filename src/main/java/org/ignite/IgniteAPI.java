@@ -7,6 +7,7 @@ import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.ignite.Entity.*;
 
 
+import java.sql.Date;
 import java.util.List;
 
 public class IgniteAPI {
@@ -16,8 +17,8 @@ public class IgniteAPI {
         Ignite client = Ignition.start("D:/BookShare/src/main/java/org/ignite/config/ignite-config.xml");
 
          IgniteCache<eBookKey, eBook> bookCache = client.cache("eBook");
-         eBook book = new eBook("Mèo lười", null, null, null, "Việt Nam", null, "2021-01-01", 0);
-         eBookKey bookKey = new eBookKey("ad2", 1, 1);
+         eBook book = new eBook("Mèo lười", null, null, null, "Việt Nam", null, new Date(2020,05,03), 0, 1);
+         eBookKey bookKey = new eBookKey("ad2", 1);
          insertEBook(client, book, bookKey);
         // List<List<?>> newT = getCatalogs(client);
         // List<List<?>> new = getNewEBook(client);
@@ -57,7 +58,7 @@ public class IgniteAPI {
                 "INSERT INTO eBook(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         bookCache.query(qry.setArgs(bookKey.geteBookId(), book.getTitle(), book.getDescription(), book.getImageLink(),
                 book.getFileLink(), book.getLanguage(), book.getReleaseYear(), book.getLastUpdate(), book.getViewers(),
-                bookKey.getUSERID(), bookKey.getCATALOGID()));
+                bookKey.getUSERID(), book.getCatalogId()));
         System.out.println("Insert Book Success!");
     }
 

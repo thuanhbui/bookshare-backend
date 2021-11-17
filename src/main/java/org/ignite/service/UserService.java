@@ -56,10 +56,8 @@ public class UserService {
        // userRepository.deleteById(key);
     }
 
-    public void addUser(User value, int adminID) {
-        int userId = 123; //tao tu dong
-        UserKey key = new UserKey(userId, adminID);
-        userRepository.save(key, value);
+    public void addUser(User value) {
+        userRepository.save(value);
     }
 
 }

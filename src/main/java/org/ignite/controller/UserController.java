@@ -3,6 +3,7 @@ package org.ignite.controller;
 import org.ignite.Entity.*;
 import org.ignite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,10 +49,14 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<UserMapper> createUser(@RequestBody User user, int adminID) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        List<UserDto> foundUser = userService.findUserByUsername(user.getUsername().trim());
+        if (foundUser.size() > 0 ) {
+            return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+        }
         UserMapper userMapper = new UserMapper();
         userMapper.toUserDto(user);
-        userService.addUser(user, adminID);
+        userService.addUser(user);
         return ResponseEntity.ok(userMapper);
     }
 }

@@ -1,13 +1,15 @@
 package org.ignite.Entity;
 
+import java.sql.Date;
+
 public class User {
 
-    private  String username;
+    private String username;
     private String password;
     private String email;
     private String phone;
     private String avatar;
-    private String registeredDate;
+    private Date registeredDate;
 
     public String getUsername() {
         return username;
@@ -49,11 +51,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public String getRegisteredDate() {
+    public Date getRegisteredDate() {
         return registeredDate;
     }
 
-    public void setRegisteredDate(String registeredDate) {
+    public void setRegisteredDate(Date registeredDate) {
         this.registeredDate = registeredDate;
     }
 }
