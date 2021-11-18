@@ -1,12 +1,17 @@
 package org.ignite.service;
 
 import org.apache.commons.io.FilenameUtils;
+import org.ignite.Dao.BookRepository;
+import org.ignite.Entity.eBook;
+import org.ignite.Entity.eBookKey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.cache.Cache;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -14,11 +19,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
 public class ImageStorageService implements IStorageService{
+
+    @Autowired
+    private BookRepository bookRepository;
+
     private final Path storageFolder = Paths.get("uploads");
     //constructor
     public ImageStorageService() {
@@ -52,8 +63,11 @@ public class ImageStorageService implements IStorageService{
             }
             //File must be rename, why ?
             String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-            String generatedFileName = UUID.randomUUID().toString().replace("-", "");
-            generatedFileName = generatedFileName+"."+fileExtension;
+            String generatedFileName = file.getOriginalFilename().replace("." + fileExtension, "");
+            Optional<eBook> entryFile = bookRepository.findByFileLink(file.getOriginalFilename());
+            Optional<eBook> entryImg = bookRepository.findByImageLink(file.getOriginalFilename());
+            if (!entryFile.isEmpty() || !entryImg.isEmpty()) generatedFileName = generatedFileName+"(1)."+fileExtension;
+            else generatedFileName = generatedFileName+"."+fileExtension;
             Path destinationFilePath = this.storageFolder.resolve(
                             Paths.get(generatedFileName))
                     .normalize().toAbsolutePath();

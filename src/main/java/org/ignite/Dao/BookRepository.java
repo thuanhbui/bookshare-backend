@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.cache.Cache;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -43,4 +44,9 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
 
     @Override
     IgniteCache<eBookKey, eBook> cache();
+
+    public Optional<eBook> findByImageLink(String imageLink);
+
+    public Optional<eBook> findByFileLink(String imageLink);
+
 }
