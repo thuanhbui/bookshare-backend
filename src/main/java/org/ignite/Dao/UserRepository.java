@@ -9,8 +9,8 @@ import org.ignite.Entity.UserKey;
 import org.springframework.stereotype.Repository;
 
 import javax.cache.Cache;
+import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RepositoryConfig(cacheName = "user")
@@ -20,11 +20,11 @@ public interface UserRepository extends IgniteRepository<User, UserKey> {
 
     public List<Cache.Entry<UserKey, User>> findByUsername(String name);
 
-
-   // Optional<User> findById(UserKey userKey);
-
     @Query("SELECT * FROM USER WHERE userId = ?")
     public Cache.Entry<UserKey, User> findById(Integer user_id);
 
-   // void deleteById(UserKey key);
+    @Query("DELETE FROM User WHERE userId = ?")
+    public void deleteByUserId(Integer key);
+
+
 }

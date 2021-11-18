@@ -23,9 +23,6 @@ public interface AdminRepository extends IgniteRepository<Admin, Integer> {
 
     public List<Cache.Entry<Integer, Admin>> findByUsername(String username);
 
-    @Query("SELECT * FROM Admin WHERE adminId = ?")
-    public Cache.Entry<Integer, Admin> findById(int id);
-
     @Query("DELETE FROM Admin WHERE adminId = ?")
     public void deleteByAdminId(int id);
 

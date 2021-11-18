@@ -4,6 +4,7 @@ import org.apache.ignite.springdata22.repository.config.Query;
 import org.ignite.Entity.*;
 import org.ignite.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<eBookDto> getBookById(@PathVariable String id) {
         eBookDto bookDto = bookService.findBookById(id);
+        if (bookDto == null)    return (ResponseEntity<eBookDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(bookDto);
     }
 
@@ -58,17 +60,29 @@ public class BookController {
         return ResponseEntity.ok(eBookDto);
     }
 
+    @PutMapping("/viewers/{id}")
+    public ResponseEntity<eBookDto> updateViewers(@PathVariable String id) {
+        eBookDto eBookDto = bookService.updateViewers(id);
+        return ResponseEntity.ok(eBookDto);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<eBookDto> deleteBook(@PathVariable String id) {
         eBookDto bookDto = bookService.findBookById(id);
+        if (bookDto == null)    return (ResponseEntity<eBookDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
         bookService.deleteBook(id);
         return ResponseEntity.ok(bookDto);
     }
 
     @PostMapping("")
-    public ResponseEntity<eBook> createBook(@RequestBody eBook book) {
-        bookService.addBook(book);
-        return ResponseEntity.ok(book);
+    public ResponseEntity<eBookDto> createBook(@RequestBody eBook book, @RequestParam (value = "userId") Integer userId) {
+        List<eBookDto> foundBook = bookService.findBookByTitle(book.getTitle().trim());
+        if (foundBook.size() > 0 ) {
+            return (ResponseEntity<eBookDto>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+        }
+        eBookDto bookDto = bookService.addBook(book, userId);
+
+        return ResponseEntity.ok(bookDto);
     }
 
 }

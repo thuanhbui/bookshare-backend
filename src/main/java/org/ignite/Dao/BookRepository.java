@@ -1,6 +1,7 @@
 package org.ignite.Dao;
 
 
+import org.apache.ignite.IgniteCache;
 import org.apache.ignite.springdata22.repository.IgniteRepository;
 import org.apache.ignite.springdata22.repository.config.Query;
 import org.apache.ignite.springdata22.repository.config.RepositoryConfig;
@@ -25,8 +26,8 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Query("SELECT * FROM EBOOK WHERE eBookId = ?")
     public Cache.Entry<eBookKey, eBook> findById(String id);
 
-    @Query("DELETE FROM eBook WHERE bookId = ?")
-    public void deleteById(String bookId);
+    @Query("DELETE FROM eBook WHERE eBookId = ?")
+    public void deleteByBookId(String bookId);
 
     @Query("SELECT * FROM eBook " +
             "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
@@ -40,4 +41,6 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Query("SELECT * FROM EBOOK WHERE userId = ?")
     public List<Cache.Entry<eBookKey, eBook>> findByUserId(Integer userId);
 
+    @Override
+    IgniteCache<eBookKey, eBook> cache();
 }

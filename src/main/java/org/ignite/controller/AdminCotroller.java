@@ -45,6 +45,7 @@ public class AdminCotroller {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<AdminDto> deleteAdmin(@PathVariable Integer id) {
+        System.out.println("delete");
         AdminDto admin = adminService.findAdminById(id);
         if (admin != null) {
             System.out.println("delete success");

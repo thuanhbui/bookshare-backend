@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class UserDto {
     private  int id;
-    private  String name;
+    private  String username;
     private String email;
     private String phone;
     private String avatar;
@@ -18,7 +18,7 @@ public class UserDto {
 
     public UserDto(UserKey key, User value) {
         this.id = key.getUserId();
-        this.name = value.getUsername();
+        this.username = value.getUsername();
         this.email = value.getEmail();
         this.phone = value.getPhone();
         this.avatar = value.getAvatar();
@@ -34,12 +34,12 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

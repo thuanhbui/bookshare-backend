@@ -1,5 +1,6 @@
 package org.ignite.Dao;
 
+import org.apache.ignite.IgniteCache;
 import org.apache.ignite.springdata22.repository.IgniteRepository;
 import org.apache.ignite.springdata22.repository.config.Query;
 import org.apache.ignite.springdata22.repository.config.RepositoryConfig;
@@ -19,11 +20,7 @@ public interface CatalogRepository extends IgniteRepository<eCatalog, eCatalogKe
     @Query("SELECT * FROM ECATALOG")
     public List<Cache.Entry<eCatalogKey, eCatalog>> getListCatalogs();
 
-    //@Query("Select * from eCatalog")
     public List<Cache.Entry<eCatalogKey, eCatalog>> findByNameCatalog(String name_catalog);
-
-    @Query("SELECT * FROM eCatalog WHERE catalogId = ?")
-    public Cache.Entry<eCatalogKey, eCatalog> findById(Integer id);
 
 
 }

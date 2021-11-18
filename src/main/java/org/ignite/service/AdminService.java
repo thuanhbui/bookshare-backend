@@ -30,8 +30,9 @@ public class AdminService {
     }
 
     public AdminDto findAdminById(int admin_id) {
-        Cache.Entry<Integer, Admin> entry = adminDao.findById(admin_id);
-        return new AdminDto(entry.getKey(), entry.getValue());
+        IgniteCache<Integer, Admin> cache = adminDao.cache();
+        Admin admin = cache.get(admin_id);
+        return new AdminDto(admin_id, admin);
     }
 
     public List<AdminDto> getListAdmins() {
@@ -44,12 +45,12 @@ public class AdminService {
     }
 
     public AdminDto updateAdmin(int adminId, Admin admin) {
-        Cache.Entry<Integer, Admin> entry = adminDao.findById(adminId);
-        entry.getValue().setUsername(admin.getUsername());
-        entry.getValue().setPassword(admin.getPassword());
-        entry.getValue().setRegisteredDate(admin.getRegisteredDate());
-        adminDao.save(entry.getKey(), entry.getValue());
-        return new AdminDto(entry.getKey(), entry.getValue());
+        IgniteCache<Integer, Admin> cache = adminDao.cache();
+        Admin admin1 = cache.get(adminId);
+        if (admin.getUsername() != null) admin1.setUsername(admin.getUsername());
+        if (admin.getPassword() != null) admin1.setPassword(admin.getPassword());
+        cache.replace(adminId, admin1);
+        return new AdminDto(adminId, admin1);
     }
 
     public void deleteAdmin(int adminId) {

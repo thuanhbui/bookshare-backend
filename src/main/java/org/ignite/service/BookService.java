@@ -1,6 +1,7 @@
 package org.ignite.service;
 
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
@@ -15,6 +16,9 @@ import javax.cache.Cache;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
+
+import static java.sql.Types.NULL;
 
 @Component
 public class BookService {
@@ -34,6 +38,7 @@ public class BookService {
 
     public eBookDto findBookById(String book_id) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(book_id);
+        if (entry == null)  return  null;
         return new eBookDto(entry.getKey(), entry.getValue());
     }
 
@@ -76,24 +81,36 @@ public class BookService {
 
     public eBookDto updateBook(String bookId, eBook book) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
-        entry.getValue().setTitle(book.getTitle());
-        entry.getValue().setDescription(book.getDescription());
-        entry.getValue().setImageLink(book.getImageLink());
-        entry.getValue().setFileLink(book.getFileLink());
-        entry.getValue().setLanguage(book.getLanguage());
-        entry.getValue().setReleaseYear(book.getReleaseYear());
-        entry.getValue().setLastUpdate(book.getLastUpdate());
-        entry.getValue().setViewers(book.getViewers());
-        bookRepository.save(entry.getKey(), entry.getValue());
-        return new eBookDto(entry.getKey(), entry.getValue());
+        IgniteCache cache = bookRepository.cache();
+        eBook book1 = (eBook) cache.get(entry.getKey());
+        if (book.getTitle() != null)   book1.setTitle(book.getTitle());
+        if (book.getDescription() != null) book1.setDescription(book.getDescription());
+        if (book.getImageLink() != null) book1.setImageLink(book.getImageLink());
+        if (book.getFileLink() != null) book1.setFileLink(book.getFileLink());
+        if (book.getLanguage() != null) book1.setLanguage(book.getLanguage());
+        if (book.getReleaseYear() != null) book1.setReleaseYear(book.getReleaseYear());
+        book1.setLastUpdate(new java.sql.Date(System.currentTimeMillis()));
+        if (book.getCatalogId() != NULL) book1.setCatalogId(book.getCatalogId());
+        cache.replace(entry.getKey(), book1);
+        return new eBookDto(entry.getKey(), book1);
+    }
+
+    public eBookDto updateViewers(String bookId) {
+        Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
+        IgniteCache cache = bookRepository.cache();
+        eBook book = (eBook) cache.get(entry.getKey());
+        book.setViewers(book.getViewers() + 1);
+        cache.replace(entry.getKey(), book);
+        return new eBookDto(entry.getKey(), book);
     }
 
     public void deleteBook(String bookId) {
-
-//        bookRepository.deleteById(bookId);
+        bookRepository.deleteByBookId(bookId);
     }
 
-    public void addBook(eBook book) {
-        bookRepository.save(book);
+    public eBookDto addBook(eBook value, int userID) {
+        eBookKey key = new eBookKey(UUID.randomUUID().toString(), 1);
+        bookRepository.cache().put(key, value);
+        return new eBookDto(key, value);
     }
 }

@@ -6,8 +6,6 @@ import java.sql.Date;
 
 public class Admin implements Serializable {
 
-   // private int adminId;
-
     private String username;
 
     private String password;

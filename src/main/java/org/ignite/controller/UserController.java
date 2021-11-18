@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/users")
@@ -20,43 +21,49 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
         UserDto userDto = userService.findUserById(id);
+        if (userDto == null) return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtos = userService.getListUsers();
+        if (userDtos == null) return (ResponseEntity<List<UserDto>>) ResponseEntity.status(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(userDtos);
     }
 
     @GetMapping("")
     public ResponseEntity<List<UserDto>> findByUsername(@RequestParam (value = "username") String username) {
         List<UserDto> userDtos = userService.findUserByUsername(username);
+        if (userDtos == null) return (ResponseEntity<List<UserDto>>) ResponseEntity.status(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(userDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody User user) {
-        UserDto userDto = userService.updateUser(id, user);
+    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @Valid @RequestBody User user)  {
+        UserDto userDto = userService.findUserById(id);
+        if (userDto == null) return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
+        userService.updateUser(id, user);
         return ResponseEntity.ok(userDto);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserDto> deleteUser(@PathVariable Integer id) {
         UserDto userDto = userService.findUserById(id);
+        if (userDto == null) return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
         userService.deleteUser(id);
         return ResponseEntity.ok(userDto);
     }
 
     @PostMapping("")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDto> createUser(@RequestBody User user) {
         List<UserDto> foundUser = userService.findUserByUsername(user.getUsername().trim());
         if (foundUser.size() > 0 ) {
-            return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
-        UserMapper userMapper = new UserMapper();
-        userMapper.toUserDto(user);
-        userService.addUser(user);
-        return ResponseEntity.ok(userMapper);
+        UserDto userDto = userService.addUser(user);
+
+        return ResponseEntity.ok(userDto);
     }
 }
