@@ -17,44 +17,54 @@ public class CatalogController {
     private CatalogService catalogService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<eCatalogDto> getCatalogById(@PathVariable Integer id) {
-//        eCatalogDto catalogDto = catalogService.findCatalogById(id);
+    public ResponseEntity<?> getCatalogById(@PathVariable Integer id) {
         eCatalogDto catalogDto = catalogService.findCatalogByKey(id);
+        if (catalogDto == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có danh mục này trong hệ thống!");
         return ResponseEntity.ok(catalogDto);
     }
 
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<eCatalogDto>> getAllCatalogs() {
+    public ResponseEntity<?> getAllCatalogs() {
         List<eCatalogDto> catalogDtos = catalogService.getListCatalogs();
+        if (catalogDtos == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có danh mục nào trong hệ thống :(");
         return ResponseEntity.ok(catalogDtos);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<eCatalogDto>> findByNameCatalog(@RequestParam (value = "nameCatalog") String nameCatalog) {
+    public ResponseEntity<?> findByNameCatalog(@RequestParam (value = "nameCatalog") String nameCatalog) {
         List<eCatalogDto> catalogDtos = catalogService.findCatalogByNameCatalog(nameCatalog);
+        if (catalogDtos == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy tên danh mục này");
         return ResponseEntity.ok(catalogDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<eCatalogDto> updateNameCatalog(@PathVariable Integer id, @RequestBody eCatalog catalog) {
-        eCatalogDto catalogDto = catalogService.updateCatalog(id, catalog);
-        return ResponseEntity.ok(catalogDto);
+    public ResponseEntity<?> updateNameCatalog(@PathVariable Integer id, @RequestBody eCatalog catalog) {
+        eCatalogDto catalogDto = catalogService.findCatalogByKey(id);
+        if (catalogDto == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có danh mục này trong hệ thống!");
+        eCatalogDto catalogDto1 = catalogService.updateCatalog(id, catalog);
+        return ResponseEntity.ok(catalogDto1);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<eCatalogDto> deleteCatalog(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteCatalog(@PathVariable Integer id) {
         eCatalogDto catalogDto = catalogService.findCatalogByKey(id);
+        if (catalogDto == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có danh mục này trong hệ thống!");
         catalogService.deleteCatalog(id);
         return ResponseEntity.ok(catalogDto);
     }
 
     @PostMapping("")
-    public ResponseEntity<eCatalogDto> createCatalog(@RequestBody eCatalog catalog) {
+    public ResponseEntity<?> createCatalog(@RequestBody eCatalog catalog) {
         List<eCatalogDto> foundCata = catalogService.findCatalogByNameCatalog(catalog.getNameCatalog().trim());
         if (foundCata.size() > 0 ) {
-            return (ResponseEntity<eCatalogDto>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đã có danh mục này trong hệ thống");
         }
         eCatalogDto catalogDto = catalogService.addCatalog(catalog);
         return ResponseEntity.ok(catalogDto);

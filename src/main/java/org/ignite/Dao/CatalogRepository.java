@@ -23,4 +23,6 @@ public interface CatalogRepository extends IgniteRepository<eCatalog, eCatalogKe
     public List<Cache.Entry<eCatalogKey, eCatalog>> findByNameCatalog(String name_catalog);
 
 
+
+
 }

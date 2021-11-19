@@ -60,6 +60,15 @@ public class BookService {
         return bookDtos;
     }
 
+    public List<eBookDto> getTop10(Integer catalogId) {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getTop10(catalogId);
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for (Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
+    }
+
 
     public List<eBookDto> getBooksByCatalogId(Integer catalogId) {
         List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByCatalogId(catalogId);
@@ -95,11 +104,11 @@ public class BookService {
         return new eBookDto(entry.getKey(), book1);
     }
 
-    public eBookDto updateViewers(String bookId) {
+    public eBookDto updateLikes(String bookId) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
         IgniteCache cache = bookRepository.cache();
         eBook book = (eBook) cache.get(entry.getKey());
-        book.setViewers(book.getViewers() + 1);
+        book.setLikes(book.getLikes() + 1);
         cache.replace(entry.getKey(), book);
         return new eBookDto(entry.getKey(), book);
     }
@@ -114,11 +123,4 @@ public class BookService {
         return new eBookDto(key, value);
     }
 
-//    public String loadImg(eBook book) {
-//        return "/api/v1/FileUpload/img";
-//    }
-//
-//    public String loadPdf(eBook book) {
-//        return "/api/v1/FileUpload/file" + book.getFileLink();
-//    }
 }

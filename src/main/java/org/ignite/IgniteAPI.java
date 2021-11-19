@@ -57,7 +57,7 @@ public class IgniteAPI {
         SqlFieldsQuery qry = new SqlFieldsQuery(
                 "INSERT INTO eBook(eBook_id, title, description, image_link, file_link, language, release_year, last_update, viewers, user_id, eCatalog_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         bookCache.query(qry.setArgs(bookKey.geteBookId(), book.getTitle(), book.getDescription(), book.getImageLink(),
-                book.getFileLink(), book.getLanguage(), book.getReleaseYear(), book.getLastUpdate(), book.getViewers(),
+                book.getFileLink(), book.getLanguage(), book.getReleaseYear(), book.getLastUpdate(), book.getLikes(),
                 bookKey.getUSERID(), book.getCatalogId()));
         System.out.println("Insert Book Success!");
     }

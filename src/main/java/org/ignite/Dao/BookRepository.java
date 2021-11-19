@@ -36,6 +36,8 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
             "ORDER BY lastUpdate DESC LIMIT 5")
     public List<Cache.Entry<eBookKey, eBook>> getListNewBooks();
 
+    @Query("SELECT * FROM eBook WHERE catalogId = ? ORDER BY likes DESC LIMIT 10;")
+    public List<Cache.Entry<eBookKey, eBook>> getTop10(Integer catalogId);
 
     public List<Cache.Entry<eBookKey, eBook>> findByCatalogId(Integer catalogId);
 

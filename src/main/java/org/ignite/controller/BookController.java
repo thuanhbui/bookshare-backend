@@ -3,7 +3,9 @@ package org.ignite.controller;
 import org.apache.ignite.springdata22.repository.config.Query;
 import org.ignite.Entity.*;
 import org.ignite.service.BookService;
+import org.ignite.service.CatalogService;
 import org.ignite.service.ImageStorageService;
+import org.ignite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +25,22 @@ public class BookController {
     @Autowired
     private ImageStorageService storageService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CatalogService catalogService;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookById(@PathVariable String id) {
         eBookDto bookDto = bookService.findBookById(id);
         if (bookDto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
+        eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+        bookDto.setCatalogName(catalogDto.getNameCatalog());
+        UserDto userDto = userService.findUserById(bookDto.getUserId());
+        bookDto.setUserName(userDto.getUsername());
         return ResponseEntity.ok(bookDto);
     }
 
@@ -71,6 +83,14 @@ public class BookController {
         return ResponseEntity.ok(bookDtos);
     }
 
+    @GetMapping("/top10/{catalogId}")
+    public ResponseEntity<?> getTop10Books(@PathVariable (value = "catalogId") Integer catalogId) {
+        List<eBookDto> bookDtos = bookService.getTop10(catalogId);
+        if (bookDtos == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách của danh mục này trong hệ thống");
+        return ResponseEntity.ok(bookDtos);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBookTitle(@PathVariable String id, @RequestBody eBook book) {
         eBookDto bookDto = bookService.findBookById(id);
@@ -83,11 +103,11 @@ public class BookController {
     }
 
     @PutMapping("/viewers/{id}")
-    public ResponseEntity<?> updateViewers(@PathVariable String id) {
+    public ResponseEntity<?> updateLikes(@PathVariable String id) {
         eBookDto bookDto = bookService.findBookById(id);
         if (bookDto == null)
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
-        eBookDto eBookDto = bookService.updateViewers(id);
+        eBookDto eBookDto = bookService.updateLikes(id);
         return ResponseEntity.ok(eBookDto);
     }
 

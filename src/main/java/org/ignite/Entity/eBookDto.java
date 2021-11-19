@@ -12,9 +12,11 @@ public class eBookDto {
     private String language;
     private Date releaseYear;
     private Date lastUpdate;
-    private int viewers;
+    private int likes;
     private int userId;
     private int catalogId;
+    private String catalogName;
+    private String userName;
 
     public eBookDto() {
 
@@ -29,7 +31,7 @@ public class eBookDto {
         this.language = value.getLanguage();
         this.releaseYear = value.getReleaseYear();
         this.lastUpdate = value.getLastUpdate();
-        this.viewers = value.getViewers();
+        this.likes = value.getLikes();
         this.catalogId = value.getCatalogId();
         this.userId = key.getUSERID();
     }
@@ -98,12 +100,12 @@ public class eBookDto {
         this.lastUpdate = lastUpdate;
     }
 
-    public int getViewers() {
-        return viewers;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setViewers(int viewers) {
-        this.viewers = viewers;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public int getUserId() {
@@ -122,20 +124,20 @@ public class eBookDto {
         this.catalogId = catalogId;
     }
 
-    @Override
-    public String toString() {
-        return "eBookDto{" +
-                "bookId='" + bookId + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", imageLink='" + imageLink + '\'' +
-                ", fileLink='" + fileLink + '\'' +
-                ", language='" + language + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", lastUpdate=" + lastUpdate +
-                ", viewers=" + viewers +
-                ", userId=" + userId +
-                ", catalogId=" + catalogId +
-                '}';
+    public String getCatalogName() {
+        return catalogName;
     }
+
+    public void setCatalogName(String catalogName) {
+        this.catalogName = catalogName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
 }

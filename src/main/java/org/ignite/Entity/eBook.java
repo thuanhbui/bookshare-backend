@@ -17,13 +17,13 @@ public class eBook {
     private String language;
     private Date releaseYear;
     private Date lastUpdate;
-    private int viewers;
+    private int likes;
     private int catalogId;
 
     public eBook() {}
 
     public eBook(String title, String description, String imageLink, String fileLink,
-                 String language, Date releaseYear, Date lastUpdate, int viewers, int catalogId) {
+                 String language, Date releaseYear, Date lastUpdate, int likes, int catalogId) {
         this.title = title;
         this.description = description;
         this.imageLink = imageLink;
@@ -31,12 +31,12 @@ public class eBook {
         this.language = language;
         this.releaseYear = releaseYear;
         this.lastUpdate = lastUpdate;
-        this.viewers = viewers;
+        this.likes = likes;
         this.catalogId = catalogId;
     }
 
     public eBook(String title, String description, MultipartFile imgMulti, String imageLink, MultipartFile fileMulti, String fileLink,
-                 String language, Date releaseYear, Date lastUpdate, int viewers, int catalogId) {
+                 String language, Date releaseYear, Date lastUpdate, int likes, int catalogId) {
         this.title = title;
         this.description = description;
         this.imgMulti = imgMulti;
@@ -46,7 +46,7 @@ public class eBook {
         this.language = language;
         this.releaseYear = releaseYear;
         this.lastUpdate = lastUpdate;
-        this.viewers = viewers;
+        this.likes = likes;
         this.catalogId = catalogId;
     }
 
@@ -106,12 +106,12 @@ public class eBook {
         this.lastUpdate = lastUpdate;
     }
 
-    public int getViewers() {
-        return viewers;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setViewers(int viewers) {
-        this.viewers = viewers;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public int getCatalogId() {
@@ -143,12 +143,14 @@ public class eBook {
         return "eBook{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", imgMulti=" + imgMulti +
                 ", imageLink='" + imageLink + '\'' +
+                ", fileMulti=" + fileMulti +
                 ", fileLink='" + fileLink + '\'' +
                 ", language='" + language + '\'' +
                 ", releaseYear=" + releaseYear +
                 ", lastUpdate=" + lastUpdate +
-                ", viewers=" + viewers +
+                ", likes=" + likes +
                 ", catalogId=" + catalogId +
                 '}';
     }
