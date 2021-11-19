@@ -1,5 +1,7 @@
 package org.ignite.Entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.sql.Date;
 
 public class User {
@@ -8,6 +10,7 @@ public class User {
     private String password;
     private String email;
     private String phone;
+    private MultipartFile avatarMulti;
     private String avatar;
     private Date registeredDate;
 
@@ -57,5 +60,13 @@ public class User {
 
     public void setRegisteredDate(Date registeredDate) {
         this.registeredDate = registeredDate;
+    }
+
+    public MultipartFile getAvatarMulti() {
+        return avatarMulti;
+    }
+
+    public void setAvatarMulti(MultipartFile avatarMulti) {
+        this.avatarMulti = avatarMulti;
     }
 }

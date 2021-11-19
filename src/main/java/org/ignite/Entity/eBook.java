@@ -1,6 +1,8 @@
 package org.ignite.Entity;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.sql.Date;
 
 
@@ -8,7 +10,9 @@ public class eBook {
 
     private String title;
     private String description;
+    private MultipartFile imgMulti;
     private String imageLink;
+    private MultipartFile fileMulti;
     private String fileLink;
     private String language;
     private Date releaseYear;
@@ -16,11 +20,28 @@ public class eBook {
     private int viewers;
     private int catalogId;
 
+    public eBook() {}
+
     public eBook(String title, String description, String imageLink, String fileLink,
                  String language, Date releaseYear, Date lastUpdate, int viewers, int catalogId) {
         this.title = title;
         this.description = description;
         this.imageLink = imageLink;
+        this.fileLink = fileLink;
+        this.language = language;
+        this.releaseYear = releaseYear;
+        this.lastUpdate = lastUpdate;
+        this.viewers = viewers;
+        this.catalogId = catalogId;
+    }
+
+    public eBook(String title, String description, MultipartFile imgMulti, String imageLink, MultipartFile fileMulti, String fileLink,
+                 String language, Date releaseYear, Date lastUpdate, int viewers, int catalogId) {
+        this.title = title;
+        this.description = description;
+        this.imgMulti = imgMulti;
+        this.imageLink = imageLink;
+        this.fileMulti = fileMulti;
         this.fileLink = fileLink;
         this.language = language;
         this.releaseYear = releaseYear;
@@ -99,6 +120,22 @@ public class eBook {
 
     public void setCatalogId(int catalogId) {
         this.catalogId = catalogId;
+    }
+
+    public MultipartFile getImgMulti() {
+        return imgMulti;
+    }
+
+    public void setImgMulti(MultipartFile imgMulti) {
+        this.imgMulti = imgMulti;
+    }
+
+    public MultipartFile getFileMulti() {
+        return fileMulti;
+    }
+
+    public void setFileMulti(MultipartFile fileMulti) {
+        this.fileMulti = fileMulti;
     }
 
     @Override

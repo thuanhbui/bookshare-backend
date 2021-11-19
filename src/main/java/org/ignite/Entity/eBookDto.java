@@ -24,8 +24,8 @@ public class eBookDto {
         this.bookId = key.geteBookId();
         this.title = value.getTitle();
         this.description = value.getDescription();
-        this.imageLink = value.getImageLink();
-        this.fileLink = value.getFileLink();
+        this.imageLink = "/api/v1/FileUpload/files/" + value.getImageLink();
+        this.fileLink = "/api/v1/FileUpload/files/" + value.getFileLink();
         this.language = value.getLanguage();
         this.releaseYear = value.getReleaseYear();
         this.lastUpdate = value.getLastUpdate();
@@ -120,5 +120,22 @@ public class eBookDto {
 
     public void setCatalogId(int catalogId) {
         this.catalogId = catalogId;
+    }
+
+    @Override
+    public String toString() {
+        return "eBookDto{" +
+                "bookId='" + bookId + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", imageLink='" + imageLink + '\'' +
+                ", fileLink='" + fileLink + '\'' +
+                ", language='" + language + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", lastUpdate=" + lastUpdate +
+                ", viewers=" + viewers +
+                ", userId=" + userId +
+                ", catalogId=" + catalogId +
+                '}';
     }
 }

@@ -4,7 +4,7 @@ package org.ignite.Entity;
 import java.sql.Date;
 
 public class UserDto {
-    private  int id;
+    private  int userid;
     private  String username;
     private String email;
     private String phone;
@@ -17,7 +17,7 @@ public class UserDto {
     }
 
     public UserDto(UserKey key, User value) {
-        this.id = key.getUserId();
+        this.userid = key.getUserId();
         this.username = value.getUsername();
         this.email = value.getEmail();
         this.phone = value.getPhone();
@@ -26,12 +26,12 @@ public class UserDto {
         this.adminId = key.getADMINID();
     }
 
-    public int getId() {
-        return id;
+    public int getUserid() {
+        return userid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public String getUsername() {

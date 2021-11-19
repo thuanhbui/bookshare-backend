@@ -19,17 +19,31 @@ public class FileUploadController {
     //Inject Storage Service here
     @Autowired
     private IStorageService storageService;
-    @PostMapping("")
-    public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile file) {
+
+    @PostMapping("/file")
+    public ResponseEntity<?> uploadFile(@RequestParam("fileLink")MultipartFile fileLink) {
         try {
             //save files to a folder => use a service
-            String generatedFileName = storageService.storeFile(file);
+            String generatedFileName = storageService.storeFile(fileLink);
             return ResponseEntity.ok(generatedFileName);
 
         }catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("error");
         }
     }
+
+    @PostMapping("/img")
+    public ResponseEntity<?> uploadImage(@RequestParam("imageLink")MultipartFile imageLink) {
+        try {
+            //save files to a folder => use a service
+            String generatedFileName = storageService.storeFile(imageLink);
+            return ResponseEntity.ok(generatedFileName);
+
+        }catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("error");
+        }
+    }
+
     //get image's url
     @GetMapping("/files/{fileName:.+}")
 

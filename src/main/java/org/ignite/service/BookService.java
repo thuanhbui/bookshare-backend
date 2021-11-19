@@ -113,4 +113,12 @@ public class BookService {
         bookRepository.cache().put(key, value);
         return new eBookDto(key, value);
     }
+
+//    public String loadImg(eBook book) {
+//        return "/api/v1/FileUpload/img";
+//    }
+//
+//    public String loadPdf(eBook book) {
+//        return "/api/v1/FileUpload/file" + book.getFileLink();
+//    }
 }

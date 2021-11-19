@@ -1,6 +1,7 @@
 package org.ignite.controller;
 
 import org.ignite.Entity.*;
+import org.ignite.service.ImageStorageService;
 import org.ignite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,51 +18,61 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ImageStorageService storageService;
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<?> getUserById(@PathVariable Integer id) {
         UserDto userDto = userService.findUserById(id);
-        if (userDto == null) return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
+        if (userDto == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có người dùng này trong hệ thống");
         return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<?> getAllUsers() {
         List<UserDto> userDtos = userService.getListUsers();
-        if (userDtos == null) return (ResponseEntity<List<UserDto>>) ResponseEntity.status(HttpStatus.NOT_FOUND);
+        if (userDtos == null)
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, chưa có người dùng nào trong hệ thống");
         return ResponseEntity.ok(userDtos);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<UserDto>> findByUsername(@RequestParam (value = "username") String username) {
+    public ResponseEntity<?> findByUsername(@RequestParam (value = "username") String username) {
         List<UserDto> userDtos = userService.findUserByUsername(username);
-        if (userDtos == null) return (ResponseEntity<List<UserDto>>) ResponseEntity.status(HttpStatus.NOT_FOUND);
+        if (userDtos == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy người dùng trong hệ thống");
         return ResponseEntity.ok(userDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @Valid @RequestBody User user)  {
+    public ResponseEntity<?> updateUser(@PathVariable Integer id, @Valid @RequestBody User user)  {
         UserDto userDto = userService.findUserById(id);
-        if (userDto == null) return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
+        if (userDto == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy người dùng trong hệ thống");
+        if (!user.getAvatarMulti().isEmpty()) user.setAvatar(storageService.storeFile(user.getAvatarMulti()));
         userService.updateUser(id, user);
         return ResponseEntity.ok(userDto);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
         UserDto userDto = userService.findUserById(id);
-        if (userDto == null) return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.NOT_FOUND);
+        if (userDto == null)
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy người dùng trong hệ thống");
         userService.deleteUser(id);
         return ResponseEntity.ok(userDto);
     }
 
     @PostMapping("")
-    public ResponseEntity<UserDto> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@ModelAttribute("user") User user) {
         List<UserDto> foundUser = userService.findUserByUsername(user.getUsername().trim());
         if (foundUser.size() > 0 ) {
-            return (ResponseEntity<UserDto>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đã có tên người dùng này trong hệ thống");
         }
+        if (!user.getAvatarMulti().isEmpty()) user.setAvatar(storageService.storeFile(user.getAvatarMulti()));
         UserDto userDto = userService.addUser(user);
 
         return ResponseEntity.ok(userDto);
