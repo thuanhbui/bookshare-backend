@@ -69,11 +69,11 @@ VALUES(1, 'eBookshare', '123456', '19020281@vnu.edu.vn', '1234567890', null, '20
 INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
 VALUES(2, 'XZ', '09876', 'adghj@gmail.com', '76543', null, '2021-11-17', 1);
 
-INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(1, 'Đời sống', 1);
-INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(2, 'Giải trí', 1);
-INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(3, 'Khoa học', 1);
-INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(4, 'Giáo dục', 1);
-INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(5, 'Kinh tế', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(1, 'Life skills', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(2, 'Entertainment', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(3, 'Science', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(4, 'Education', 1);
+INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(5, 'Economy', 1);
 
 
 
