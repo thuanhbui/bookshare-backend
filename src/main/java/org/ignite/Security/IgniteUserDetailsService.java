@@ -31,7 +31,7 @@ public class IgniteUserDetailsService implements UserDetailsService {
 
         Cache.Entry<Integer, Admin> entryAdmin =  adminRepository.findByUsername(s);
 
-        Cache.Entry<UserKey, User> entryUser =  userRepository.findByUsername(s);
+        List<Cache.Entry<UserKey, User>> entryUser =  userRepository.findByUsername(s);
 
 
         if (entryAdmin != null) {
@@ -41,8 +41,8 @@ public class IgniteUserDetailsService implements UserDetailsService {
         }
 
 
-        if (entryUser != null) {
-            User user = entryUser.getValue();
+        if (entryUser.size() > 0) {
+            User user = entryUser.get(0).getValue();
             UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles("USER").build();
             return userDetails;
         }

@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -33,24 +32,26 @@ public class SercutiryConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/home","/books/*").permitAll() // không cần đăng nhập nhưng đang lỗi :(
+                .antMatchers("/login", "/welcome", "/").permitAll() // không cần đăng nhập
                 .antMatchers("/users/*", "/books/*", "/catalogs/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedPage("/403")
                 .and().formLogin()//
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")//
-                .defaultSuccessUrl("/userAccountInfo")//
+                .defaultSuccessUrl("/userInfo") //
                 .failureUrl("/login?error=true")//
-                .usernameParameter("username")//
+                .usernameParameter("username")  //
                 .passwordParameter("password")
                 // Cấu hình cho Logout Page.
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful")
                 .and() //
                 .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60)
+                .tokenValiditySeconds(1 * 24 * 60 * 60) // 24h
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and().cors().and().csrf().disable();
     }
 
 
@@ -61,6 +62,17 @@ public class SercutiryConfig extends WebSecurityConfigurerAdapter {
         return db;
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -62,12 +62,15 @@ public class ImageStorageService implements IStorageService{
                 throw new RuntimeException("File must be <= 5Mb");
             }
             //File must be rename, why ?
+//            String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+//            String generatedFileName = file.getOriginalFilename().replace("." + fileExtension, "");
+//            Optional<eBook> entryFile = bookRepository.findByFileLink(file.getOriginalFilename());
+//            Optional<eBook> entryImg = bookRepository.findByImageLink(file.getOriginalFilename());
+//            if (!entryFile.isEmpty() || !entryImg.isEmpty()) generatedFileName = generatedFileName+"(1)."+fileExtension;
+//            else generatedFileName = generatedFileName+"."+fileExtension;
             String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-            String generatedFileName = file.getOriginalFilename().replace("." + fileExtension, "");
-            Optional<eBook> entryFile = bookRepository.findByFileLink(file.getOriginalFilename());
-            Optional<eBook> entryImg = bookRepository.findByImageLink(file.getOriginalFilename());
-            if (!entryFile.isEmpty() || !entryImg.isEmpty()) generatedFileName = generatedFileName+"(1)."+fileExtension;
-            else generatedFileName = generatedFileName+"."+fileExtension;
+            String generatedFileName = UUID.randomUUID().toString().replace("-", "");
+            generatedFileName = generatedFileName+"."+fileExtension;
             Path destinationFilePath = this.storageFolder.resolve(
                             Paths.get(generatedFileName))
                     .normalize().toAbsolutePath();

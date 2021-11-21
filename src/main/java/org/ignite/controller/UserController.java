@@ -40,10 +40,10 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<?> findByUsername(@RequestParam (value = "username") String username) {
-        UserDto userDto = userService.findUserByUsername(username);
-        if (userDto == null)
+        List<UserDto> userDtos = userService.findUserByUsername(username);
+        if (userDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy người dùng trong hệ thống");
-        return ResponseEntity.ok(userDto);
+        return ResponseEntity.ok(userDtos);
     }
 
     @PutMapping("/{id}")
@@ -68,8 +68,8 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<?> createUser(@ModelAttribute("user") User user) {
-        UserDto foundUser = userService.findUserByUsername(user.getUsername().trim());
-        if (foundUser != null) {
+        List<UserDto> foundUser = userService.findUserByUsername(user.getUsername().trim());
+        if (foundUser.size() > 0 ) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đã có tên người dùng này trong hệ thống");
         }
         if (!user.getAvatarMulti().isEmpty()) user.setAvatar(storageService.storeFile(user.getAvatarMulti()));

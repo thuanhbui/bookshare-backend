@@ -21,7 +21,7 @@ public class UserDto {
         this.username = value.getUsername();
         this.email = value.getEmail();
         this.phone = value.getPhone();
-        this.avatar = value.getAvatar();
+        this.avatar = "/api/v1/FileUpload/files/" + value.getAvatar();
         this.registeredDate = value.getRegisteredDate();
         this.adminId = key.getADMINID();
     }

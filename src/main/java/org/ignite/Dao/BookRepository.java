@@ -47,8 +47,8 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Override
     IgniteCache<eBookKey, eBook> cache();
 
-    public Optional<eBook> findByImageLink(String imageLink);
+    public List<Cache.Entry<eBookKey, eBook>> findByImageLink(String imageLink);
 
-    public Optional<eBook> findByFileLink(String imageLink);
+    public List<Cache.Entry<eBookKey, eBook>> findByFileLink(String imageLink);
 
 }

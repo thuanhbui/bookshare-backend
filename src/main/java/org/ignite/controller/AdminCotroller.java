@@ -33,9 +33,9 @@ public class AdminCotroller {
     }
 
     @GetMapping("")
-    public ResponseEntity<AdminDto> findByUsername(@RequestParam (value = "username") String username) {
-        AdminDto admin = adminService.findAdminByUsername(username);
-        return ResponseEntity.ok(admin);
+    public ResponseEntity<?> findByUsername(@RequestParam (value = "username") String username) {
+        List<AdminDto> admins = adminService.findAdminByUsername(username);
+        return ResponseEntity.ok(admins);
     }
 
     @PutMapping("/{id}")
@@ -58,8 +58,8 @@ public class AdminCotroller {
 
     @PostMapping("")
     public ResponseEntity<?> createAdmin(@RequestBody Admin admin) {
-        AdminDto foundUser = adminService.findAdminByUsername(admin.getUsername().trim());
-        if (foundUser != null) {
+        List<AdminDto> foundUser = adminService.findAdminByUsername(admin.getUsername().trim());
+        if (foundUser.size() > 0) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đã có tên người dùng này trong hệ thống");
         }
 

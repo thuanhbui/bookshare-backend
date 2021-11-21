@@ -23,9 +23,13 @@ public class AdminService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public AdminDto findAdminByUsername(String name) {
-        Cache.Entry<Integer, Admin> entry = adminDao.findByUsername(name);
-        return new AdminDto(entry.getKey(), entry.getValue());
+    public List<AdminDto> findAdminByUsername(String name) {
+        List<Cache.Entry<Integer, Admin>> entries = adminDao.findByUsername(name);
+        List<AdminDto> adminDtos = new ArrayList<>();
+        for (Cache.Entry<Integer, Admin> entry : entries) {
+            adminDtos.add(new AdminDto(entry.getKey(), entry.getValue()));
+        }
+        return adminDtos;
     }
 
     public AdminDto findAdminById(int admin_id) {
