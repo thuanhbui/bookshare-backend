@@ -5,6 +5,7 @@ import org.apache.ignite.IgniteCache;
 import org.ignite.Dao.UserRepository;
 import org.ignite.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
@@ -18,6 +19,9 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserDto findUserByUsername(String name) {
         Cache.Entry<UserKey, User> entry = userRepository.findByUsername(name);
@@ -45,7 +49,7 @@ public class UserService {
         IgniteCache cache = userRepository.cache();
         User user1 = (User) cache.get(key);
         if (user.getUsername() != null) user1.setUsername(user.getUsername());
-        if (user.getPassword() != null) user1.setPassword(user.getPassword());
+        if (user.getPassword() != null) user1.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getEmail() != null)    user1.setEmail(user.getEmail());
         if (user.getPhone() != null) user1.setPhone(user.getPhone());
         if (user.getAvatar() != null) user1.setAvatar(user.getAvatar());
@@ -59,6 +63,7 @@ public class UserService {
 
     public UserDto addUser(User value) {
         UserKey key = new UserKey(UUID.randomUUID().hashCode(), 1);
+        value.setPassword(passwordEncoder.encode(value.getPassword()));
         userRepository.cache().put(key, value);
         return new UserDto(key, value);
     }

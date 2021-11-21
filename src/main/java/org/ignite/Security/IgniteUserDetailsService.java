@@ -28,18 +28,25 @@ public class IgniteUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Cache.Entry<UserKey, User> entry1 =  userRepository.findByUsername(s);
-        User user = entry1.getValue();
-        if (user != null) {
-            UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles("USER").build();
-            return userDetails;
-        }
-        Cache.Entry<Integer, Admin> entry2 =  adminRepository.findByUsername(s);
-        Admin admin = entry2.getValue();
-        if (admin != null) {
+
+        Cache.Entry<Integer, Admin> entryAdmin =  adminRepository.findByUsername(s);
+
+        Cache.Entry<UserKey, User> entryUser =  userRepository.findByUsername(s);
+
+
+        if (entryAdmin != null) {
+            Admin admin = entryAdmin.getValue();
             UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(admin.getUsername()).password(admin.getPassword()).roles("ADMIN").build();
             return userDetails;
         }
+
+
+        if (entryUser != null) {
+            User user = entryUser.getValue();
+            UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles("USER").build();
+            return userDetails;
+        }
+
         throw new UsernameNotFoundException("User " + s + " was not found in the database");
     }
 }

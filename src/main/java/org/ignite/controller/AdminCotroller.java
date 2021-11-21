@@ -3,6 +3,7 @@ package org.ignite.controller;
 import org.ignite.Entity.Admin;
 import org.ignite.Entity.AdminDto;
 import org.ignite.Entity.AdminMapper;
+import org.ignite.Entity.UserDto;
 import org.ignite.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,11 +57,15 @@ public class AdminCotroller {
     }
 
     @PostMapping("")
-    public ResponseEntity<AdminMapper> createAdmin(@RequestBody Admin admin) {
-        AdminMapper adminMapper = new AdminMapper();
-        adminMapper.toAdminDto(admin);
-        adminService.addAdmin(admin);
-        return ResponseEntity.ok(adminMapper);
+    public ResponseEntity<?> createAdmin(@RequestBody Admin admin) {
+        AdminDto foundUser = adminService.findAdminByUsername(admin.getUsername().trim());
+        if (foundUser != null) {
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đã có tên người dùng này trong hệ thống");
+        }
+
+        AdminDto adminDto = adminService.addAdmin(admin);
+
+        return ResponseEntity.ok(adminDto);
     }
 
 

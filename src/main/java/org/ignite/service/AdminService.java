@@ -4,6 +4,7 @@ import org.apache.ignite.IgniteCache;
 import org.ignite.Dao.AdminRepository;
 import org.ignite.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import javax.cache.Cache;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Component
@@ -18,7 +20,8 @@ public class AdminService {
 
     @Autowired AdminRepository adminDao;
 
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AdminDto findAdminByUsername(String name) {
         Cache.Entry<Integer, Admin> entry = adminDao.findByUsername(name);
@@ -44,7 +47,7 @@ public class AdminService {
         IgniteCache<Integer, Admin> cache = adminDao.cache();
         Admin admin1 = cache.get(adminId);
         if (admin.getUsername() != null) admin1.setUsername(admin.getUsername());
-        if (admin.getPassword() != null) admin1.setPassword(admin.getPassword());
+        if (admin.getPassword() != null) admin1.setPassword(passwordEncoder.encode(admin.getPassword()));
         cache.replace(adminId, admin1);
         return new AdminDto(adminId, admin1);
     }
@@ -54,8 +57,11 @@ public class AdminService {
         adminDao.deleteByAdminId(adminId);
     }
 
-    public Admin addAdmin(Admin value) {
-        return adminDao.save(value);
+    public AdminDto addAdmin(Admin value) {
+        Integer key = UUID.randomUUID().hashCode();
+        value.setPassword(passwordEncoder.encode(value.getPassword()));
+        adminDao.cache().put(key, value);
+        return new AdminDto(key, value);
     }
 
 }
