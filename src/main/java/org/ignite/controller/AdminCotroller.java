@@ -32,9 +32,9 @@ public class AdminCotroller {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<AdminDto>> findByUsername(@RequestParam (value = "username") String username) {
-        List<AdminDto> amins = adminService.findAdminByUsername(username);
-        return ResponseEntity.ok(amins);
+    public ResponseEntity<AdminDto> findByUsername(@RequestParam (value = "username") String username) {
+        AdminDto admin = adminService.findAdminByUsername(username);
+        return ResponseEntity.ok(admin);
     }
 
     @PutMapping("/{id}")

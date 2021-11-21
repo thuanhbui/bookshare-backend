@@ -19,13 +19,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<UserDto> findUserByUsername(String name) {
-        List<Cache.Entry<UserKey, User>> entries = userRepository.findByUsername(name);
-        List<UserDto> userDtos = new ArrayList<>();
-        for(Cache.Entry<UserKey, User> entry : entries) {
-            userDtos.add(new UserDto(entry.getKey(), entry.getValue()));
-        }
-        return userDtos;
+    public UserDto findUserByUsername(String name) {
+        Cache.Entry<UserKey, User> entry = userRepository.findByUsername(name);
+        return new UserDto(entry.getKey(), entry.getValue());
     }
 
     public UserDto findUserById(int userId) {

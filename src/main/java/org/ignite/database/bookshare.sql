@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS admin;
 CREATE TABLE admin(
     adminId INT(15) PRIMARY KEY,
     username CHAR(32),
-    password CHAR(32),
+    password CHAR(250),
     registeredDate DATE
 )WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=admin, VALUE_TYPE=org.ignite.Entity.Admin";
 
@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user(
     userId INT(15),
     username CHAR(32),
-    password CHAR(32),
+    password CHAR(250),
     email CHAR(50),
     phone CHAR(15),
     avatar CHAR(128),
@@ -61,13 +61,15 @@ CREATE TABLE histories (
 )WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories";
 
 SET STREAMING ON;
+-- password = baogiomoihetbug
+INSERT INTO admin(adminId, username, password, registeredDate) VALUES(1, 'bookshare', '$2a$10$x3oN4qvV/UVmSspU9RWGxeBYUZUxkqPd90RPidkw1ucqQzTYuaK4C', '2021-11-17');
 
-INSERT INTO admin(adminId, username, password, registeredDate) VALUES(1, 'bookshare', 'baogiomoihetbug', '2021-11-17');
-
+-- password = 123456
 INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
-VALUES(1, 'eBookshare', '123456', '19020281@vnu.edu.vn', '1234567890', null, '2021-11-17', 1);
+VALUES(1, 'eBookshare', '$2a$10$S86yX6fWpg5bjL3H2aQSmeXmgj.6DwA9rreoPtKFRh2emVa7t29Py', '19020281@vnu.edu.vn', '1234567890', null, '2021-11-17', 1);
+-- password = ignite
 INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
-VALUES(2, 'XZ', '09876', 'adghj@gmail.com', '76543', null, '2021-11-17', 1);
+VALUES(2, 'XZ', '$2a$10$Ynb0K2xjbPZQRbhxpJ0Ld.8NoUbPu1Ob0EC3WpIqbzYK.jDim62jq', 'adghj@gmail.com', '76543', null, '2021-11-17', 1);
 
 INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(1, 'Life skills', 1);
 INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(2, 'Entertainment', 1);
