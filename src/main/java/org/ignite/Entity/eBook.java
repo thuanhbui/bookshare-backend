@@ -17,13 +17,13 @@ public class eBook {
     private String language;
     private Date releaseYear;
     private Date lastUpdate;
-    private int likes;
-    private int catalogId;
+    private Integer likes;
+    private Integer catalogId;
 
     public eBook() {}
 
     public eBook(String title, String description, String imageLink, String fileLink,
-                 String language, Date releaseYear, Date lastUpdate, int likes, int catalogId) {
+                 String language, Date releaseYear, Date lastUpdate, Integer likes, Integer catalogId) {
         this.title = title;
         this.description = description;
         this.imageLink = imageLink;
@@ -106,19 +106,19 @@ public class eBook {
         this.lastUpdate = lastUpdate;
     }
 
-    public int getLikes() {
+    public Integer getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(Integer likes) {
         this.likes = likes;
     }
 
-    public int getCatalogId() {
+    public Integer getCatalogId() {
         return catalogId;
     }
 
-    public void setCatalogId(int catalogId) {
+    public void setCatalogId(Integer catalogId) {
         this.catalogId = catalogId;
     }
 

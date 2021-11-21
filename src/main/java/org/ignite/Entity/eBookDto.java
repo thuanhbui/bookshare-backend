@@ -12,9 +12,9 @@ public class eBookDto {
     private String language;
     private Date releaseYear;
     private Date lastUpdate;
-    private int likes;
-    private int userId;
-    private int catalogId;
+    private Integer likes;
+    private Integer userId;
+    private Integer catalogId;
     private String catalogName;
     private String userName;
 
@@ -100,27 +100,27 @@ public class eBookDto {
         this.lastUpdate = lastUpdate;
     }
 
-    public int getLikes() {
+    public Integer getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(Integer likes) {
         this.likes = likes;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getCatalogId() {
+    public Integer getCatalogId() {
         return catalogId;
     }
 
-    public void setCatalogId(int catalogId) {
+    public void setCatalogId(Integer catalogId) {
         this.catalogId = catalogId;
     }
 

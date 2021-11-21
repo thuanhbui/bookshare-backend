@@ -14,8 +14,6 @@ CREATE TABLE eCatalog(
     PRIMARY KEY (catalogId, adminId)
 )WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=adminId, CACHE_NAME=catalog, KEY_TYPE=org.ignite.Entity.eCatalogKey, VALUE_TYPE=org.ignite.Entity.eCatalog";
 
---CREATE INDEX idx_nameCatalog ON eCatalog (nameCatalog);
-
 DROP TABLE IF EXISTS user;
 CREATE TABLE user(
     userId INT(15),
@@ -46,7 +44,7 @@ CREATE TABLE eBook(
     PRIMARY KEY (eBookId, userId)
 )WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=userId, CACHE_NAME=eBook, KEY_TYPE=org.ignite.Entity.eBookKey, VALUE_TYPE=org.ignite.Entity.eBook";
 
---CREATE INDEX idx_title ON eBook (title);
+CREATE INDEX idx_title ON eBook (title);
 
 DROP TABLE if EXISTS eBookshelf;
 CREATE TABLE eBookshelf(

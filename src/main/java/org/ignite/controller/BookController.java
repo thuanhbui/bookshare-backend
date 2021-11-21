@@ -1,5 +1,6 @@
 package org.ignite.controller;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.ignite.springdata22.repository.config.Query;
 import org.ignite.Entity.*;
 import org.ignite.service.BookService;
@@ -49,6 +50,12 @@ public class BookController {
         List<eBookDto> bookDtos = bookService.getListBooks();
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách trong hệ thống");
+        for (eBookDto bookDto : bookDtos) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+            UserDto userDto = userService.findUserById(bookDto.getUserId());
+            bookDto.setUserName(userDto.getUsername());
+        }
         return ResponseEntity.ok(bookDtos);
     }
 
@@ -57,6 +64,12 @@ public class BookController {
         List<eBookDto> bookDtos = bookService.findBookByTitle(title);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy sách trong hệ thống");
+        for (eBookDto bookDto : bookDtos) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+            UserDto userDto = userService.findUserById(bookDto.getUserId());
+            bookDto.setUserName(userDto.getUsername());
+        }
         return ResponseEntity.ok(bookDtos);
     }
 
@@ -72,6 +85,12 @@ public class BookController {
         List<eBookDto> bookDtos = bookService.getBooksByUserId(catalogId);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có sách của người dùng này trong hệ thống");
+        for (eBookDto bookDto : bookDtos) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+            UserDto userDto = userService.findUserById(bookDto.getUserId());
+            bookDto.setUserName(userDto.getUsername());
+        }
         return ResponseEntity.ok(bookDtos);
     }
 
@@ -80,6 +99,12 @@ public class BookController {
         List<eBookDto> bookDtos = bookService.getListNewBooks();
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách trong hệ thống");
+        for (eBookDto bookDto : bookDtos) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+            UserDto userDto = userService.findUserById(bookDto.getUserId());
+            bookDto.setUserName(userDto.getUsername());
+        }
         return ResponseEntity.ok(bookDtos);
     }
 
@@ -88,17 +113,30 @@ public class BookController {
         List<eBookDto> bookDtos = bookService.getTop10(catalogId);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách của danh mục này trong hệ thống");
+        for (eBookDto bookDto : bookDtos) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+            UserDto userDto = userService.findUserById(bookDto.getUserId());
+            bookDto.setUserName(userDto.getUsername());
+        }
         return ResponseEntity.ok(bookDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateBookTitle(@PathVariable String id, @RequestBody eBook book) {
+    public ResponseEntity<?> updateBookTitle(@PathVariable String id, @ModelAttribute("book") eBook book) {
         eBookDto bookDto = bookService.findBookById(id);
         if (bookDto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
         if (!book.getImgMulti().isEmpty())  book.setImageLink(storageService.storeFile(book.getImgMulti()));
         if (!book.getFileMulti().isEmpty()) book.setFileLink(storageService.storeFile(book.getFileMulti()));
+
         eBookDto eBookDto = bookService.updateBook(id, book);
+
+        eCatalogDto catalogDto = catalogService.findCatalogByKey(eBookDto.getCatalogId());
+        eBookDto.setCatalogName(catalogDto.getNameCatalog());
+        UserDto userDto = userService.findUserById(eBookDto.getUserId());
+        eBookDto.setUserName(userDto.getUsername());
+
         return ResponseEntity.ok(eBookDto);
     }
 
@@ -108,6 +146,12 @@ public class BookController {
         if (bookDto == null)
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
         eBookDto eBookDto = bookService.updateLikes(id);
+        if (bookDto.getCatalogId() != null) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(eBookDto.getCatalogId());
+            eBookDto.setCatalogName(catalogDto.getNameCatalog());
+        }
+        UserDto userDto = userService.findUserById(eBookDto.getUserId());
+        eBookDto.setUserName(userDto.getUsername());
         return ResponseEntity.ok(eBookDto);
     }
 
@@ -117,6 +161,10 @@ public class BookController {
         if (bookDto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
         bookService.deleteBook(id);
+        eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+        bookDto.setCatalogName(catalogDto.getNameCatalog());
+        UserDto userDto = userService.findUserById(bookDto.getUserId());
+        bookDto.setUserName(userDto.getUsername());
         return ResponseEntity.ok(bookDto);
     }
 
@@ -129,6 +177,12 @@ public class BookController {
         if (!book.getImgMulti().isEmpty())  book.setImageLink(storageService.storeFile(book.getImgMulti()));
         if (!book.getFileMulti().isEmpty()) book.setFileLink(storageService.storeFile(book.getFileMulti()));
         eBookDto bookDto = bookService.addBook(book, userId);
+        if (bookDto.getCatalogId() != null) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+        }
+        UserDto userDto = userService.findUserById(bookDto.getUserId());
+        bookDto.setUserName(userDto.getUsername());
         return ResponseEntity.ok(bookDto);
     }
 

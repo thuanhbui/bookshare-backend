@@ -119,6 +119,8 @@ public class BookService {
 
     public eBookDto addBook(eBook value, int userID) {
         eBookKey key = new eBookKey(UUID.randomUUID().toString(), 1);
+        value.setLastUpdate(new java.sql.Date(System.currentTimeMillis()));
+        value.setLikes(0);
         bookRepository.cache().put(key, value);
         return new eBookDto(key, value);
     }

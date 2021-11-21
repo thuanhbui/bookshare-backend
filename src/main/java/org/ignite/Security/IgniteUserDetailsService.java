@@ -29,13 +29,13 @@ public class IgniteUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        Cache.Entry<Integer, Admin> entryAdmin =  adminRepository.findByUsername(s);
+        List<Cache.Entry<Integer, Admin>> entryAdmin =  adminRepository.findByUsername(s);
 
         List<Cache.Entry<UserKey, User>> entryUser =  userRepository.findByUsername(s);
 
 
-        if (entryAdmin != null) {
-            Admin admin = entryAdmin.getValue();
+        if (entryAdmin.size() > 0) {
+            Admin admin = entryAdmin.get(0).getValue();
             UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(admin.getUsername()).password(admin.getPassword()).roles("ADMIN").build();
             return userDetails;
         }
