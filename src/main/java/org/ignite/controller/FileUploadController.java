@@ -54,7 +54,6 @@ public class FileUploadController {
                     .ok()
                     .contentType(MediaType.IMAGE_JPEG)
                     .contentType(MediaType.APPLICATION_PDF)
-                    .contentType(MediaType.IMAGE_PNG)
                     .body(bytes);
         }catch (Exception exception) {
             return ResponseEntity.noContent().build();

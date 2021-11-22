@@ -32,8 +32,8 @@ public class SercutiryConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/welcome", "/").permitAll() // không cần đăng nhập
-                .antMatchers("/users/*", "/books/*", "/catalogs/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/login", "/api/*", "/books/*").permitAll() // không cần đăng nhập
+                .antMatchers("/users/*", "/books/*", "/catalogs/*", "/api/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedPage("/403")

@@ -56,18 +56,11 @@ public class ImageStorageService implements IStorageService{
             if(!isImageFile(file)) {
                 throw new RuntimeException("You can only upload image file");
             }
-            //file must be <= 5Mb
+            //file must be <= 15Mb
             float fileSizeInMegabytes = file.getSize() / 1_000_000.0f;
             if(fileSizeInMegabytes > 15.0f) {
-                throw new RuntimeException("File must be <= 5Mb");
+                throw new RuntimeException("File must be <= 15Mb");
             }
-            //File must be rename, why ?
-//            String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-//            String generatedFileName = file.getOriginalFilename().replace("." + fileExtension, "");
-//            Optional<eBook> entryFile = bookRepository.findByFileLink(file.getOriginalFilename());
-//            Optional<eBook> entryImg = bookRepository.findByImageLink(file.getOriginalFilename());
-//            if (!entryFile.isEmpty() || !entryImg.isEmpty()) generatedFileName = generatedFileName+"(1)."+fileExtension;
-//            else generatedFileName = generatedFileName+"."+fileExtension;
             String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
             String generatedFileName = UUID.randomUUID().toString().replace("-", "");
             generatedFileName = generatedFileName+"."+fileExtension;
