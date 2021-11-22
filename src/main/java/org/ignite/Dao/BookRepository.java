@@ -47,8 +47,7 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Override
     IgniteCache<eBookKey, eBook> cache();
 
-    public List<Cache.Entry<eBookKey, eBook>> findByImageLink(String imageLink);
-
-    public List<Cache.Entry<eBookKey, eBook>> findByFileLink(String imageLink);
+    @Query("SELECT * FROM EBOOK WHERE title LIKE ? " )
+    public List<Cache.Entry<eBookKey, eBook>> findByKeyWord(String keyWord);
 
 }

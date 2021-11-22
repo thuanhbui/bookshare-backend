@@ -61,6 +61,7 @@ public class BookController {
 
     @GetMapping("")
     public ResponseEntity<?> findByTitle(@RequestParam (value = "title") String title) {
+        System.out.println(title);
         List<eBookDto> bookDtos = bookService.findBookByTitle(title);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy sách trong hệ thống");

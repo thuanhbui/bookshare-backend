@@ -2,6 +2,7 @@ package org.ignite.service;
 
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.WordUtils;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
@@ -28,7 +29,9 @@ public class BookService {
 
 
     public List<eBookDto> findBookByTitle(String title) {
-        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByTitle(title);
+        title = '%' + WordUtils.capitalizeFully(title) + '%';
+        System.out.println(title);
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByKeyWord(title);
         List<eBookDto> bookDtos = new ArrayList<>();
         for(Cache.Entry<eBookKey, eBook> entry : entries) {
             bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
@@ -92,7 +95,7 @@ public class BookService {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
         IgniteCache cache = bookRepository.cache();
         eBook book1 = (eBook) cache.get(entry.getKey());
-        if (book.getTitle() != null)   book1.setTitle(book.getTitle());
+        if (book.getTitle() != null)   book1.setTitle(WordUtils.capitalizeFully(book.getTitle()));
         if (book.getDescription() != null) book1.setDescription(book.getDescription());
         if (book.getImageLink() != null) book1.setImageLink(book.getImageLink());
         if (book.getFileLink() != null) book1.setFileLink(book.getFileLink());
@@ -121,6 +124,7 @@ public class BookService {
         eBookKey key = new eBookKey(UUID.randomUUID().toString(), 1);
         value.setLastUpdate(new java.sql.Date(System.currentTimeMillis()));
         value.setLikes(0);
+        value.setTitle(WordUtils.capitalizeFully(value.getTitle()));
         bookRepository.cache().put(key, value);
         return new eBookDto(key, value);
     }
