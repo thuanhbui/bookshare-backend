@@ -11,6 +11,7 @@ public class UserDto {
     private String avatar;
     private Date registeredDate;
     private int adminId;
+    private final String role = "USER";
 
     public UserDto() {
 
@@ -81,4 +82,10 @@ public class UserDto {
     public void setAdminId(int adminId) {
         this.adminId = adminId;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+
 }

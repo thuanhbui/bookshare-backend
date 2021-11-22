@@ -13,6 +13,7 @@ public class User {
     private MultipartFile avatarMulti;
     private String avatar;
     private Date registeredDate;
+    private String role;
 
     public String getUsername() {
         return username;
@@ -69,4 +70,6 @@ public class User {
     public void setAvatarMulti(MultipartFile avatarMulti) {
         this.avatarMulti = avatarMulti;
     }
+
+
 }

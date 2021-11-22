@@ -7,8 +7,8 @@ import java.sql.Date;
 public class AdminDto {
     private int adminId;
     private String username;
-  //  private String password;
     private Date registeredDate;
+    private final String role = "ADMIN";
 
     public AdminDto() {
 
@@ -17,7 +17,6 @@ public class AdminDto {
     public AdminDto(Integer key, Admin value) {
         this.adminId = key;
         this.username = value.getUsername();
-       // this.password = value.getPassword();
         this.registeredDate = value.getRegisteredDate();
     }
 
@@ -43,5 +42,9 @@ public class AdminDto {
 
     public void setRegisteredDate(Date registeredDate) {
         this.registeredDate = registeredDate;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
