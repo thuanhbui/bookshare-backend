@@ -64,7 +64,6 @@ public class AdminCotroller {
         }
 
         AdminDto adminDto = adminService.addAdmin(admin);
-
         return ResponseEntity.ok(adminDto);
     }
 

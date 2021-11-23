@@ -31,6 +31,17 @@ public class BookService {
     @Autowired
     private LikeRepository likeRepository;
 
+    public List<eBookDto> getLikedBook(Integer userId) {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByLike(userId);
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for (Cache.Entry<eBookKey, eBook> entry : entries) {
+            eBookDto bookDto = new eBookDto(entry.getKey(), entry.getValue());
+            bookDto.setCheckLike(1);
+            bookDtos.add(bookDto);
+        }
+        return bookDtos;
+    }
+
     public LikeDto toggleLike(Integer userId, String bookId) {
         IgniteCache<LikeKey, Like> cache = likeRepository.cache();
         LikeKey key = new LikeKey(userId, bookId);
@@ -58,9 +69,14 @@ public class BookService {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(bookId);
         if (entry == null)  return  null;
         eBookDto bookDto = new eBookDto(entry.getKey(), entry.getValue());
-        IgniteCache<LikeKey, Like> cache = likeRepository.cache();
-        LikeKey key = new LikeKey(userId, bookId);
-        bookDto.setCheckLike(cache.get(key).getLiked());
+        if (userId == null) {
+            bookDto.setCheckLike(0);
+        } else {
+            IgniteCache<LikeKey, Like> cache = likeRepository.cache();
+            LikeKey key = new LikeKey(userId, bookId);
+            bookDto.setCheckLike(cache.get(key).getLiked());
+        }
+
         return bookDto;
     }
 
@@ -117,10 +133,6 @@ public class BookService {
     }
 
 
-
-//    public List<eBookDto> getLikedBook(Integer userId) {
-//        Cache.
-//    }
 
     public List<eBookDto> getListBooks() {
         List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListBooks();

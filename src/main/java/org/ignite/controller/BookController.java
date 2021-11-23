@@ -32,6 +32,14 @@ public class BookController {
     @Autowired
     private CatalogService catalogService;
 
+    @GetMapping("/liked")
+    public ResponseEntity<?> getLikedBooks(@RequestParam (value = "userId") Integer userId) {
+        List<eBookDto> bookDtos = bookService.getLikedBook(userId);
+        if (bookDtos.size() > 0) {
+            return ResponseEntity.ok(bookDtos);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Người dùng chưa like");
+    }
 
 
     @GetMapping("/{id}")

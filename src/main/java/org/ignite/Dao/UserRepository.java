@@ -20,6 +20,8 @@ public interface UserRepository extends IgniteRepository<User, UserKey> {
 
     public List<Cache.Entry<UserKey, User>> findByUsername(String name);
 
+    public List<Cache.Entry<UserKey, User>> findByPassword(String password);
+
     @Query("SELECT * FROM USER WHERE userId = ?")
     public Cache.Entry<UserKey, User> findById(Integer user_id);
 

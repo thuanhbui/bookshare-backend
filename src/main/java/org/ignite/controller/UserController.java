@@ -67,14 +67,12 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> createUser(@ModelAttribute("user") User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
         List<UserDto> foundUser = userService.findUserByUsername(user.getUsername().trim());
         if (foundUser.size() > 0 ) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đã có tên người dùng này trong hệ thống");
         }
-        if (!user.getAvatarMulti().isEmpty()) user.setAvatar(storageService.storeFile(user.getAvatarMulti()));
         UserDto userDto = userService.addUser(user);
-
         return ResponseEntity.ok(userDto);
     }
 }
