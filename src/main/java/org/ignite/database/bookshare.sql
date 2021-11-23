@@ -134,19 +134,19 @@ VALUES('19', 'Tung Sản phẩm', 'Dù bạn đã có công việc kinh doanh ha
 ('22', 'Kinh Doanh Như Một Cuộc Chơi', null, 'kinh-doanh-nhu-mot-cuoc-choi.jpg', 'kinh-doanh-nhu-mot-cuoc-choi.pdf', 'Việt Nam', null, '2021-11-17', 0, 5, 1),
 ('23', 'Marketing Truyền Miệng', null, 'marketing-truyen-mieng.jpg', 'marketing-truyen-mieng.pdf', 'Việt Nam', null, '2021-11-17', 0, 5, 1),
 ('24', 'Xì Xầm Vs Hét To - Bí Kíp X Trong Quảng Cáo PR', null, 'xi-xam-het-to-bi-kip-x-trong-quang-cao-pr.jpg', 'xi-xam-het-to-bi-kip-x-trong-quang-cao-pr.pdf', 'Việt Nam', null, '2021-11-17', 0, 4, 1),
-('25', 'Vượt Lên Những Chuyện Nhỏ Trong Công Việc', null, 'vuot-len-nhung-chuyen-nho-trong-cong-viec.jpg', 'vuot-len-nhung-chuyen-nho-trong-cong-viec.pdf', 'Việt Nam', null, '2021-11-17', 0, 1, 1),
+('25', 'Vượt Lên Những Chuyện Nhỏ Trong Công Việc', null, 'vuot-len-nhung-chuyen-nho-trong-cong-viec.jpg', 'vuot-len-nhung-chuyen-nho-trong-cong-viec.pdf', 'Việt Nam', null, '2021-11-20', 0, 1, 1),
 ('26', 'Kẻ Thành Công Phải Biết Lắng Nghe', null, 'ke-thanh-cong-phai-biet-lang-nghe.jpg', 'ke-thanh-cong-phai-biet-lang-nghe.pdf', null, null, '2021-11-17', 0, 4, 1),
 ('27', 'Nửa Kia Của Hitler', null, 'Nua-kia-cua-Hitler.jpg', 'Nua-kia-cua-Hitler.pdf', null, null, '2021-11-17', 0, 2, 1),
 ('28', 'Đứng Dậy Mạnh Mẽ', null, 'Dung-day-manh-me.png', 'Dung-day-manh-me.pdf', null, null, '2021-11-17', 0, 1, 1),
 ('29', 'Bí Quyết Làm Giàu Của Napoleon Hill', null, 'bi-quyet-lam-giau-cua-napoleon-hill.jpg', 'bi-quyet-lam-giau-cua-napoleon-hill.pdf', null, null, '2021-11-17', 0, 3, 1),
-('30', 'Phụ Nữ 20 Thay Đổi Để Thành Công', null, 'phu-nu-20-thay-doi-de-thanh-cong.jpg', 'phu-nu-20-thay-doi-de-thanh-cong.pdf', null, null, '2021-11-17', 0, 1, 1),
-('31', 'Hành Trình Biến Thương Hiệu Thành Biểu Tượng', null, 'Hanh-trinh-bien-thuong-hieu-thanh-bieu-tuong.jpg', 'Hanh-trinh-bien-thuong-hieu-thanh-bieu-tuong.pdf', null, null, '2021-11-17', 0, 5, 1),
+('30', 'Phụ Nữ 20 Thay Đổi Để Thành Công', null, 'phu-nu-20-thay-doi-de-thanh-cong.jpg', 'phu-nu-20-thay-doi-de-thanh-cong.pdf', null, null, '2021-10-05', 0, 1, 1),
+('31', 'Hành Trình Biến Thương Hiệu Thành Biểu Tượng', null, 'Hanh-trinh-bien-thuong-hieu-thanh-bieu-tuong.jpg', 'Hanh-trinh-bien-thuong-hieu-thanh-bieu-tuong.pdf', null, null, '2021-06-23', 0, 5, 1),
 ('32', 'Thuật Lãnh Đạo', null, 'thuat-lanh-dao.jpg', 'thuat-lanh-dao.pdf', null, null, '2021-11-17', 0, 1, 1),
 ('33', 'Thuật Đàm Phán', null, 'thuat-dam-phan.jpg', 'thuat-dam-phan.pdf', null, null, '2021-11-17', 0, 1, 1),
 ('34', 'Bạn Không Thể Đổi Hướng Gió, Nhưng Có Thể Điều Khiển Cánh Buồm', null, 'ban-khong-the-thay-doi-huong-gio.png', 'ban-khong-the-thay-doi-huong-gio.pdf', null, null, '2021-11-17', 0, 1, 1),
-('35', 'Cho Tôi Xin Một Vé Đi Tuổi Thơ', null, 'cho-toi-xin-mot-ve-di-tuoi-tho.jpg', 'cho-toi-xin-mot-ve-di-tuoi-tho.pdf', 'Viêt Nam', null, '2021-11-17', 0, 2, 1),
-('36', 'Cô Gái Đến Từ Hôm Qua', null, 'co-gai-den-tu-hom-qua.jpg', 'co-gai-den-tu-hom-qua.pdf', 'Việt Nam', null, '2021-11-17', 0,2, 1),
-('37', 'Quốc Gia Khởi Nghiệp', null, 'quoc-gia-khoi-nghiep.jpg', 'quoc-gia-khoi-nghiep.pdf', null, null, '2021-11-17', 0, 5, 1);
+('35', 'Cho Tôi Xin Một Vé Đi Tuổi Thơ', null, 'cho-toi-xin-mot-ve-di-tuoi-tho.jpg', 'cho-toi-xin-mot-ve-di-tuoi-tho.pdf', 'Viêt Nam', null, '2021-11-24', 0, 2, 1),
+('36', 'Cô Gái Đến Từ Hôm Qua', null, 'co-gai-den-tu-hom-qua.jpg', 'co-gai-den-tu-hom-qua.pdf', 'Việt Nam', null, '2021-11-23', 0,2, 1),
+('37', 'Quốc Gia Khởi Nghiệp', null, 'quoc-gia-khoi-nghiep.jpg', 'quoc-gia-khoi-nghiep.pdf', null, null, '2021-11-22', 0, 5, 1);
 
 
 SET STREAMING OFF;

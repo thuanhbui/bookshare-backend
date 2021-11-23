@@ -104,6 +104,8 @@ public class BookController {
     public ResponseEntity<?> findBooksByUserId(@RequestParam (value = "userId") Integer userId,
                                                @RequestParam (value =  "catalogId") Integer catalogId,
                                                @RequestParam (value = "search") String keyword) {
+        UserDto user = userService.findUserById(userId);
+        if (user == null) userId = null;
         List<eBookDto> bookDtos = bookService.findBookByKeyUserCata(keyword, userId, catalogId);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có sách của người dùng này trong hệ thống");
@@ -117,8 +119,12 @@ public class BookController {
     }
 
     @GetMapping("/new")
-    public ResponseEntity<?> getListNewBooks() {
-        List<eBookDto> bookDtos = bookService.getListNewBooks();
+    public ResponseEntity<?> getListNewBooks(@RequestParam (value = "userId") Integer userId,
+                                             @RequestParam (value =  "catalogId") Integer catalogId,
+                                             @RequestParam (value = "search") String keyword) {
+        UserDto user = userService.findUserById(userId);
+        if (user == null) userId = null;
+        List<eBookDto> bookDtos = bookService.getListNewBooks(userId, catalogId, keyword);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách trong hệ thống");
         for (eBookDto bookDto : bookDtos) {
@@ -130,9 +136,13 @@ public class BookController {
         return ResponseEntity.ok(bookDtos);
     }
 
-    @GetMapping("/top10/{catalogId}")
-    public ResponseEntity<?> getTop10Books(@PathVariable (value = "catalogId") Integer catalogId) {
-        List<eBookDto> bookDtos = bookService.getTop10(catalogId);
+    @GetMapping("/top10")
+    public ResponseEntity<?> getTop10Books(@RequestParam (value = "userId") Integer userId,
+                                           @RequestParam (value =  "catalogId") Integer catalogId,
+                                           @RequestParam (value = "search") String keyword) {
+        UserDto user = userService.findUserById(userId);
+        if (user == null) userId = null;
+        List<eBookDto> bookDtos = bookService.getTop10(catalogId, userId, keyword);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách của danh mục này trong hệ thống");
         for (eBookDto bookDto : bookDtos) {
