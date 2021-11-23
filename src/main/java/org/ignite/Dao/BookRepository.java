@@ -76,9 +76,5 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
             + "INNER JOIN user ON likes.userId = user.userId WHERE user.userId = ? AND liked = 1")
     public List<Cache.Entry<eBookKey, eBook>> findByLike(Integer userId);
 
-//    @Query("SELECT eBook.* FROM eBook INNER JOIN likes ON eBook.eBookId = likes.eBookId "
-//            + "INNER JOIN user ON likes.userId = user.userId WHERE user.userId = ? AND liked = 1 "
-//            + "AND eBook.title LIKE '")
-//    public List<Cache.Entry<eBookKey, eBook>> findByLikeKey(Integer userId, String keyWord);
 
 }
