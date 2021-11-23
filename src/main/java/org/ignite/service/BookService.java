@@ -7,6 +7,7 @@ import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.ignite.Dao.BookRepository;
+import org.ignite.Dao.LikeRepository;
 import org.ignite.Entity.*;
 import org.ignite.config.IgniteConfig;
 import org.ignite.exception.NotFoundException;
@@ -27,6 +28,14 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private LikeRepository likeRepository;
+
+    public void toggleLike(Integer userId, String bookId) {
+        Integer key = UUID.randomUUID().hashCode();
+        Like value = new Like(userId, bookId);
+        likeRepository.cache().put(key, value);
+    }
 
     public List<eBookDto> findBookByTitle(String title) {
         title = '%' + WordUtils.capitalizeFully(title) + '%';
@@ -39,11 +48,64 @@ public class BookService {
         return bookDtos;
     }
 
+    public List<eBookDto> findBookByKeyUserCata(String keyWord, Integer userId, Integer cataId) {
+        keyWord = '%' + WordUtils.capitalizeFully(keyWord) + '%';
+        if (userId == null && cataId == null) {
+            List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByKeyWord(keyWord);
+            List<eBookDto> bookDtos = new ArrayList<>();
+            for(Cache.Entry<eBookKey, eBook> entry : entries) {
+                bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+            }
+            return bookDtos;
+        } else {
+            if (userId == null) {
+                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByKeyCata(keyWord, cataId);
+                List<eBookDto> bookDtos = new ArrayList<>();
+                for(Cache.Entry<eBookKey, eBook> entry : entries) {
+                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+                }
+                return bookDtos;
+            } else if (cataId == null){
+                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByKeyUser(keyWord, userId);
+                List<eBookDto> bookDtos = new ArrayList<>();
+                for(Cache.Entry<eBookKey, eBook> entry : entries) {
+                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+                }
+                return bookDtos;
+            } else {
+                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByKeyUserCata(keyWord, userId, cataId);
+                List<eBookDto> bookDtos = new ArrayList<>();
+                for(Cache.Entry<eBookKey, eBook> entry : entries) {
+                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+                }
+                return bookDtos;
+            }
+        }
+    }
+
     public eBookDto findBookById(String book_id) {
         Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(book_id);
         if (entry == null)  return  null;
         return new eBookDto(entry.getKey(), entry.getValue());
     }
+
+    public eBookDto checkLike(String id, Integer userId) {
+        Cache.Entry<eBookKey, eBook> entry = bookRepository.findById(id);
+        if (entry == null)  return  null;
+        eBookDto bookDto = new eBookDto(entry.getKey(), entry.getValue());
+        List<Cache.Entry<Integer, Like>> entries = likeRepository.findByUserId(userId);
+        bookDto.setLike(false);
+        for(Cache.Entry<Integer, Like> entry1 : entries) {
+            if (entry1.getValue().geteBookId().equals(id)) {
+                bookDto.setLike(true);
+            }
+        }
+        return bookDto;
+    }
+
+//    public List<eBookDto> getLikedBook(Integer userId) {
+//        Cache.
+//    }
 
     public List<eBookDto> getListBooks() {
         List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListBooks();

@@ -10,6 +10,7 @@ import org.ignite.Dao.UserRepository;
 import org.ignite.Entity.*;
 import org.ignite.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -47,7 +48,7 @@ public class MainController {
             return ResponseEntity.ok(adminDto);
         }
 
-        return ResponseEntity.ok("Không tìm thấy username phù hợp !");
+        return new ResponseEntity<>("USER_NOT_FOUND", HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)

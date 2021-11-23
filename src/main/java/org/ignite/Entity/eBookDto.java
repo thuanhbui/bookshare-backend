@@ -17,6 +17,7 @@ public class eBookDto {
     private Integer catalogId;
     private String catalogName;
     private String userName;
+    private boolean like;
 
     public eBookDto() {
 
@@ -140,4 +141,11 @@ public class eBookDto {
         this.userName = userName;
     }
 
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
+    }
 }

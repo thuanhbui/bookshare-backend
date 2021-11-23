@@ -33,9 +33,10 @@ public class BookController {
     private CatalogService catalogService;
 
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookById(@PathVariable String id) {
-        eBookDto bookDto = bookService.findBookById(id);
+    public ResponseEntity<?> getBookById(@PathVariable String id, @RequestParam (value = "userId") Integer userId) {
+        eBookDto bookDto = bookService.checkLike(id, userId);
         if (bookDto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
         eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
@@ -43,6 +44,16 @@ public class BookController {
         UserDto userDto = userService.findUserById(bookDto.getUserId());
         bookDto.setUserName(userDto.getUsername());
         return ResponseEntity.ok(bookDto);
+    }
+
+    @GetMapping("/toggleLike")
+    public ResponseEntity<?> toggleLike(@RequestParam (value = "userId") Integer userId,
+                                        @RequestParam (value = "bookId") String bookId) {
+        if (userId == null || bookId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("UserId hoặc BookId đang rỗng");
+        }
+        bookService.toggleLike(userId, bookId);
+        return ResponseEntity.ok("Like thành công");
     }
 
     @GetMapping("/all")
@@ -82,8 +93,10 @@ public class BookController {
         return ResponseEntity.ok(bookDtos);
     }
     @GetMapping("/ofUser")
-    public ResponseEntity<?> findBooksByUserId(@RequestParam (value = "userId") Integer catalogId) {
-        List<eBookDto> bookDtos = bookService.getBooksByUserId(catalogId);
+    public ResponseEntity<?> findBooksByUserId(@RequestParam (value = "userId") Integer userId,
+                                               @RequestParam (value =  "catalogId") Integer catalogId,
+                                               @RequestParam (value = "search") String keyword) {
+        List<eBookDto> bookDtos = bookService.findBookByKeyUserCata(keyword, userId, catalogId);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có sách của người dùng này trong hệ thống");
         for (eBookDto bookDto : bookDtos) {

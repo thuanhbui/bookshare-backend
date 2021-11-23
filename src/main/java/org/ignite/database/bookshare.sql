@@ -49,16 +49,26 @@ CREATE INDEX idx_title ON eBook (title);
 DROP TABLE if EXISTS eBookshelf;
 CREATE TABLE eBookshelf(
     userId INT(15) PRIMARY KEY,
-    eBookId INT(15)
+    eBookId VARCHAR
 ) WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=eBookshelf";
 
 DROP TABLE if EXISTS histories;
 CREATE TABLE histories (
     userId INT(15) PRIMARY KEY,
-    eBookId INT(15),
+    eBookId VARCHAR,
 )WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories";
 
+DROP TABLE if EXISTS likes;
+CREATE TABLE likes (
+    likeId INT(15) PRIMARY KEY,
+    userId INT(15),
+    eBookId VARCHAR,
+)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=likes, VALUE_TYPE=org.ignite.Entity.Like";
+
 SET STREAMING ON;
+
+INSERT INTO likes(likeId, userId, eBookId) VALUES(1, 1, 1);
+
 
 -- password = baogiomoihetbug
 INSERT INTO admin(adminId, username, password, registeredDate)
