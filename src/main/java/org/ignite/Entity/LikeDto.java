@@ -1,26 +1,18 @@
 package org.ignite.Entity;
 
 public class LikeDto {
-    private Integer likeId;
     private Integer userId;
     private String eBookId;
+    private int like;
 
     public LikeDto() {
 
     }
 
-    public LikeDto(Integer key, Like value) {
-        this.likeId = key;
-        this.userId = value.getUserId();
-        this.eBookId = value.geteBookId();
-    }
-
-    public Integer getLikeId() {
-        return likeId;
-    }
-
-    public void setLikeId(Integer likeId) {
-        this.likeId = likeId;
+    public LikeDto(LikeKey key, Like value) {
+        this.userId = key.getUserId();
+        this.eBookId = key.getEBOOKID();
+        this.like = value.getLiked();
     }
 
     public Integer getUserId() {
@@ -37,5 +29,13 @@ public class LikeDto {
 
     public void seteBookId(String eBookId) {
         this.eBookId = eBookId;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 }

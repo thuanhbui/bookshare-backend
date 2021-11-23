@@ -52,8 +52,8 @@ public class BookController {
         if (userId == null || bookId == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("UserId hoặc BookId đang rỗng");
         }
-        bookService.toggleLike(userId, bookId);
-        return ResponseEntity.ok("Like thành công");
+        LikeDto likeDto = bookService.toggleLike(userId, bookId);
+        return ResponseEntity.ok(likeDto);
     }
 
     @GetMapping("/all")
@@ -159,7 +159,7 @@ public class BookController {
         eBookDto bookDto = bookService.findBookById(id);
         if (bookDto == null)
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
-        eBookDto eBookDto = bookService.updateLikes(id);
+        eBookDto eBookDto = bookService.increaseLikes(id);
         if (bookDto.getCatalogId() != null) {
             eCatalogDto catalogDto = catalogService.findCatalogByKey(eBookDto.getCatalogId());
             eBookDto.setCatalogName(catalogDto.getNameCatalog());

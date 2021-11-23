@@ -4,6 +4,7 @@ import org.apache.ignite.springdata22.repository.IgniteRepository;
 import org.apache.ignite.springdata22.repository.config.Query;
 import org.apache.ignite.springdata22.repository.config.RepositoryConfig;
 import org.ignite.Entity.Like;
+import org.ignite.Entity.LikeKey;
 import org.springframework.stereotype.Repository;
 
 import javax.cache.Cache;
@@ -12,13 +13,13 @@ import java.util.List;
 
 @Repository
 @RepositoryConfig(cacheName = "likes")
-public interface LikeRepository extends IgniteRepository<Like, Integer> {
+public interface LikeRepository extends IgniteRepository<Like, LikeKey> {
 
     @Query("SELECT * FROM likes WHERE userId = ?")
-    public List<Cache.Entry<Integer, Like>> findByUserId(Integer userId);
+    public List<Cache.Entry<LikeKey, Like>> findByUserId(Integer userId);
 
     @Query("SELECT * FROM likes WHERE eBookId = ?")
-    public List<Cache.Entry<Integer, Like>> findByEBookId(String eBookId);
+    public List<Cache.Entry<LikeKey, Like>> findByEBookId(String eBookId);
 
 //    @Query("SELECT eBook.* FROM eBook INNER JOIN likes ON eBook.eBookId = likes.eBookId "
 //        + "INNER JOIN user ON likes.userId = user.userId WHERE user.userId = ?")

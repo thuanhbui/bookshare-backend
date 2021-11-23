@@ -60,14 +60,15 @@ CREATE TABLE histories (
 
 DROP TABLE if EXISTS likes;
 CREATE TABLE likes (
-    likeId INT(15) PRIMARY KEY,
     userId INT(15),
-    eBookId VARCHAR,
-)WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=likes, VALUE_TYPE=org.ignite.Entity.Like";
+    eBookId CHAR,
+    liked INT,
+    PRIMARY KEY (userId, eBookId)
+)WITH "TEMPLATE=partitioned, BACKUPS=1, atomicity=transactional, AFFINITY_KEY=eBookId, CACHE_NAME=likes, KEY_TYPE=org.ignite.Entity.LikeKey, VALUE_TYPE=org.ignite.Entity.Like";
 
 SET STREAMING ON;
 
-INSERT INTO likes(likeId, userId, eBookId) VALUES(1, 1, 1);
+INSERT INTO likes(userId, eBookId, liked) VALUES(1, 1, 1);
 
 
 -- password = baogiomoihetbug

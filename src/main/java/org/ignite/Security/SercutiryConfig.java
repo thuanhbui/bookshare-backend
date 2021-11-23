@@ -32,24 +32,24 @@ public class SercutiryConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/logout").permitAll() // không cần đăng nhập
+                .antMatchers("/", "/login", "/logout", "/users/**", "/books/**", "/catalogs/**", "/api/**", "/admin/**", "/FileUpload/**").permitAll() // không cần đăng nhập
                 .antMatchers("/users/*", "/books/*", "/catalogs/*", "/api/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and().exceptionHandling().accessDeniedPage("/403")
-                .and().formLogin()//
-                // Submit URL của trang login
-                .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
-                .defaultSuccessUrl("/userInfo")//
-                .failureUrl("/login?error=true")//
-                .usernameParameter("username")//
-                .passwordParameter("password")
-                // Cấu hình cho Logout Page.
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful")
-                .and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60)
+//                .and().exceptionHandling().accessDeniedPage("/403")
+//                .and().formLogin()//
+//                // Submit URL của trang login
+//                .loginProcessingUrl("/j_spring_security_check") // Submit URL
+//                .loginPage("/login")//
+//                .defaultSuccessUrl("/userInfo")//
+//                .failureUrl("/login?error=true")//
+//                .usernameParameter("username")//
+//                .passwordParameter("password")
+//                // Cấu hình cho Logout Page.
+//                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful")
+//                .and() //
+//                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+//                .tokenValiditySeconds(1 * 24 * 60 * 60)
                 .and()
                 .httpBasic()
                 .and().cors().and().csrf().disable();
