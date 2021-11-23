@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping("")
     public ResponseEntity<?> findByUsername(@RequestParam (value = "username") String username) {
         List<UserDto> userDtos = userService.findUserByUsername(username);
-        if (userDtos == null)
+        if (userDtos.size() == 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy người dùng trong hệ thống");
         return ResponseEntity.ok(userDtos);
     }

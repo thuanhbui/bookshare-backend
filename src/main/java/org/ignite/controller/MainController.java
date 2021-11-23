@@ -37,15 +37,17 @@ public class MainController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Entity entity) {
         String userName = entity.getUsername();
-        List<Cache.Entry<UserKey, org.ignite.Entity.User>> entries = userRepository.findByUsername(userName);
-        if (entries.size() > 0 ) {
-            UserDto userDto = new UserDto(entries.get(0).getKey(), entries.get(0).getValue());
-            return ResponseEntity.ok(userDto);
+        List<Cache.Entry<UserKey, org.ignite.Entity.User>> users = userRepository.findByUsername(userName);
+        if (users.size() > 0 ) {
+            UserDto userDto = new UserDto(users.get(0).getKey(), users.get(0).getValue());
+            if (users.get(0).getValue().getPassword().equals(entity.getPassword()))
+                return ResponseEntity.ok(userDto);
         }
         List<Cache.Entry<Integer, Admin>> admins = adminRepository.findByUsername(userName);
         if (admins.size() > 0 ) {
             AdminDto adminDto = new AdminDto(admins.get(0).getKey(), admins.get(0).getValue());
-            return ResponseEntity.ok(adminDto);
+            if (admins.get(0).getValue().getPassword().equals(entity.getPassword()))
+                return ResponseEntity.ok(adminDto);
         }
 
         return new ResponseEntity<>("USER_NOT_FOUND", HttpStatus.NOT_FOUND);

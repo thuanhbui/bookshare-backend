@@ -74,6 +74,10 @@ public class BookService {
         } else {
             IgniteCache<LikeKey, Like> cache = likeRepository.cache();
             LikeKey key = new LikeKey(userId, bookId);
+            Like value = cache.get(key);
+            if (value == null) {
+                bookDto.setCheckLike(0);
+            } else 
             bookDto.setCheckLike(cache.get(key).getLiked());
         }
 
