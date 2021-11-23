@@ -31,28 +31,16 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     public void deleteByBookId(String bookId);
 
     @Query("SELECT * FROM eBook " +
-            "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
-            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook) AND title LIKE ? " +
+            "WHERE (lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
+            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook)) AND title LIKE ? " +
             "ORDER BY lastUpdate DESC;")
     public List<Cache.Entry<eBookKey, eBook>> getListNewBooks(String keyWord);
 
     @Query("SELECT * FROM eBook " +
-            "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
-            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook) AND userId = ? AND title LIKE ? " +
-            "ORDER BY lastUpdate DESC;")
-    public List<Cache.Entry<eBookKey, eBook>> getListNewBooksUser(Integer userId, String keyWord);
-
-    @Query("SELECT * FROM eBook " +
-            "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
-            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook) AND catalogId = ? AND title LIKE ? " +
+            "WHERE (lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
+            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook)) AND catalogId = ? AND title LIKE ? " +
             "ORDER BY lastUpdate DESC;")
     public List<Cache.Entry<eBookKey, eBook>> getListNewBooksCata(Integer catalogId, String keyWord);
-
-    @Query("SELECT * FROM eBook " +
-            "WHERE lastUpdate < (SELECT MAX(lastUpdate) FROM eBook) " +
-            "OR lastUpdate = (SELECT MAX(lastUpdate) FROM eBook) AND userId = ? AND catalogId = ? AND title LIKE ? " +
-            "ORDER BY lastUpdate DESC;")
-    public List<Cache.Entry<eBookKey, eBook>> getListNewBooksUSerCata(Integer userId, Integer cataID, String keyWord);
 
     @Query("SELECT * FROM eBook WHERE title LIKE ? ORDER BY likes DESC;")
     public List<Cache.Entry<eBookKey, eBook>> getTop10(String keyWord);
@@ -60,11 +48,6 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Query("SELECT * FROM eBook WHERE catalogId = ? AND title LIKE ? ORDER BY likes DESC;")
     public List<Cache.Entry<eBookKey, eBook>> getTop10Cata(Integer catalogId, String keyWord);
 
-    @Query("SELECT * FROM eBook WHERE userId = ? AND title LIKE ? ORDER BY likes DESC;")
-    public List<Cache.Entry<eBookKey, eBook>> getTop10User(Integer userId, String keyWord);
-
-    @Query("SELECT * FROM eBook WHERE catalogId = ? AND userId = ? AND title LIKE ? ORDER BY likes DESC;")
-    public List<Cache.Entry<eBookKey, eBook>> getTop10UserCata(Integer catalogId, Integer userId, String keyWord);
 
     @Query("SELECT * FROM eBook ORDER BY likes DESC;")
     public List<Cache.Entry<eBookKey, eBook>> getHotBooks();

@@ -77,9 +77,9 @@ public class BookService {
         }
     }
 
-    public List<eBookDto> getListNewBooks(Integer userId, Integer cataId, String keyWord) {
+    public List<eBookDto> getListNewBooks(Integer cataId, String keyWord) {
         keyWord = '%' + WordUtils.capitalizeFully(keyWord) + '%';
-        if (userId == null && cataId == null) {
+        if (cataId == null) {
             List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListNewBooks(keyWord);
             List<eBookDto> bookDtos = new ArrayList<>();
             for(Cache.Entry<eBookKey, eBook> entry : entries) {
@@ -87,35 +87,19 @@ public class BookService {
             }
             return bookDtos;
         } else {
-            if (userId == null) {
-                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListNewBooksCata(cataId, keyWord);
-                List<eBookDto> bookDtos = new ArrayList<>();
-                for(Cache.Entry<eBookKey, eBook> entry : entries) {
-                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
-                }
-                return bookDtos;
-            } else if (cataId == null){
-                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListNewBooksUser(userId, keyWord);
-                List<eBookDto> bookDtos = new ArrayList<>();
-                for(Cache.Entry<eBookKey, eBook> entry : entries) {
-                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
-                }
-                return bookDtos;
-            } else {
-                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListNewBooksUSerCata(userId, cataId, keyWord);
-                List<eBookDto> bookDtos = new ArrayList<>();
-                for(Cache.Entry<eBookKey, eBook> entry : entries) {
-                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
-                }
-                return bookDtos;
+            List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getListNewBooksCata(cataId, keyWord);
+            List<eBookDto> bookDtos = new ArrayList<>();
+            for(Cache.Entry<eBookKey, eBook> entry : entries) {
+                bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
             }
+            return bookDtos;
         }
     }
 
-    public List<eBookDto> getTop10(Integer catalogId, Integer userId, String keyWord) {
+    public List<eBookDto> getTop10(Integer catalogId, String keyWord) {
 
         keyWord = '%' + WordUtils.capitalizeFully(keyWord) + '%';
-        if (userId == null && catalogId == null) {
+        if (catalogId == null) {
             List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getTop10(keyWord);
             List<eBookDto> bookDtos = new ArrayList<>();
             for(Cache.Entry<eBookKey, eBook> entry : entries) {
@@ -123,28 +107,12 @@ public class BookService {
             }
             return bookDtos;
         } else {
-            if (userId == null) {
-                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getTop10Cata(catalogId, keyWord);
-                List<eBookDto> bookDtos = new ArrayList<>();
-                for(Cache.Entry<eBookKey, eBook> entry : entries) {
-                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
-                }
-                return bookDtos;
-            } else if (catalogId == null){
-                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getTop10User(userId, keyWord);
-                List<eBookDto> bookDtos = new ArrayList<>();
-                for(Cache.Entry<eBookKey, eBook> entry : entries) {
-                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
-                }
-                return bookDtos;
-            } else {
-                List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getTop10UserCata(catalogId, userId, keyWord);
-                List<eBookDto> bookDtos = new ArrayList<>();
-                for(Cache.Entry<eBookKey, eBook> entry : entries) {
-                    bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
-                }
-                return bookDtos;
+            List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getTop10Cata(catalogId, keyWord);
+            List<eBookDto> bookDtos = new ArrayList<>();
+            for(Cache.Entry<eBookKey, eBook> entry : entries) {
+                bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
             }
+            return bookDtos;
         }
     }
 

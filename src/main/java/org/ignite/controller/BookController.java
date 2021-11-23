@@ -119,12 +119,9 @@ public class BookController {
     }
 
     @GetMapping("/new")
-    public ResponseEntity<?> getListNewBooks(@RequestParam (value = "userId") Integer userId,
-                                             @RequestParam (value =  "catalogId") Integer catalogId,
+    public ResponseEntity<?> getListNewBooks(@RequestParam (value =  "catalogId") Integer catalogId,
                                              @RequestParam (value = "search") String keyword) {
-        UserDto user = userService.findUserById(userId);
-        if (user == null) userId = null;
-        List<eBookDto> bookDtos = bookService.getListNewBooks(userId, catalogId, keyword);
+        List<eBookDto> bookDtos = bookService.getListNewBooks(catalogId, keyword);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách trong hệ thống");
         for (eBookDto bookDto : bookDtos) {
@@ -137,12 +134,9 @@ public class BookController {
     }
 
     @GetMapping("/top10")
-    public ResponseEntity<?> getTop10Books(@RequestParam (value = "userId") Integer userId,
-                                           @RequestParam (value =  "catalogId") Integer catalogId,
+    public ResponseEntity<?> getTop10Books(@RequestParam (value =  "catalogId") Integer catalogId,
                                            @RequestParam (value = "search") String keyword) {
-        UserDto user = userService.findUserById(userId);
-        if (user == null) userId = null;
-        List<eBookDto> bookDtos = bookService.getTop10(catalogId, userId, keyword);
+        List<eBookDto> bookDtos = bookService.getTop10(catalogId, keyword);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách của danh mục này trong hệ thống");
         for (eBookDto bookDto : bookDtos) {
