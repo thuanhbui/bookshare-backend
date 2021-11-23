@@ -77,10 +77,10 @@ VALUES(1, 'bookshare', '$2a$10$x3oN4qvV/UVmSspU9RWGxeBYUZUxkqPd90RPidkw1ucqQzTYu
 
 -- password = 123456
 INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
-VALUES(2, 'eBookshare', '$2a$10$S86yX6fWpg5bjL3H2aQSmeXmgj.6DwA9rreoPtKFRh2emVa7t29Py', '19020281@vnu.edu.vn', '1234567890', null, '2021-11-17', 1);
+VALUES(1, 'eBookshare', '$2a$10$S86yX6fWpg5bjL3H2aQSmeXmgj.6DwA9rreoPtKFRh2emVa7t29Py', '19020281@vnu.edu.vn', '1234567890', null, '2021-11-17', 1);
 -- password = ignite
 INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)
-VALUES(3, 'XZ', '$2a$10$Ynb0K2xjbPZQRbhxpJ0Ld.8NoUbPu1Ob0EC3WpIqbzYK.jDim62jq', 'adghj@gmail.com', '76543', null, '2021-11-17', 1);
+VALUES(2, 'XZ', '$2a$10$Ynb0K2xjbPZQRbhxpJ0Ld.8NoUbPu1Ob0EC3WpIqbzYK.jDim62jq', 'adghj@gmail.com', '76543', null, '2021-11-17', 1);
 
 INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(1, 'LifeSkills', 1);
 INSERT INTO eCatalog(catalogId, nameCatalog, adminId) VALUES(2, 'Entertainment', 1);
