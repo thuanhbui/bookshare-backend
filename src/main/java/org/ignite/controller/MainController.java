@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.ignite.Security.SercutiryConfig;
 import javax.cache.Cache;
 
 @Controller
@@ -33,10 +32,6 @@ public class MainController {
     @Autowired
     private AdminRepository adminRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Entity entity) {
@@ -44,13 +39,14 @@ public class MainController {
         List<Cache.Entry<UserKey, org.ignite.Entity.User>> users = userRepository.findByUsername(userName);
         if (users.size() > 0 ) {
             UserDto userDto = new UserDto(users.get(0).getKey(), users.get(0).getValue());
-            if (users.get(0).getValue().getPassword().equals(passwordEncoder.encode(entity.getPassword())))
+            if (users.get(0).getValue().getPassword().equals(entity.getPassword())) {
                 return ResponseEntity.ok(userDto);
+            }
         }
         List<Cache.Entry<Integer, Admin>> admins = adminRepository.findByUsername(userName);
         if (admins.size() > 0 ) {
             AdminDto adminDto = new AdminDto(admins.get(0).getKey(), admins.get(0).getValue());
-            if (admins.get(0).getValue().getPassword().equals(passwordEncoder.encode(entity.getPassword())))
+            if (admins.get(0).getValue().getPassword().equals(entity.getPassword()))
                 return ResponseEntity.ok(adminDto);
         }
 

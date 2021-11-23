@@ -54,7 +54,7 @@ public class UserService {
         IgniteCache cache = userRepository.cache();
         User user1 = (User) cache.get(key);
         if (user.getUsername() != null) user1.setUsername(user.getUsername());
-        if (user.getPassword() != null) user1.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null) user1.setPassword(user.getPassword());
         if (user.getEmail() != null)    user1.setEmail(user.getEmail());
         if (user.getPhone() != null) user1.setPhone(user.getPhone());
         if (user.getAvatar() != null) user1.setAvatar(user.getAvatar());
@@ -68,7 +68,7 @@ public class UserService {
 
     public UserDto addUser(User value) {
         UserKey key = new UserKey(UUID.randomUUID().hashCode(), 1);
-        value.setPassword(passwordEncoder.encode(value.getPassword()));
+        value.setPassword(value.getPassword());
         userRepository.cache().put(key, value);
         return new UserDto(key, value);
     }
