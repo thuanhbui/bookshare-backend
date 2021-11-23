@@ -44,13 +44,15 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookById(@PathVariable String id, @RequestParam (value = "userId") Integer userId) {
-        eBookDto bookDto = bookService.checkLike(id, userId);
+        eBookDto bookDto1 = bookService.checkLike(id, userId);
+        eBookDto bookDto = bookService.findBookById(id);
         if (bookDto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
         eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
         bookDto.setCatalogName(catalogDto.getNameCatalog());
         UserDto userDto = userService.findUserById(bookDto.getUserId());
         bookDto.setUserName(userDto.getUsername());
+        bookDto.setCheckLike(bookDto1.getCheckLike());
         return ResponseEntity.ok(bookDto);
     }
 

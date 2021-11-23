@@ -39,6 +39,9 @@ public interface BookRepository extends IgniteRepository<eBook, eBookKey> {
     @Query("SELECT * FROM eBook WHERE catalogId = ? ORDER BY likes DESC;")
     public List<Cache.Entry<eBookKey, eBook>> getTop10(Integer catalogId);
 
+    @Query("SELECT * FROM eBook ORDER BY likes DESC;")
+    public List<Cache.Entry<eBookKey, eBook>> getHotBooks(Integer catalogId);
+
     public List<Cache.Entry<eBookKey, eBook>> findByCatalogId(Integer catalogId);
 
     @Query("SELECT * FROM EBOOK WHERE userId = ?")

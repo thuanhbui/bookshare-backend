@@ -34,6 +34,7 @@ public class UserService {
 
     public UserDto findUserById(int userId) {
         Cache.Entry<UserKey, User> entry = userRepository.findById(userId);
+        if (entry == null) return null;
         return new UserDto(entry.getKey(), entry.getValue());
     }
 
