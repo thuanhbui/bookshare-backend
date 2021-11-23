@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(path = "/api/v1/FileUpload")
+@RequestMapping(path = "/FileUpload")
 public class FileUploadController {
     //Inject Storage Service here
     @Autowired
@@ -45,14 +45,27 @@ public class FileUploadController {
     }
 
     //get image's url
-    @GetMapping("/files/{fileName:.+}")
+    @GetMapping("/img/{fileName:.+}")
+
+    public ResponseEntity<byte[]> readDetailImg(@PathVariable String fileName) {
+        try {
+            byte[] bytes = storageService.readFileContent(fileName);
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(bytes);
+        }catch (Exception exception) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping("/file/{fileName:.+}")
 
     public ResponseEntity<byte[]> readDetailFile(@PathVariable String fileName) {
         try {
             byte[] bytes = storageService.readFileContent(fileName);
             return ResponseEntity
                     .ok()
-                    .contentType(MediaType.IMAGE_JPEG)
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(bytes);
         }catch (Exception exception) {

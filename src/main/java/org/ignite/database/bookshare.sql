@@ -59,8 +59,10 @@ CREATE TABLE histories (
 )WITH "TEMPLATE=partitioned, BACKUPS=1, CACHE_NAME=histories";
 
 SET STREAMING ON;
+
 -- password = baogiomoihetbug
-INSERT INTO admin(adminId, username, password, registeredDate) VALUES(1, 'bookshare', '$2a$10$x3oN4qvV/UVmSspU9RWGxeBYUZUxkqPd90RPidkw1ucqQzTYuaK4C', '2021-11-17');
+INSERT INTO admin(adminId, username, password, registeredDate)
+VALUES(1, 'bookshare', '$2a$10$x3oN4qvV/UVmSspU9RWGxeBYUZUxkqPd90RPidkw1ucqQzTYuaK4C', '2021-11-17');
 
 -- password = 123456
 INSERT INTO user(userId, username, password, email, phone, avatar, registeredDate, adminId)

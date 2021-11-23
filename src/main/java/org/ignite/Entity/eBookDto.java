@@ -26,8 +26,8 @@ public class eBookDto {
         this.bookId = key.geteBookId();
         this.title = value.getTitle();
         this.description = value.getDescription();
-        this.imageLink = "/api/v1/FileUpload/files/" + value.getImageLink();
-        this.fileLink = "/api/v1/FileUpload/files/" + value.getFileLink();
+        this.imageLink = "/FileUpload/img/" + value.getImageLink();
+        this.fileLink = "/FileUpload/file/" + value.getFileLink();
         this.language = value.getLanguage();
         this.releaseYear = value.getReleaseYear();
         this.lastUpdate = value.getLastUpdate();
