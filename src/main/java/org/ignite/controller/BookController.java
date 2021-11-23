@@ -44,15 +44,13 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookById(@PathVariable String id, @RequestParam (value = "userId") Integer userId) {
-        eBookDto bookDto1 = bookService.checkLike(id, userId);
-        eBookDto bookDto = bookService.findBookById(id);
+        eBookDto bookDto = bookService.checkLike(id, userId);
         if (bookDto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không có mã sách này trong hệ thống");
         eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
         bookDto.setCatalogName(catalogDto.getNameCatalog());
         UserDto userDto = userService.findUserById(bookDto.getUserId());
         bookDto.setUserName(userDto.getUsername());
-        bookDto.setCheckLike(bookDto1.getCheckLike());
         return ResponseEntity.ok(bookDto);
     }
 
@@ -137,6 +135,20 @@ public class BookController {
         List<eBookDto> bookDtos = bookService.getTop10(catalogId);
         if (bookDtos == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách của danh mục này trong hệ thống");
+        for (eBookDto bookDto : bookDtos) {
+            eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
+            bookDto.setCatalogName(catalogDto.getNameCatalog());
+            UserDto userDto = userService.findUserById(bookDto.getUserId());
+            bookDto.setUserName(userDto.getUsername());
+        }
+        return ResponseEntity.ok(bookDtos);
+    }
+
+    @GetMapping("/hotBooks")
+    public ResponseEntity<?> getHotBooks() {
+        List<eBookDto> bookDtos = bookService.getHotBooks();
+        if (bookDtos == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hiện tại, không có sách trong hệ thống");
         for (eBookDto bookDto : bookDtos) {
             eCatalogDto catalogDto = catalogService.findCatalogByKey(bookDto.getCatalogId());
             bookDto.setCatalogName(catalogDto.getNameCatalog());

@@ -77,10 +77,9 @@ public class BookService {
             Like value = cache.get(key);
             if (value == null) {
                 bookDto.setCheckLike(0);
-            } else 
+            } else
             bookDto.setCheckLike(cache.get(key).getLiked());
         }
-
         return bookDto;
     }
 
@@ -165,6 +164,14 @@ public class BookService {
         return bookDtos;
     }
 
+    public List<eBookDto> getHotBooks() {
+        List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.getHotBooks();
+        List<eBookDto> bookDtos = new ArrayList<>();
+        for (Cache.Entry<eBookKey, eBook> entry : entries) {
+            bookDtos.add(new eBookDto(entry.getKey(), entry.getValue()));
+        }
+        return bookDtos;
+    }
 
     public List<eBookDto> getBooksByCatalogId(Integer catalogId) {
         List<Cache.Entry<eBookKey, eBook>> entries = bookRepository.findByCatalogId(catalogId);

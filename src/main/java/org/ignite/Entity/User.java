@@ -13,7 +13,7 @@ public class User {
     private MultipartFile avatarMulti;
     private String avatar;
     private Date registeredDate;
-    private String role;
+
 
     public String getUsername() {
         return username;
